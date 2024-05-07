@@ -2,16 +2,16 @@ import React from "react";
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import client from "@/lib/api";
 import { cookies } from "next/headers";
+import TableRowItem from "@/components/table-row-item";
 
 async function getItems() {
-  const {data, error} = await client.GET("/api/v1/items/",{
+  const { data, error } = await client.GET("/api/v1/items/", {
     headers: {
       Authorization: `Bearer ${cookies().get("access_token")?.value}`,
     },
@@ -36,14 +36,18 @@ async function ItemsTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {items && (items as { data: { title: string; description?: string | null | undefined; id: number; owner_id: number; }[]; count: number; }).data.map((item) => (
-          <TableRow key={item.id}>
-            <TableCell className="font-medium">{item.id}</TableCell>
-            <TableCell>{item.title}</TableCell>
-            <TableCell>{item.description}</TableCell>
-            <TableCell>action</TableCell>
-          </TableRow>
-        ))}
+        {items &&
+          (
+            items as {
+              data: {
+                title: string;
+                description?: string | null | undefined;
+                id: number;
+                owner_id: number;
+              }[];
+              count: number;
+            }
+          ).data.map((item) => <TableRowItem key={item.id} item={item} />)}
       </TableBody>
     </Table>
   );
