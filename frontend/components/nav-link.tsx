@@ -1,3 +1,4 @@
+'use client'
 import Link from "next/link";
 import {
   Bell,
@@ -8,6 +9,8 @@ import {
   Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 // import {
 //   Card,
 //   CardContent,
@@ -17,12 +20,13 @@ import { Button } from "@/components/ui/button";
 // } from "@/components/ui/card";
 
 function NavLink() {
+  const pathname = usePathname()
   return (
     <div className="hidden border-r bg-muted/40 md:block">
       <div className="flex h-full max-h-screen flex-col gap-2">
         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
           <Link href="https://euclideanai.com" className="flex items-center gap-2 font-semibold">
-            <Package2 className="h-6 w-6" />
+            <Image src="/euclideanai-favicon-black-transparent.png" alt="EuclideanAI" width={35} height={35} />
             <span className="">EuclideanAI</span>
           </Link>
           <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
@@ -31,10 +35,10 @@ function NavLink() {
           </Button>
         </div>
         <div className="flex-1">
-          <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
+          <nav className="grid items-start px-2 text-sm font-medium lg:px-4 gap-3">
             <Link
-              href="#"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+              href="/dashboard"
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary ${pathname === '/dashboard' ? 'bg-muted' : ''}`}
             >
               <Home className="h-4 w-4" />
               Dashboard
@@ -50,22 +54,22 @@ function NavLink() {
               </Badge>
             </Link> */}
             <Link
-              href="#"
-              className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
+              href="/items"
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary ${pathname === '/items' ? 'bg-muted' : ''}`}
             >
               <Briefcase className="h-4 w-4" />
               Items{" "}
             </Link>
             <Link
-              href="#"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+              href="/settings"
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary ${pathname === '/settings' ? 'bg-muted' : ''}`}
             >
               <Settings className="h-4 w-4" />
               User Settings
             </Link>
             <Link
-              href="#"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+              href="/admin"
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary ${pathname === '/admin' ? 'bg-muted' : ''}`}
             >
               <Users className="h-4 w-4" />
               Admin

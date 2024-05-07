@@ -1,3 +1,4 @@
+'use client'
 import Link from "next/link";
 import {
     Home,
@@ -7,8 +8,8 @@ import {
     Users,
     Menu,
   } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { usePathname } from "next/navigation";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 // import {
 //   Card,
@@ -19,6 +20,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 // } from "@/components/ui/card";
 
 function MobileNavLink() {
+  const pathname = usePathname();
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -37,29 +39,29 @@ function MobileNavLink() {
             <span className="sr-only">EuclideanAI</span>
           </Link>
           <Link
-            href="#"
-            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+            href="/dashboard"
+            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === '/dashboard' ? 'bg-muted' : ''}`}
           >
             <Home className="h-5 w-5" />
             Dashboard
           </Link>
           <Link
-            href="#"
-            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+            href="/items"
+            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === '/items' ? 'bg-muted' : ''}`}
           >
             <Briefcase className="h-5 w-5" />
             Items
           </Link>
           <Link
-            href="#"
-            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+            href="/settings"
+            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === '/settings' ? 'bg-muted' : ''}`}
           >
             <Settings className="h-5 w-5" />
             User Settings
           </Link>
           <Link
-            href="#"
-            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+            href="/admin"
+            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === '/admin' ? 'bg-muted' : ''}`}
           >
             <Users className="h-5 w-5" />
             Admin
