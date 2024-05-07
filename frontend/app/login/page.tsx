@@ -10,9 +10,13 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { login } from "./actions";
+import { login, signup } from "./actions";
 
-export default function LoginPage() {
+export default function LoginPage({
+  searchParams,
+}: {
+  searchParams: { message?: string };
+}) {
   return (
     <form className="fixed inset-0 m-auto flex items-center justify-center">
       <Card className="mx-auto max-w-sm">
@@ -27,7 +31,7 @@ export default function LoginPage() {
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
-                id="username"
+                name="username"
                 type="email"
                 placeholder="m@example.com"
                 required
@@ -43,14 +47,24 @@ export default function LoginPage() {
                   Forgot your password?
                 </Link>
               </div>
-              <Input id="password" type="password" required />
+              <Input name="password" type="password" required />
             </div>
-            <SubmitButton type="submit" className="w-full" formAction={login} pendingText="logging in...">
+            <SubmitButton
+              type="submit"
+              className="w-full"
+              formAction={login}
+              pendingText="logging in..."
+            >
               Login
             </SubmitButton>
-            {/* <SubmitButton variant="outline" className="w-full" formAction={signup} pendingText="signing up...">
+            <SubmitButton
+              variant="outline"
+              className="w-full"
+              formAction={signup}
+              pendingText="signing up..."
+            >
               Sign up
-            </SubmitButton> */}
+            </SubmitButton>
           </div>
           {/* <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{" "}
@@ -58,6 +72,11 @@ export default function LoginPage() {
               Sign up
             </Link>
           </div> */}
+          {searchParams?.message && (
+            <p className="mt-4 w-auto bg-foreground/10 p-4 text-center text-foreground">
+              {searchParams.message}
+            </p>
+          )}
         </CardContent>
       </Card>
     </form>
