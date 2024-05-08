@@ -1,3 +1,4 @@
+import Appearance from "@/components/appearance-settings";
 import MyProfile from "@/components/my-profile";
 import PasswordReset from "@/components/password-reset";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -29,7 +30,9 @@ async function SettingsPage() {
           <TabsContent value="password">
             <PasswordReset />
           </TabsContent>
-          <TabsContent value="appearance"></TabsContent>
+          <TabsContent value="appearance">
+            <Appearance />
+          </TabsContent>
         </Tabs>
       </div>
     </div>
