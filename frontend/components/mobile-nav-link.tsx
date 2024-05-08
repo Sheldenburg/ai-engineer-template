@@ -1,16 +1,10 @@
-'use client'
+"use client";
 import Link from "next/link";
-import {
-    Home,
-    Settings,
-    Package2,
-    Briefcase,
-    Users,
-    Menu,
-  } from "lucide-react";
+import Image from "next/image";
+import { Home, Settings, Package2, Briefcase, Users, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 // import {
 //   Card,
 //   CardContent,
@@ -35,33 +29,47 @@ function MobileNavLink() {
             href="https://euclideanai.com"
             className="flex items-center gap-2 text-lg font-semibold"
           >
-            <Package2 className="h-6 w-6" />
+            <Image
+              src="/euclideanai-favicon-black-transparent.png"
+              alt="EuclideanAI"
+              width={35}
+              height={35}
+            />
+
             <span className="sr-only">EuclideanAI</span>
           </Link>
           <Link
             href="/dashboard"
-            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === '/dashboard' ? 'bg-muted' : ''}`}
+            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${
+              pathname === "/dashboard" ? "bg-muted" : ""
+            }`}
           >
             <Home className="h-5 w-5" />
             Dashboard
           </Link>
           <Link
             href="/items"
-            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === '/items' ? 'bg-muted' : ''}`}
+            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${
+              pathname === "/items" ? "bg-muted" : ""
+            }`}
           >
             <Briefcase className="h-5 w-5" />
             Items
           </Link>
           <Link
             href="/settings"
-            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === '/settings' ? 'bg-muted' : ''}`}
+            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${
+              pathname === "/settings" ? "bg-muted" : ""
+            }`}
           >
             <Settings className="h-5 w-5" />
             User Settings
           </Link>
           <Link
             href="/admin"
-            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === '/admin' ? 'bg-muted' : ''}`}
+            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${
+              pathname === "/admin" ? "bg-muted" : ""
+            }`}
           >
             <Users className="h-5 w-5" />
             Admin
