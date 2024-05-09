@@ -3,7 +3,7 @@ import DashboardHeader from "@/components/dashboard-header";
 import client from "@/lib/api";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { unstable_noStore as noStore } from "next/cache";
+import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 
 export default async function Layout({
   children,
@@ -23,6 +23,7 @@ export default async function Layout({
   if (error) {
     //TODO: handle error
     console.log(error);
+    revalidatePath("/");
     redirect("/login");
   }
   return (
