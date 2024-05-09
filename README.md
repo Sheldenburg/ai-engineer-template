@@ -57,6 +57,10 @@ We use [Shadcn](https://ui.shadcn.com/ "Shadcn"). Again, it's light-weight, all 
 Updating the docker compose file to include nextjs bit at the moment and we are planning to cast a video on deployment, so stay tuned. 
 A friendly warning is this code was recently written (in 3-4 days), so there are still bugs. All pull requests are welcome!
 
+- Tidy up the error handling bit 
+- Add task queue for long last jobs (Celery + Redis)
+- AI chat interface
+
 ### Backend
 We did not change the backend code, all the other details remain valid from the original [README](README-original.md)
 
