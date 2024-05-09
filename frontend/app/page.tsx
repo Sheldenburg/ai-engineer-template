@@ -54,7 +54,7 @@ export default function Home() {
             priority
           />
         </div>
-        <Link href="/login" className={cn(buttonVariants())}>
+        <Link href="/dashboard" className={cn(buttonVariants())}>
           Dashboard
         </Link>
       </div>

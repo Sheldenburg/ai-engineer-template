@@ -3,8 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { Home, Settings, LogOut, Briefcase, Users, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { revalidatePath } from "next/cache";
+import { logout } from "@/app/login/actions";
 // import {
 //   Card,
 //   CardContent,
@@ -74,13 +76,16 @@ function MobileNavLink({ user }: { user: { email: string } }) {
             <Users className="h-5 w-5" />
             Admin
           </Link>
-          <Link
-            href="/"
-            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground text-red-600"
-          >
-            <LogOut className="h-5 w-5" />
-            Logout
-          </Link>
+          <form action={logout}>
+            <Button
+              variant="ghost"
+              type="submit"
+              className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground text-red-600 text-base"
+            >
+              <LogOut className="h-5 w-5" />
+              Logout
+            </Button>
+          </form>
         </nav>
         <div className="mt-auto">
           <p className="text-sm">logged in as:</p>

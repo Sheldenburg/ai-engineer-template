@@ -11,7 +11,7 @@ async function SettingsPage() {
     console.log(error);
   }
   const fullName = data?.full_name;
-  const email = data.email;
+  const email = data?.email;
   return (
     <div>
       <h1 className="text-3xl font-bold pl-5">User Settings</h1>

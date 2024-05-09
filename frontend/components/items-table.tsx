@@ -11,6 +11,7 @@ import TableRowItem from "@/components/table-row-item";
 
 async function getItems() {
   const { data, error } = await client.GET("/api/v1/items/", {
+    cache: "no-store",
   });
   if (error) {
     console.log(error);

@@ -6,7 +6,6 @@ import { cookies } from "next/headers";
 import client from "@/lib/api";
 
 export async function login(formData: FormData) {
-
   const { data, error } = await client.POST("/api/v1/login/access-token", {
     body: {
       grant_type: "",
@@ -27,9 +26,7 @@ export async function login(formData: FormData) {
   });
   if (error) {
     console.log(error);
-    redirect(
-      `/login?message=${error.detail}`
-    );
+    redirect(`/login?message=${error.detail}`);
   }
   cookies().set("access_token", data.access_token);
   revalidatePath("/", "layout");
@@ -50,4 +47,11 @@ export async function signup(formData: FormData) {
   }
   revalidatePath("/", "layout");
   redirect("/login?message=Check your email to continue sign in process");
+}
+
+export async function logout() {
+  console.log("logging out...");
+  cookies().delete("access_token");
+  revalidatePath("/", "layout");
+  redirect("/");
 }

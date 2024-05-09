@@ -40,8 +40,8 @@ function TableRowUser({
           {user.email === me.email && <p className="bg-gray-200">YOU</p>}
         </div>
       </TableCell>
-      <TableCell>{user.email}</TableCell>
-      <TableCell>{`${user.is_superuser ? "Superuser" : "User"}`}</TableCell>
+      <TableCell className="hidden md:table-cell">{user.email}</TableCell>
+      <TableCell className="hidden md:table-cell">{`${user.is_superuser ? "Superuser" : "User"}`}</TableCell>
       <TableCell>
         <div className="flex flex-row items-center">
           <Dot className="h-6 w-6" />
