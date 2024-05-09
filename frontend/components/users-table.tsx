@@ -8,11 +8,9 @@ import {
 } from "@/components/ui/table";
 import client from "@/lib/api";
 import TableRowUser from "@/components/table-row-user";
-import { unstable_noStore as noStore } from "next/cache";
 
 async function getUsers() {
-  noStore();
-  const { data, error } = await client.GET("/api/v1/users/", {});
+  const { data, error } = await client.GET("/api/v1/users/", {cache: "no-store"});
   if (error) {
     console.log(error);
     // return [];
@@ -20,8 +18,7 @@ async function getUsers() {
   return data;
 }
 async function getMe() {
-  noStore();
-  const { data, error } = await client.GET("/api/v1/users/me", {});
+  const { data, error } = await client.GET("/api/v1/users/me", {cache: "no-store"});
   if (error) {
     console.log(error);
     // return [];
@@ -33,10 +30,10 @@ async function UsersTable() {
   const users = await getUsers();
   const me = await getMe();
   return (
-    <Table>
+    <Table className="overflow-x-auto">
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">FULL NAME</TableHead>
+          <TableHead>FULL NAME</TableHead>
           <TableHead>EMAIL</TableHead>
           <TableHead>ROLE</TableHead>
           <TableHead>STATUS</TableHead>

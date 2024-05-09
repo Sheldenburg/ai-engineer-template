@@ -11,10 +11,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import MobileNavLink from "./mobile-nav-link";
 
-function DashboardHeader() {
+function DashboardHeader({user}:{user:{email:string}}) {
   return (
     <header className="flex h-14 items-center gap-4 px-4 lg:h-[60px] lg:px-6">
-      <MobileNavLink />
+      <MobileNavLink user={user}/>
       <div className="w-full flex-1">
         {/* <form>
           <div className="relative">

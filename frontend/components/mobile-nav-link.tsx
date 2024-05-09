@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { Home, Settings, Package2, Briefcase, Users, Menu } from "lucide-react";
+import { Home, Settings, LogOut, Briefcase, Users, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -13,7 +13,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 //   CardTitle,
 // } from "@/components/ui/card";
 
-function MobileNavLink() {
+function MobileNavLink({ user }: { user: { email: string } }) {
   const pathname = usePathname();
   return (
     <Sheet>
@@ -74,9 +74,18 @@ function MobileNavLink() {
             <Users className="h-5 w-5" />
             Admin
           </Link>
+          <Link
+            href="/"
+            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground text-red-600"
+          >
+            <LogOut className="h-5 w-5" />
+            Logout
+          </Link>
         </nav>
-        {/* <div className="mt-auto">
-          <Card>
+        <div className="mt-auto">
+          <p className="text-sm">logged in as:</p>
+          <p className="text-sm">{user.email}</p>
+          {/* <Card>
             <CardHeader>
               <CardTitle>Upgrade to Pro</CardTitle>
               <CardDescription>
@@ -89,8 +98,8 @@ function MobileNavLink() {
                 Upgrade
               </Button>
             </CardContent>
-          </Card>
-        </div> */}
+          </Card> */}
+        </div>
       </SheetContent>
     </Sheet>
   );

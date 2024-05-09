@@ -7,7 +7,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import client from "@/lib/api";
-import { cookies } from "next/headers";
 import TableRowItem from "@/components/table-row-item";
 
 async function getItems() {
@@ -26,7 +25,7 @@ async function ItemsTable() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Id</TableHead>
+          <TableHead>Id</TableHead>
           <TableHead>Title</TableHead>
           <TableHead>Description</TableHead>
           <TableHead>Actions</TableHead>
