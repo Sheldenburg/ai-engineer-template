@@ -57,6 +57,11 @@ We use [Shadcn](https://ui.shadcn.com/ "Shadcn"). Again, it's light-weight, all 
 Updating the docker compose file to include nextjs bit at the moment and we are planning to cast a video on deployment, so stay tuned. 
 A friendly warning is this code was recently written (in 3-4 days), so there are still bugs. All pull requests are welcome!
 
+### Backend
+We did not change the backend code, all the other details remain valid from the original [README](README-original.md)
+
+### EuclideanAI
+Who the hell is EuclideanAI? we are a boutique AI & Data consultancy who provide purpose-built AI, data, machine learning solutions for our clients. [Feel free to reach out!](https://euclideanai.com/contactus/) 
 
 ### License
 
