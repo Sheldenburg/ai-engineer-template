@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import client from "@/lib/api";
 
 export async function login(formData: FormData) {
+
   const { data, error } = await client.POST("/api/v1/login/access-token", {
     body: {
       grant_type: "",
@@ -22,6 +23,7 @@ export async function login(formData: FormData) {
       }
       return fd;
     },
+    cache: "no-store",
   });
   if (error) {
     console.log(error);
@@ -40,6 +42,7 @@ export async function signup(formData: FormData) {
       email: formData.get("username") as string,
       password: formData.get("password") as string,
     },
+    cache: "no-store",
   });
   if (error) {
     console.log(error);

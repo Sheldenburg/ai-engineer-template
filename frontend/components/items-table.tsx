@@ -12,9 +12,6 @@ import TableRowItem from "@/components/table-row-item";
 
 async function getItems() {
   const { data, error } = await client.GET("/api/v1/items/", {
-    headers: {
-      Authorization: `Bearer ${cookies().get("access_token")?.value}`,
-    },
   });
   if (error) {
     console.log(error);

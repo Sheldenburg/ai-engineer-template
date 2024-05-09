@@ -10,9 +10,6 @@ export async function addItems(formData: FormData) {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
     },
-    headers: {
-      Authorization: `Bearer ${cookies().get("access_token")?.value}`,
-    },
   });
   if (error) {
     console.log(error);

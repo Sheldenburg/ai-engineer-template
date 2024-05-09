@@ -10,7 +10,7 @@ async function SettingsPage() {
     //TODO: handle error
     console.log(error);
   }
-  const fullName = data.full_name;
+  const fullName = data?.full_name;
   const email = data.email;
   return (
     <div>
