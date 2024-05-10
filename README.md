@@ -6,6 +6,23 @@
 ![nextjs+fastapi_template](nextjs+fastapi-template.png)
 ![nextjs+fastapi_template_dark_mode](nextjs+fastapi-template-dark-mode.png)
 
+### How to run in local
+1. Clone this repo
+```bash
+git clone https://github.com/Sheldenburg/nextjs-fastapi-template.git
+```
+2. Follow the original [README]('README-original.md') to docker compose and set up Postgres, reverse proxy and Fastapi server. You can leave the original React fronend running if you'd like. Or, you can just comment out the frontend bit in the docker compose file. 
+3. Run nextjs app in local
+```bash
+cd frontend
+```
+```bash
+npm install
+```
+```bash
+npm run dev
+```
+
 Note: This is a fork from the original [Full Stack FastAPI Template](https://github.com/tiangolo/full-stack-fastapi-template "Full Stack FastAPI Template"). Instead of the original Reactjs frontend, we used Nextjs14 in this repository. 
 
 Here are the reasons why we wanted to build with Nextjs (a full stack framework built on top of React) over React. 
@@ -51,12 +68,13 @@ async function getItems() {
 This is as cleanest as it can possibly get, in my personal opinion, for handling frontend API requests. 
 
 ### UI library 
-We use [Shadcn](https://ui.shadcn.com/ "Shadcn"). Again, it's light-weight, all the UI components are imported as plain javascript code for transparency. So, you can modify to suit your need. 
+We use [Shadcn](https://ui.shadcn.com/ "Shadcn"). It's light-weight, all the UI components are imported as plain javascript code for transparency. So, you can modify to suit your need. 
 
-### Roadmap
-Updating the docker compose file to include nextjs bit at the moment and we are planning to cast a video on deployment, so stay tuned. 
+### Deployment
+We are updating the docker compose file to include nextjs bit at the moment and we are planning to cast a video on deployment, so stay tuned. 
 A friendly warning is this code was recently written (in 3-4 days), so there are still bugs. All pull requests are welcome!
 
+### Roadmap
 - Tidy up the error handling bit 
 - Add task queue for long last jobs (Celery + Redis)
 - AI chat interface
