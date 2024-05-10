@@ -6,6 +6,9 @@
 ![nextjs+fastapi_template](nextjs+fastapi-template.png)
 ![nextjs+fastapi_template_dark_mode](nextjs+fastapi-template-dark-mode.png)
 
+### Demo video
+https://drive.google.com/file/d/1QfZvzOnOeBvtoDMlBb4IxDx3DoC-GC4Q/view?usp=sharing
+
 ### How to run in local
 1. Clone this repo
 ```bash
