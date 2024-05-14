@@ -68,8 +68,10 @@ services:
     build:
       context: ./frontend
       args:
-        - VITE_API_URL=http://${DOMAIN?Variable not set}
+        # - VITE_API_URL=http://${DOMAIN?Variable not set}
         - NODE_ENV=development
+    environment:
+      - API_BASE_URL=http://backend:80
 
 networks:
   traefik-public:

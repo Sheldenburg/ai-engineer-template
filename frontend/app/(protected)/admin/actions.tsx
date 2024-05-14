@@ -1,8 +1,9 @@
 "use server";
-import client from "@/lib/api";
+import initiateClient from "@/lib/api";
 import { revalidatePath } from "next/cache";
 
 export async function addUsers(additionalInfo: string, formData: FormData) {
+  const client = initiateClient();
   const isSuperUser = JSON.parse(additionalInfo).isSuperUser;
   const isActive = JSON.parse(additionalInfo).isActive;
   console.log(additionalInfo, isSuperUser, isActive);
@@ -23,6 +24,7 @@ export async function addUsers(additionalInfo: string, formData: FormData) {
 }
 
 export async function editUser(additionalInfo: string, formData: FormData) {
+    const client = initiateClient();
     const userId = JSON.parse(additionalInfo).userId;
     const isSuperUser = JSON.parse(additionalInfo).isSuperUser;
     const isActive = JSON.parse(additionalInfo).isActive;
@@ -44,6 +46,7 @@ export async function editUser(additionalInfo: string, formData: FormData) {
 }
 
 export async function deleteUser(userId: string) {
+  const client = initiateClient();
   const { data, error } = await client.DELETE("/api/v1/users/{user_id}", {
     params: { path: { user_id: Number(userId) } },
   });

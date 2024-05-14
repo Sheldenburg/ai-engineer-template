@@ -31,10 +31,10 @@ Note: This is a fork from the original [Full Stack FastAPI Template](https://git
 Here are the reasons why we wanted to build with Nextjs (a full stack framework built on top of React) over React. 
 - Dependencies reduction
 A barebone Reactjs application would require installation of dependency packages to achieve multi-page routing, managing API requests, caching etc. There are a number of solutions out there, e.g. in the original repo, @tanstack/react-router is used for routing, @tanstack/react-query + axios are used for managing API requests and caching. 
-In a Nextjs application, all these functions are built in without the need of third-party libraries. Also, Nextjs14 (app router) uses file-based routing which means the routing is automatically done via the folder structure. 
+In a Nextjs application, all these functions are built in without the need for third-party libraries. Also, Nextjs14 (app router) uses file-based routing which means the routing is automatically done via the folder structure. 
 
 - Server side rendering 
-Data fetching and mutation in a Nextjs application is mostly dealt in server side while client side data fetching is also allowed. This offers advantages to get away with 'useEffect' and other cumbersome boiler plate codes in order to do data feaching at client side. Server side rendering also offers performance benefit.
+Data fetching and mutation in a Nextjs application is mostly dealt in server side while client side data fetching is also allowed. This offers advantages to get away with 'useEffect' and other cumbersome boiler plate codes in order to do data fetching at client side. Server side rendering also offers performance benefit.
 
 - Popularity 
 Nextjs is getting more and more popular. There are good amount of frontend projects and Youtube tutorials based on Nextjs, which are beginner friendly. 

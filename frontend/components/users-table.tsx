@@ -6,31 +6,31 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import client from "@/lib/api";
+import initiateClient from "@/lib/api";
 import TableRowUser from "@/components/table-row-user";
 
-async function getUsers() {
-  const { data, error } = await client.GET("/api/v1/users/", {
-    cache: "no-store",
-  });
-  if (error) {
-    console.log(error);
-    // return [];
-  }
-  return data;
-}
-async function getMe() {
-  const { data, error } = await client.GET("/api/v1/users/me", {
-    cache: "no-store",
-  });
-  if (error) {
-    console.log(error);
-    // return [];
-  }
-  return data;
-}
-
 async function UsersTable() {
+  const client = initiateClient();
+  async function getUsers() {
+    const { data, error } = await client.GET("/api/v1/users/", {
+      cache: "no-store",
+    });
+    if (error) {
+      console.log(error);
+      // return [];
+    }
+    return data;
+  }
+  async function getMe() {
+    const { data, error } = await client.GET("/api/v1/users/me", {
+      cache: "no-store",
+    });
+    if (error) {
+      console.log(error);
+      // return [];
+    }
+    return data;
+  }
   const users = await getUsers();
   const me = await getMe();
   return (
@@ -38,7 +38,7 @@ async function UsersTable() {
       <Table className="text-xs md:text-base">
         <TableHeader>
           <TableRow>
-            <TableHead >FULL NAME</TableHead>
+            <TableHead>FULL NAME</TableHead>
             <TableHead className="hidden md:table-cell">EMAIL</TableHead>
             <TableHead className="hidden md:table-cell">ROLE</TableHead>
             <TableHead>STATUS</TableHead>

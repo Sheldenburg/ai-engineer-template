@@ -3,9 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import client from "@/lib/api";
+import initiateClient from "@/lib/api";
 
 export async function login(formData: FormData) {
+  const client = initiateClient();
   const { data, error } = await client.POST("/api/v1/login/access-token", {
     body: {
       grant_type: "",
@@ -34,6 +35,7 @@ export async function login(formData: FormData) {
 }
 
 export async function signup(formData: FormData) {
+  const client = initiateClient();
   const { data, error } = await client.POST("/api/v1/users/signup", {
     body: {
       email: formData.get("username") as string,

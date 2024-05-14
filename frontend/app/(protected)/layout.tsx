@@ -1,6 +1,6 @@
 import NavLink from "@/components/nav-link";
 import DashboardHeader from "@/components/dashboard-header";
-import client from "@/lib/api";
+import initiateClient from "@/lib/api";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { unstable_noStore as noStore, revalidatePath } from "next/cache";
@@ -16,6 +16,7 @@ export default async function Layout({
   //   console.log("No access token found");
   //   redirect('/')
   // }
+  const client = initiateClient();
   const { data, error } = await client.GET("/api/v1/users/me", {
     headers: { Authorization: `Bearer ${cookies().get("access_token")?.value}` },
     cache: "no-store",

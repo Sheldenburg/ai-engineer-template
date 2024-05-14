@@ -1,10 +1,10 @@
 "use server";
-import client from "@/lib/api";
+import initiateClient from "@/lib/api";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 
 export async function addItems(formData: FormData) {
+  const client = initiateClient();
   const { data, error } = await client.POST("/api/v1/items/", {
     body: {
       title: formData.get("title") as string,
@@ -20,6 +20,7 @@ export async function addItems(formData: FormData) {
 }
 
 export async function deleteItem(itemId: string) {
+  const client = initiateClient();
   const { data, error } = await client.DELETE("/api/v1/items/{id}", {
     params: { path: { id: Number(itemId) } },
   });
@@ -32,6 +33,7 @@ export async function deleteItem(itemId: string) {
 }
 
 export async function editItem(itemId: string, formData: FormData) {
+  const client = initiateClient();
   const { data, error } = await client.PUT("/api/v1/items/{id}", {
     body: {
       title: formData.get("title") as string,

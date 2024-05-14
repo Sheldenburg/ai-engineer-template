@@ -6,21 +6,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import client from "@/lib/api";
+import initiateClient from "@/lib/api";
 import TableRowItem from "@/components/table-row-item";
 
-async function getItems() {
-  const { data, error } = await client.GET("/api/v1/items/", {
-    cache: "no-store",
-  });
-  if (error) {
-    console.log(error);
-    // return [];
-  }
-  return data;
-}
-
 async function ItemsTable() {
+  const client = initiateClient();
+  async function getItems() {
+    const { data, error } = await client.GET("/api/v1/items/", {
+      cache: "no-store",
+    });
+    if (error) {
+      console.log(error);
+      // return [];
+    }
+    return data;
+  }
   const items = await getItems();
   return (
     <Table>
