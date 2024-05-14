@@ -74,7 +74,7 @@ This is as cleanest as it can possibly get, in my personal opinion, for handling
 We use [Shadcn](https://ui.shadcn.com/ "Shadcn"). It's light-weight, all the UI components are imported as plain javascript code for transparency. So, you can modify to suit your need. 
 
 ### Deployment
-We are updating the docker compose file to include nextjs bit at the moment and we are planning to cast a video on deployment, so stay tuned. 
+Docker compose is up to date now with nextjs frontend. You can just deploy through docker compose on a remote server.
 A friendly warning is this code was recently written (in 3-4 days), so there are still bugs. All pull requests are welcome!
 
 ### Roadmap
