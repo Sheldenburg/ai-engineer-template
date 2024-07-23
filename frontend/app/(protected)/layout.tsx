@@ -28,9 +28,10 @@ export default async function Layout({
     redirect("/login");
   }
   return (
-    <div className="grid min-h-screen md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+    // <div className="grid min-h-screen md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+    <div className="flex min-h-screen">
       <NavLink user={data} />
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full" style={{ marginLeft: '16.666667%' }}>
         <DashboardHeader user={data} />
         {children}
       </div>
