@@ -338,43 +338,43 @@ export default function ChatPage() {
               </fieldset>
             </form>
           </div> */}
-            <div className="relative flex min-h-[50vh] overflow-auto flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
-              <Badge variant="outline" className="absolute right-3 top-3">
-                Output
-              </Badge>
-              {/* Display messages here */}
+          <div className="relative flex min-h-[50vh] overflow-auto flex-col rounded-xl bg-muted/50 p-3 lg:col-span-2">
+            <Badge variant="outline" className="absolute right-3 top-3">
+              Output
+            </Badge>
+            {/* Display messages here */}
+            <div className="mb-24 text-sm md:text-base">
               {messages.map((m, i) => (
-                <div key={i} className="mb-3 border-b border-gray-200">
-                  <div className="whitespace-pre-wrap flex flex-row p-3">
+                <div key={i} className="border-b border-gray-200">
+                  <div className="grid grid-cols-[26px_1fr] whitespace-pre-wrap py-3 md:p-3 items-start justify-start">
                     {m.role === "user" ? (
-                      <SquareUser className="mr-3" />
+                      <SquareUser className="pr-3 w-[30px] h-[30px]"/>
                     ) : (
-                      <Bot className="mr-3" />
+                      <Bot className="pr-3 w-[30px] h-[30px]"/>
                     )}
-                    {m.content as string}{" "}
+                    <div className="ml-4 items-center justify-center pt-1">{m.content as string}</div>
                   </div>
                 </div>
               ))}
-              <div className="flex-1" />
-              {/* <div className="fixed inset-x-0 bottom-0 md:left-[220px] lg:left-[280px] w-1/2 pl-3"> */}
-              <div className="fixed inset-x-0 bottom-8 w-1/2 left-1/3 bg-gradient-to-b from-muted/30 from-0% to-muted/30 to-50% duration-300 ease-in-out animate-in dark:from-background/10 dark:from-10% dark:to-background/80 peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px]">
-                <form
-                  className="relative overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring"
-                  x-chunk="dashboard-03-chunk-1"
-                  onSubmit={handleSubmit}
-                >
-                  <Label htmlFor="message" className="sr-only">
-                    Message
-                  </Label>
-                  <Textarea
-                    id="message"
-                    placeholder="Type your message here..."
-                    className="min-h-10 resize-none border-0 p-3 shadow-none focus-visible:ring-0"
-                    value={input}
-                    onChange={handleInputChange}
-                  />
-                  <div className="relative flex items-center p-3 pt-0">
-                    {/* <TooltipProvider>
+            </div>
+            {/* <div className="flex-1" /> */}
+            {/* <div className="fixed inset-x-0 bottom-0 md:left-[220px] lg:left-[280px] w-1/2 pl-3"> */}
+            <div className="fixed inset-x-0 bottom-0 w-full px-5 md:w-1/2 md:left-1/3 bg-background">
+              <form
+                className="relative mb-2 overflow-hidden rounded-lg border focus-within:ring-1 focus-within:ring-ring"
+                x-chunk="dashboard-03-chunk-1"
+                onSubmit={handleSubmit}
+              >
+                <Textarea
+                  id="message"
+                  placeholder="Type your message here..."
+                  className="min-h-10 max-h-60 w-full resize-none border-0 p-3 shadow-none focus-visible:ring-0 text-xs md:text-base"
+                  value={input}
+                  onChange={handleInputChange}
+                  autoFocus
+                />
+                <div className="relative flex items-center pt-0">
+                  {/* <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button variant="ghost" size="icon">
@@ -394,18 +394,20 @@ export default function ChatPage() {
                     <TooltipContent side="top">Use Microphone</TooltipContent>
                   </Tooltip>
                 </TooltipProvider> */}
-                    <Button
-                      type="submit"
-                      size="sm"
-                      className="absolute bottom-5 right-5 ml-auto gap-1.5"
-                    >
-                      Send Message
-                      <CornerDownLeft className="size-3.5" />
-                    </Button>
-                  </div>
-                </form>
-              </div>
+                  <Button
+                    type="submit"
+                    size="sm"
+                    className="absolute bottom-3 right-5 ml-auto gap-1.5"
+                  >
+                    <CornerDownLeft className="size-3.5" />
+                  </Button>
+                </div>
+              </form>
+              <p className="text-center mb-2 text-[11px] md:text-xs">
+                AI generated content can contain errors, check important info.
+              </p>
             </div>
+          </div>
         </main>
       </div>
     </div>
