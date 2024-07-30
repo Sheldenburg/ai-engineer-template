@@ -38,55 +38,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-// import { useChat } from "ai/react";
-import { type CoreMessage } from "ai";
-import { continueConversation, messageTest } from "./actions";
 import { readStreamableValue } from "ai/rsc";
 import { useState } from "react";
-
-// Allow streaming responses up to 30 seconds
-export const maxDuration = 30;
+import useChatStream from "@/lib/hooks/useChatStream";
 
 export default function ChatPage() {
-  // const { messages, input, handleInputChange, handleSubmit } = useChat({
-  //   api: "api/chat",
-  // });
-  const [messages, setMessages] = useState<CoreMessage[]>([]);
-  const [input, setInput] = useState<string>("");
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const newMessages: CoreMessage[] = [
-      ...messages,
-      { content: input, role: "user" },
-    ];
-
-    setMessages(newMessages);
-    setInput("");
-
-    // const result = await continueConversation(newMessages);
-    const result = await messageTest(newMessages);
-    setMessages([
-      ...newMessages,
-      {
-        role: "assistant",
-        content: result as string,
-      },
-    ]);
-
-    // for await (const content of readStreamableValue(result)) {
-    //   setMessages([
-    //     ...newMessages,
-    //     {
-    //       role: "assistant",
-    //       content: content as string,
-    //     },
-    //   ]);
-    // }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInput(e.target.value);
-  };
+  const { messages, input, handleInputChange, handleSubmit } =
+    useChatStream("/api/v1/ai/chat/stream");
 
   return (
     <div className="flex flex-col h-[calc(100vh_-_theme(spacing.16))] w-full">
@@ -213,7 +171,7 @@ export default function ChatPage() {
           </DrawerContent>
         </Drawer>
       </div>
-      <div className="relative flex min-h-[50vh] overflow-auto flex-col rounded-xl bg-muted/50 md:m-3 mt-3 p-3 lg:col-span-2">
+      <div className="relative flex h-full overflow-auto flex-col rounded-xl bg-muted/50 md:m-3 mt-3 p-3 lg:col-span-2">
         {/* Display messages here */}
         <div className="mb-24 text-sm md:text-base">
           {messages.map((m, i) => (

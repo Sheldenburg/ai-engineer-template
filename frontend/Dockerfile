@@ -38,6 +38,8 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 ARG API_BASE_URL=${API_BASE_URL}
 
+ARG NEXT_PUBLIC_API_BASE_URL
+
 RUN npm run build
 
 # Production image, copy all the files and run next

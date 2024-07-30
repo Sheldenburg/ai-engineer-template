@@ -1,6 +1,6 @@
 from typing import Any
 
-from fastapi import APIRouter, HTTPException, Response
+from fastapi import APIRouter, HTTPException, Response, status
 from sqlmodel import func, select
 
 from app.api.deps import CurrentUser, SessionDep
@@ -10,26 +10,58 @@ from pydantic import BaseModel
 
 from fastapi.responses import StreamingResponse
 
+from openai import OpenAI
+
+import json
+
+import os
+
+from dotenv import load_dotenv
+
+from app.api.utils import get_streamed_response
+
 router = APIRouter()
+
+load_dotenv()
 
 
 class Message(BaseModel):
     content: str
-    role: str = "user"
+    role: str
 
 
 class ChatRequest(BaseModel):
+    input: str
     messages: list[Message]
 
 
 SYSTEM_PROMPT = """You are a helpful assistant."""
 
 
+def get_openai_generator(chat_request: ChatRequest):
+    messages = (
+        [{"role": "system", "content": SYSTEM_PROMPT}]
+        + chat_request.messages
+        + [{"role": "user", "content": chat_request.input}]
+    )
+    # messages = chat_request.messages
+    client = OpenAI()
+    openai_stream = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=messages,
+        temperature=0.0,
+        stream=True,
+    )
+    for event in openai_stream:
+        if event.choices[0].delta.content is not None:
+            # print(event.choices[0].delta.content, end="")
+            yield event.choices[0].delta.content
+
+
 @router.post("/chat")
 async def chat_handler(chat_request: ChatRequest) -> dict:
     messages = [{"role": "system", "content": SYSTEM_PROMPT}] + chat_request.messages
-    # Azure Open AI takes the deployment name as the model name
-    model = os.getenv("AZURE_OPENAI_CHATGPT_DEPLOYMENT", "chatgpt")
+    model = os.getenv("OPENAI_API_KEY", "chatgpt")
 
     response = await clients["openai"].chat.completions.create(
         model=model,
@@ -44,24 +76,15 @@ async def chat_handler(chat_request: ChatRequest) -> dict:
 async def chat_stream_handler(
     chat_request: ChatRequest,
 ) -> StreamingResponse:
-    messages = [{"role": "system", "content": SYSTEM_PROMPT}] + chat_request.messages
-    # Azure Open AI takes the deployment name as the model name
-    model = os.getenv("AZURE_OPENAI_CHATGPT_DEPLOYMENT", "chatgpt")
-
-    async def response_stream():
-        chat_coroutine = clients["openai"].chat.completions.create(
-            model=model,
-            messages=messages,
-            stream=True,
+    print(chat_request)
+    try:
+        return StreamingResponse(
+            get_openai_generator(chat_request), media_type="text/event-stream"
         )
-        async for event in await chat_coroutine:
-            if event.choices:
-                first_choice = event.model_dump()["choices"][0]
-                yield json.dumps(
-                    {"delta": first_choice["delta"]}, ensure_ascii=False
-                ) + "\n"
-
-    return StreamingResponse(response_stream())
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+        )
 
 
 @router.get("/chat/test")
