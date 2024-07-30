@@ -20,7 +20,7 @@ import { useState } from "react";
 function DashboardHeader({ user }: { user: { email: string } }) {
   const [open, setOpen] = useState(false);
   return (
-    <header className="flex h-14 items-center gap-4 px-4 lg:h-[60px] lg:px-6">
+    <header className="fixed top-0 right-0 flex h-14 w-full z-10 items-end justify-end gap-4 px-4 lg:h-[60px] lg:px-6">
       <MobileNavLink user={user} />
       <div className="w-full flex-1">
         {/* <form>

@@ -136,6 +136,18 @@ export interface paths {
      */
     delete: operations["items-delete_item"];
   };
+  "/api/v1/ai/chat": {
+    /** Chat Handler */
+    post: operations["ai-chat_handler"];
+  };
+  "/api/v1/ai/chat/stream": {
+    /** Chat Stream Handler */
+    post: operations["ai-chat_stream_handler"];
+  };
+  "/api/v1/ai/chat/test": {
+    /** Chat Test */
+    get: operations["ai-chat_test"];
+  };
 }
 
 export type webhooks = Record<string, never>;
@@ -159,6 +171,11 @@ export interface components {
       client_id?: string | null;
       /** Client Secret */
       client_secret?: string | null;
+    };
+    /** ChatRequest */
+    ChatRequest: {
+      /** Messages */
+      messages: components["schemas"]["Message-Input"][];
     };
     /** HTTPValidationError */
     HTTPValidationError: {
@@ -198,7 +215,17 @@ export interface components {
       count: number;
     };
     /** Message */
-    Message: {
+    "Message-Input": {
+      /** Content */
+      content: string;
+      /**
+       * Role
+       * @default user
+       */
+      role?: string;
+    };
+    /** Message */
+    "Message-Output": {
       /** Message */
       message: string;
     };
@@ -382,7 +409,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Message"];
+          "application/json": components["schemas"]["Message-Output"];
         };
       };
       /** @description Validation Error */
@@ -407,7 +434,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Message"];
+          "application/json": components["schemas"]["Message-Output"];
         };
       };
       /** @description Validation Error */
@@ -517,7 +544,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Message"];
+          "application/json": components["schemas"]["Message-Output"];
         };
       };
     };
@@ -561,7 +588,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Message"];
+          "application/json": components["schemas"]["Message-Output"];
         };
       };
       /** @description Validation Error */
@@ -636,7 +663,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Message"];
+          "application/json": components["schemas"]["Message-Output"];
         };
       };
       /** @description Validation Error */
@@ -691,7 +718,7 @@ export interface operations {
       /** @description Successful Response */
       201: {
         content: {
-          "application/json": components["schemas"]["Message"];
+          "application/json": components["schemas"]["Message-Output"];
         };
       };
       /** @description Validation Error */
@@ -822,13 +849,68 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Message"];
+          "application/json": components["schemas"]["Message-Output"];
         };
       };
       /** @description Validation Error */
       422: {
         content: {
           "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  /** Chat Handler */
+  "ai-chat_handler": {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["ChatRequest"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": Record<string, never>;
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  /** Chat Stream Handler */
+  "ai-chat_stream_handler": {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["ChatRequest"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": unknown;
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  /** Chat Test */
+  "ai-chat_test": {
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": Record<string, never>[];
         };
       };
     };

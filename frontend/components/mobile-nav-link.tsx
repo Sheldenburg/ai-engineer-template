@@ -59,6 +59,15 @@ function MobileNavLink({ user }: { user: { email: string } }) {
             Items
           </Link>
           <Link
+            href="/chat"
+            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${
+              pathname === "/settings" ? "bg-muted" : ""
+            }`}
+          >
+            <Settings className="h-5 w-5" />
+            Chat
+          </Link>
+          <Link
             href="/settings"
             className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${
               pathname === "/settings" ? "bg-muted" : ""

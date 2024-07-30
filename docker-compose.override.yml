@@ -72,6 +72,8 @@ services:
         - NODE_ENV=development
     environment:
       - API_BASE_URL=http://backend:80
+      # - NEXT_PUBLIC_API_BASE_URL=http://backend:80
+      - NEXT_PUBLIC_API_BASE_URL=http://localhost:80
 
 networks:
   traefik-public:

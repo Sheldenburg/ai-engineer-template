@@ -98,6 +98,7 @@ services:
       args:
         # - VITE_API_URL=https://${DOMAIN?Variable not set}
         - API_BASE_URL=http://backend:80
+        - NEXT_PUBLIC_API_BASE_URL=http://localhost:80
         - NODE_ENV=production
     labels:
       - traefik.enable=true

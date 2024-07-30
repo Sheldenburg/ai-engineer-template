@@ -18,7 +18,9 @@ export default async function Layout({
   // }
   const client = initiateClient();
   const { data, error } = await client.GET("/api/v1/users/me", {
-    headers: { Authorization: `Bearer ${cookies().get("access_token")?.value}` },
+    headers: {
+      Authorization: `Bearer ${cookies().get("access_token")?.value}`,
+    },
     cache: "no-store",
   });
   if (error) {
@@ -28,11 +30,14 @@ export default async function Layout({
     redirect("/login");
   }
   return (
-    <div className="grid min-h-screen md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+    // <div className="grid min-h-screen md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+    <div className="flex min-h-screen">
       <NavLink user={data} />
-      <div className="flex flex-col">
+      <div
+        className="flex flex-col w-full md:ml-[16.666667%]"
+      >
         <DashboardHeader user={data} />
-        {children}
+        <div className="mt-14">{children}</div>
       </div>
     </div>
   );
