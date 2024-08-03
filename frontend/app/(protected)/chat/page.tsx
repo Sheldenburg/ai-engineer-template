@@ -189,7 +189,7 @@ export default function ChatPage() {
             </div>
           ))}
         </div>
-        <div className="fixed inset-x-0 bottom-0 w-full px-5 md:w-1/2 md:left-1/3 bg-background">
+        <div className="fixed inset-x-0 bottom-0 w-full px-5 md:w-1/2 md:left-1/3">
           <form
             className="relative mb-2 overflow-hidden rounded-lg border focus-within:ring-1 focus-within:ring-ring"
             x-chunk="dashboard-03-chunk-1"
