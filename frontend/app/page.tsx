@@ -6,17 +6,19 @@ import { FaGithub } from "react-icons/fa";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import GitHubStars from "@/components/github-star";
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <Badge variant="outline" className="text-sm gap-2">
+        {/* <Badge variant="outline" className="text-sm gap-2">
           <FaGithub className="w-6 h-6 text-black dark:text-white" />
           <Link href="https://github.com/Sheldenburg/nextjs-fastapi-template">
              Get started
           </Link>
-        </Badge>
+        </Badge> */}
+        <GitHubStars />
         {/* <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-100 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
           Get started by&nbsp;
           <code className="font-mono font-bold">
@@ -65,7 +67,7 @@ export default function Home() {
           />
         </div>
         <Link href="/dashboard" className={cn(buttonVariants())}>
-          Dashboard
+          Get Started
         </Link>
       </div>
       <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-3 lg:text-left">
