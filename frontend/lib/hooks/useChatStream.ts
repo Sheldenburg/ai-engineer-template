@@ -8,6 +8,12 @@ const useChatSteam = (endpoint: string) => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState<string>("");
     const [isStreaming, setIsStreaming] = useState<boolean>(false);
+    const [model, setModel] = useState<string | null>(null);
+    const [apiKey, setApiKey] = useState<string | null>(null);
+    const [temperature, setTemperature] = useState<number | null>(0.4);
+    const [topP, setTopP] = useState<number | null>(1.0);
+    const [topK, setTopK] = useState<number | null>(null);
+    const [systemMessage, setSystemMessage] = useState<string | null>(null);
 
     // const handleInputChange = (value: string) => {
     //     setInput(value);
@@ -25,7 +31,7 @@ const useChatSteam = (endpoint: string) => {
     const addMessage = (message: Message) => {
         setMessages(messages => [...messages, message]);
     };
-    
+
     const appendMessageToChat = (message: string) => {
         setMessages(messages => {
             const latestMessage = messages[messages.length - 1];
@@ -75,6 +81,18 @@ const useChatSteam = (endpoint: string) => {
         isStreaming,
         handleInputChange,
         handleSubmit,
+        model,
+        apiKey,
+        temperature,
+        topP,
+        topK,
+        systemMessage,
+        setModel,
+        setApiKey,
+        setTemperature,
+        setTopP,
+        setTopK,
+        setSystemMessage,
     };
 }
 
