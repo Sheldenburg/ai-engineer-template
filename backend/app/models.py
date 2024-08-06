@@ -111,3 +111,30 @@ class TokenPayload(SQLModel):
 class NewPassword(SQLModel):
     token: str
     new_password: str
+
+
+class ChatConfigBase(SQLModel):
+    model: str
+    temperature: float
+    top_p: float | None = None
+    top_k: int | None = None
+    system_message: str | None = None
+
+
+class ChatConfigCreate(ChatConfigBase):
+    api_key: str | None = None
+
+
+class ChatConfig(ChatConfigBase, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    owner_id: int | None = Field(default=None, foreign_key="user.id", nullable=False)
+    api_key_encrypted: str | None = Field(default=None)
+
+
+class ChatConfigPublic(SQLModel):
+    model: str
+    api_key: str | None = None
+    temperature: float
+    top_p: float | None = None
+    top_k: int | None = None
+    system_message: str | None = None

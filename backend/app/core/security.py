@@ -6,6 +6,11 @@ from passlib.context import CryptContext
 
 from app.core.config import settings
 
+from cryptography.fernet import Fernet
+
+# Initialize Fernet with the key
+cipher_suite = Fernet(settings.ENCRYPTION_KEY)
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
@@ -25,3 +30,11 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def get_password_hash(password: str) -> str:
     return pwd_context.hash(password)
+
+
+def encrypt_api_key(api_key: str) -> str:
+    return cipher_suite.encrypt(api_key.encode()).decode()
+
+
+def decrypt_api_key(encrypted_api_key: str) -> str:
+    return cipher_suite.decrypt(encrypted_api_key.encode()).decode()
