@@ -119,7 +119,12 @@ def read_chat_config(
 
     statement = select(ChatConfig).where(ChatConfig.owner_id == current_user.id)
     chatConfig = session.exec(statement).first().dict()
-    chatConfig["api_key"] = decrypt_api_key(chatConfig["api_key_encrypted"])
+    if not chatConfig:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Chat config not found."
+        )
+    else:
+        chatConfig["api_key"] = decrypt_api_key(chatConfig["api_key_encrypted"])
     return chatConfig
 
 

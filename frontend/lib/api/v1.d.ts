@@ -136,17 +136,25 @@ export interface paths {
      */
     delete: operations["items-delete_item"];
   };
-  "/api/v1/ai/chat": {
+  "/api/v1/chat/config": {
+    /**
+     * Read Chat Config
+     * @description Retrieve chat config from db.
+     */
+    get: operations["chat-read_chat_config"];
+    /**
+     * Create Chat Config
+     * @description Create chat config.
+     */
+    post: operations["chat-create_chat_config"];
+  };
+  "/api/v1/chat/": {
     /** Chat Handler */
-    post: operations["ai-chat_handler"];
+    post: operations["chat-chat_handler"];
   };
-  "/api/v1/ai/chat/stream": {
+  "/api/v1/chat/stream": {
     /** Chat Stream Handler */
-    post: operations["ai-chat_stream_handler"];
-  };
-  "/api/v1/ai/chat/test": {
-    /** Chat Test */
-    get: operations["ai-chat_test"];
+    post: operations["chat-chat_stream_handler"];
   };
 }
 
@@ -172,8 +180,53 @@ export interface components {
       /** Client Secret */
       client_secret?: string | null;
     };
+    /** ChatConfigBase */
+    ChatConfigBase: {
+      /** Model */
+      model: string;
+      /** Temperature */
+      temperature: number;
+      /** Top P */
+      top_p?: number | null;
+      /** Top K */
+      top_k?: number | null;
+      /** System Message */
+      system_message?: string | null;
+    };
+    /** ChatConfigCreate */
+    ChatConfigCreate: {
+      /** Model */
+      model: string;
+      /** Temperature */
+      temperature: number;
+      /** Top P */
+      top_p?: number | null;
+      /** Top K */
+      top_k?: number | null;
+      /** System Message */
+      system_message?: string | null;
+      /** Api Key */
+      api_key?: string | null;
+    };
+    /** ChatConfigPublic */
+    ChatConfigPublic: {
+      /** Model */
+      model: string;
+      /** Api Key */
+      api_key?: string | null;
+      /** Temperature */
+      temperature: number;
+      /** Top P */
+      top_p?: number | null;
+      /** Top K */
+      top_k?: number | null;
+      /** System Message */
+      system_message?: string | null;
+    };
     /** ChatRequest */
     ChatRequest: {
+      /** Input */
+      input: string;
       /** Messages */
       messages: components["schemas"]["Message-Input"][];
     };
@@ -218,11 +271,12 @@ export interface components {
     "Message-Input": {
       /** Content */
       content: string;
-      /**
-       * Role
-       * @default user
-       */
-      role?: string;
+      /** Role */
+      role: string;
+      /** Function Call */
+      function_call?: string | null;
+      /** Tool Call */
+      tool_call?: string | null;
     };
     /** Message */
     "Message-Output": {
@@ -860,8 +914,47 @@ export interface operations {
       };
     };
   };
+  /**
+   * Read Chat Config
+   * @description Retrieve chat config from db.
+   */
+  "chat-read_chat_config": {
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ChatConfigPublic"];
+        };
+      };
+    };
+  };
+  /**
+   * Create Chat Config
+   * @description Create chat config.
+   */
+  "chat-create_chat_config": {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["ChatConfigCreate"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ChatConfigBase"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
   /** Chat Handler */
-  "ai-chat_handler": {
+  "chat-chat_handler": {
     requestBody: {
       content: {
         "application/json": components["schemas"]["ChatRequest"];
@@ -883,7 +976,7 @@ export interface operations {
     };
   };
   /** Chat Stream Handler */
-  "ai-chat_stream_handler": {
+  "chat-chat_stream_handler": {
     requestBody: {
       content: {
         "application/json": components["schemas"]["ChatRequest"];
@@ -900,17 +993,6 @@ export interface operations {
       422: {
         content: {
           "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  /** Chat Test */
-  "ai-chat_test": {
-    responses: {
-      /** @description Successful Response */
-      200: {
-        content: {
-          "application/json": Record<string, never>[];
         };
       };
     };
