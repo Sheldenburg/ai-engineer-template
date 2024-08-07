@@ -20,124 +20,21 @@ import {
 import { Bird, Rabbit, Settings, Turtle } from "lucide-react";
 import initiateClient from "@/lib/api";
 import { Button } from "@/components/ui/button";
-import { addChatConfig } from "@/app/(protected)/chat/actions";
-// import useSWR from "swr";
+import { addChatConfig, editChatConfig } from "@/app/(protected)/chat/actions";
+import { ChatConfigPublic } from "@/lib/definitions";
 
-// function getCookie(name: string) {
-//   const value = `; ${document.cookie}`;
-//   const parts = value.split(`; ${name}=`);
-//   if (parts.length === 2) return parts.pop()?.split(";").shift();
-// }
-
-// const fetcher = (url: string) =>
-//   fetch(url, {
-//     method: "GET",
-//     headers: {
-//       "Content-Type": "application/json",
-//       Authorization: `Bearer ${getCookie("access_token")}`,
-//     },
-//     // Include other fetch options as needed
-//   }).then((res) => res.json());
-
-async function ChatSettings({}: // model,
-// setModel,
-// apiKey,
-// setApiKey,
-// temperature,
-// setTemperature,
-// topP,
-// setTopP,
-// topK,
-// setTopK,
-// systemMessage,
-// setSystemMessage,
+function ChatSettings({
+  chatConfig,
+}: // model,
 {
-  // model: string | null;
-  // setModel: React.Dispatch<React.SetStateAction<string | null>>;
-  // apiKey: string | null;
-  // setApiKey: React.Dispatch<React.SetStateAction<string | null>>;
-  // temperature: number | null;
-  // setTemperature: React.Dispatch<React.SetStateAction<number | null>>;
-  // topP: number | null;
-  // setTopP: React.Dispatch<React.SetStateAction<number | null>>;
-  // topK: number | null;
-  // setTopK: React.Dispatch<React.SetStateAction<number | null>>;
-  // systemMessage: string | null;
-  // setSystemMessage: React.Dispatch<React.SetStateAction<string | null>>;
+  chatConfig: ChatConfigPublic;
 }) {
-  // const { data, error } = useSWR(
-  //   process.env.NEXT_PUBLIC_API_BASE_URL + "/api/v1/chat/config",
-  //   fetcher
-  // );
-  // if (error) {
-  //   console.log(error);
-  // }
-  // if (data) {
-  //   setModel(data.model ?? null);
-  //   setApiKey(data.api_key ?? null);
-  //   setTemperature(data.temperature);
-  //   setTopP(data.top_p ?? null);
-  //   setTopK(data.top_k ?? null);
-  //   setSystemMessage(data.system_message ?? null);
-  // }
-  // const handleModelSelectChange = (value: string) => {
-  //   setModel(value);
-  // };
-  // const handleInputChangeTemperature = (
-  //   e: React.ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   if (e.target.value === "") {
-  //     setTemperature(0.4);
-  //   } else {
-  //     setTemperature(parseFloat(e.target.value));
-  //   }
-  // };
-  // const handleInputChangeTopP = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.value === "") {
-  //     setTopP(1.0);
-  //   } else {
-  //     setTopP(parseFloat(e.target.value));
-  //   }
-  // };
-  // const handleInputChangeSystemMessage = (
-  //   e: React.ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   if (e.target.value === "") {
-  //     setSystemMessage("");
-  //   } else {
-  //     setSystemMessage(e.target.value);
-  //   }
-  //   console.log(systemMessage);
-  // };
-  // const handleInputChangeAPIKey = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.value === "") {
-  //     setApiKey("");
-  //   } else {
-  //     setApiKey(e.target.value);
-  //   }
-  //   console.log(systemMessage);
-  // };
-
   async function handleSubmit(formData: FormData) {
-    // console.log('submitting form')
-    const result = await addChatConfig(formData);
-    // const result = await addUserswithCheckbox(formData);
-    // if (result?.error) {
-    //   resetForm();
-    //   setOpen(false);
-    //   return toast({
-    //     title: "Something went wrong!",
-    //     description: String(result.error),
-    //     variant: "destructive",
-    //   });
-    // } else {
-    //   resetForm();
-    //   setOpen(false);
-    //   return toast({
-    //     title: "Success",
-    //     description: "User was created successfully!",
-    //   });
-    // }
+    if (chatConfig) {
+      const result = await editChatConfig(formData);
+    } else {
+      const result = await addChatConfig(formData);
+    }
   }
 
   return (
@@ -186,7 +83,7 @@ async function ChatSettings({}: // model,
               <div className="grid gap-3">
                 <Label htmlFor="model">Model</Label>
                 <Select
-                  defaultValue="openai"
+                  defaultValue={chatConfig?.model || "openai"}
                   // onValueChange={handleModelSelectChange}
                   name="model"
                 >
@@ -259,6 +156,7 @@ async function ChatSettings({}: // model,
                   id="api-key"
                   name="api-key"
                   type="password"
+                  defaultValue={chatConfig?.api_key || ""}
                   // onChange={handleInputChangeAPIKey}
                   // value={apiKey ?? ""}
                 />
@@ -269,7 +167,7 @@ async function ChatSettings({}: // model,
                   id="temperature"
                   name="temperature"
                   type="number"
-                  defaultValue="0.4"
+                  defaultValue={chatConfig?.temperature || 0.2}
                   // onChange={handleInputChangeTemperature}
                   // value={temperature ?? ""}
                   min={0}
@@ -283,7 +181,7 @@ async function ChatSettings({}: // model,
                   id="top-p"
                   name="top-p"
                   type="number"
-                  defaultValue="1.0"
+                  defaultValue={chatConfig?.top_p || 1.0}
                   // onChange={handleInputChangeTopP}
                   // value={topP ?? ""}
                   min={0}
@@ -318,6 +216,7 @@ async function ChatSettings({}: // model,
                 <Input
                   id="system-message"
                   name="system-message"
+                  defaultValue={chatConfig?.system_message || ""}
                   placeholder="You are a..."
                   // className="min-h-10 max-h-60 w-full resize-none border-0 p-3 shadow-none focus-visible:ring-0 text-xs md:text-base"
                   // value={systemMessage ?? ""}

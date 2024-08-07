@@ -128,6 +128,33 @@ def read_chat_config(
     return chatConfig
 
 
+@router.put("/config", response_model=ChatConfigPublic)
+def create_chat_config(
+    *, session: SessionDep, current_user: CurrentUser, config_in: ChatConfigCreate
+) -> Any:
+    """
+    Create chat config.
+    """
+    # check if the user already has a chat config
+    statement = select(ChatConfig).where(ChatConfig.owner_id == current_user.id)
+    results = session.exec(statement)
+    chatConfig = results.one()
+    if not chatConfig:
+        raise HTTPException(status_code=404, detail="Chat config not found")
+
+    update_dict = config_in.dict(exclude_unset=True)
+    update_dict["api_key_encrypted"] = encrypt_api_key(config_in.api_key)
+    del update_dict["api_key"]
+    for key, value in update_dict.items():
+        setattr(chatConfig, key, value)
+
+    session.add(chatConfig)
+    session.commit()
+    session.refresh(chatConfig)
+
+    return chatConfig
+
+
 @router.post("/")
 async def chat_handler(
     chat_request: ChatRequest, session: SessionDep, current_user: CurrentUser

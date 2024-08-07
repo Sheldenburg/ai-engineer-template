@@ -146,6 +146,11 @@ export interface paths {
      * Create Chat Config
      * @description Create chat config.
      */
+    put: operations["chat-create_chat_config"];
+    /**
+     * Create Chat Config
+     * @description Create chat config.
+     */
     post: operations["chat-create_chat_config"];
   };
   "/api/v1/chat/": {
