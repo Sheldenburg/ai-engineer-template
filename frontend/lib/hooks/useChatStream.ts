@@ -25,6 +25,9 @@ const useChatSteam = (endpoint: string) => {
 
     const handleSubmit = async (e?: FormEvent<HTMLFormElement>) => {
         e?.preventDefault();
+        if (input === null || input === '') {
+            return; // Do nothing if input is null or empty
+        }
         await resetInputAndGetResponse();
     }
 
