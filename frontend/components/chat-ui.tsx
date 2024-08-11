@@ -1,39 +1,43 @@
-'use client';
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import {
-    Bird,
-    CornerDownLeft,
-    Mic,
-    Paperclip,
-    Rabbit,
-    Settings,
-    Turtle,
-    SquareUser,
-    Bot,
-  } from "lucide-react";
+  Bird,
+  CornerDownLeft,
+  Mic,
+  Paperclip,
+  Rabbit,
+  Settings,
+  Turtle,
+  SquareUser,
+  Bot,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import useChatStream from "@/lib/hooks/useChatStream";
+import { getChatHistory } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 function ChatUI() {
-  const {
-    messages,
-    input,
-    handleInputChange,
-    handleSubmit,
-    apiKey,
-    setApiKey,
-    temperature,
-    setTemperature,
-    topK,
-    setTopK,
-    topP,
-    setTopP,
-    systemMessage,
-    setSystemMessage,
-    model,
-    setModel,
-  } = useChatStream("/api/v1/chat/stream");
+  const { messages, input, handleInputChange, handleSubmit, setMessages } =
+    useChatStream("/api/v1/chat/stream");
+  async function fetchChatHistory() {
+      try {
+        const chatHistory = await getChatHistory(chatId);
+        if (chatHistory) {
+          setMessages(chatHistory.messages);
+        } else {
+          console.log('No chat history found or there was an error fetching it.');
+        }
+      } catch (error) {
+        console.error('Error fetching chat history:', error);
+      }
+    }
+  const pathName = usePathname();
+  const chatId = pathName.split("/").pop() ?? "";
+  console.log(messages);
+  useEffect(() => {
+    fetchChatHistory();
+  }, []);
   return (
     <div className="relative flex h-full overflow-auto flex-col rounded-xl bg-muted/50 md:m-3 mt-3 p-3 lg:col-span-2">
       {/* Display messages here */}

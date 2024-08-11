@@ -1,6 +1,9 @@
-import { useState, FormEvent, ChangeEvent } from "react";
+import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { getStream, decodeStreamToJson } from "../utils";
 import { Message } from "@/lib/definitions"
+import { useRouter } from "next/navigation";
+import { nanoid } from "nanoid";
+import { usePathname } from "next/navigation";
 
 const BOT_ERROR_MESSAGE = 'Something went wrong fetching AI response.';
 
@@ -8,13 +11,8 @@ const useChatSteam = (endpoint: string) => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState<string>("");
     const [isStreaming, setIsStreaming] = useState<boolean>(false);
-    const [model, setModel] = useState<string | null>(null);
-    const [apiKey, setApiKey] = useState<string | null>(null);
-    const [temperature, setTemperature] = useState<number | null>(0.4);
-    const [topP, setTopP] = useState<number | null>(1.0);
-    const [topK, setTopK] = useState<number | null>(null);
-    const [systemMessage, setSystemMessage] = useState<string | null>(null);
-
+    const pathName = usePathname();
+    const chatId = pathName.split("/").pop() ?? "";
     // const handleInputChange = (value: string) => {
     //     setInput(value);
     // }
@@ -47,9 +45,9 @@ const useChatSteam = (endpoint: string) => {
     };
 
     const fetchAndUpdateAIResponse = async () => {
-        const stream = await getStream(input, messages, endpoint);
+        // console.log(pathName);
+        const stream = await getStream(input, messages, endpoint, chatId);
         addMessage({ content: '', role: 'assistant' });
-        console.log(messages);
         let response = '';
 
         for await (const message of decodeStreamToJson(stream)) {
@@ -64,7 +62,6 @@ const useChatSteam = (endpoint: string) => {
         setIsStreaming(true);
         addMessage({ content: message ?? input, role: 'user' });
         // await input.handlers.onMessageAdded?.(addedMessage);
-        console.log(messages);
         setInput('');
 
         try {
@@ -78,24 +75,18 @@ const useChatSteam = (endpoint: string) => {
         }
     }
 
+    // useEffect(() => {
+    //     console.log(messages);
+    //     // saveChatHistory(chatId, messages);
+    // }, [messages]);
+
     return {
         messages,
         input,
         isStreaming,
         handleInputChange,
         handleSubmit,
-        model,
-        apiKey,
-        temperature,
-        topP,
-        topK,
-        systemMessage,
-        setModel,
-        setApiKey,
-        setTemperature,
-        setTopP,
-        setTopK,
-        setSystemMessage,
+        setMessages,
     };
 }
 

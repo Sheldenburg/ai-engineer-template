@@ -1,4 +1,8 @@
-from sqlmodel import Field, Relationship, SQLModel
+from datetime import datetime
+from typing import Optional, List
+from sqlmodel import Field, Relationship, SQLModel, JSON
+from sqlalchemy.sql import func
+from sqlalchemy import Column, DateTime
 
 
 # Shared properties
@@ -138,3 +142,48 @@ class ChatConfigPublic(SQLModel):
     top_p: float | None = None
     top_k: int | None = None
     system_message: str | None = None
+
+
+class MessageBase(SQLModel):
+    role: str
+    content: str
+
+
+class Message(MessageBase):
+    content: str
+    role: str
+    function_call: str | None = None
+    tool_call: str | None = None
+
+
+# class ChatBase(SQLModel):
+#     id: str | None = None
+#     chat_config_id: int | None = None
+#     message: list[MessageBase] = []
+#     created_at: datetime
+#     updated_at: datetime
+#     owner_id: int | None = None
+
+
+class Chat(SQLModel, table=True):
+    id: str | None = Field(default=None, primary_key=True)
+    chat_config_id: int | None = Field(
+        default=None, foreign_key="chatconfig.id", nullable=False
+    )
+    messages: List[dict] = Field(sa_column=Column(JSON))
+    created_at: Optional[datetime] = Field(
+        sa_column=Column(DateTime(timezone=True), server_default=func.now())
+    )
+
+    updated_at: Optional[datetime] = Field(
+        sa_column=Column(DateTime(timezone=True), onupdate=func.now())
+    )
+    owner_id: int | None = Field(default=None, foreign_key="user.id", nullable=False)
+
+
+class ChatPublic(SQLModel):
+    id: str
+    messages: List[Message]
+    created_at: datetime
+    updated_at: datetime
+    owner_id: int

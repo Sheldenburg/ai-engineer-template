@@ -161,6 +161,20 @@ export interface paths {
     /** Chat Stream Handler */
     post: operations["chat-chat_stream_handler"];
   };
+  "/api/v1/chat/{chat_id}": {
+    /**
+     * Get Chat
+     * @description Get chat history.
+     */
+    get: operations["chat-get_chat"];
+  };
+  "/api/v1/chat/save/{chat_id}": {
+    /**
+     * Save Chat
+     * @description Save chat history.
+     */
+    post: operations["chat-save_chat"];
+  };
 }
 
 export type webhooks = Record<string, never>;
@@ -228,10 +242,36 @@ export interface components {
       /** System Message */
       system_message?: string | null;
     };
+    /** ChatPublic */
+    ChatPublic: {
+      /** Id */
+      id: string;
+      /** Message */
+      message: components["schemas"]["MessageBase"][];
+      /**
+       * Created At
+       * Format: date-time
+       */
+      created_at: string;
+      /**
+       * Updated At
+       * Format: date-time
+       */
+      updated_at: string;
+      /** Owner Id */
+      owner_id: number;
+    };
     /** ChatRequest */
     ChatRequest: {
       /** Input */
       input: string;
+      /** Messages */
+      messages: components["schemas"]["Message-Input"][];
+    };
+    /** ChatSaveReuqest */
+    ChatSaveReuqest: {
+      /** Chat Id */
+      chat_id: string;
       /** Messages */
       messages: components["schemas"]["Message-Input"][];
     };
@@ -287,6 +327,13 @@ export interface components {
     "Message-Output": {
       /** Message */
       message: string;
+    };
+    /** MessageBase */
+    MessageBase: {
+      /** Role */
+      role: string;
+      /** Content */
+      content: string;
     };
     /** NewPassword */
     NewPassword: {
@@ -992,6 +1039,61 @@ export interface operations {
       200: {
         content: {
           "application/json": unknown;
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  /**
+   * Get Chat
+   * @description Get chat history.
+   */
+  "chat-get_chat": {
+    parameters: {
+      path: {
+        chat_id: string;
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ChatPublic"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  /**
+   * Save Chat
+   * @description Save chat history.
+   */
+  "chat-save_chat": {
+    parameters: {
+      path: {
+        chat_id: string;
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["ChatSaveReuqest"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": Record<string, never>;
         };
       };
       /** @description Validation Error */
