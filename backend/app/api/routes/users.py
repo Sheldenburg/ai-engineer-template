@@ -22,6 +22,7 @@ from app.models import (
     UsersPublic,
     UserUpdate,
     UserUpdateMe,
+    Chat,
 )
 from app.utils import generate_new_account_email, send_email
 
@@ -117,11 +118,19 @@ def update_password_me(
 
 
 @router.get("/me", response_model=UserPublic)
-def read_user_me(current_user: CurrentUser) -> Any:
+def read_user_me(current_user: CurrentUser, session: SessionDep) -> Any:
     """
-    Get current user.
+    Get current user and the user's chat list.
     """
-    return current_user
+    chatList = []
+    statement = select(Chat).where(Chat.owner_id == current_user.id)
+    allChats = session.exec(statement).all()
+    # print(allChats)
+    for chat in allChats:
+        chatList.append({"id": chat.id, "title": chat.messages[1]["content"][:30]})
+    response = current_user.dict()
+    response["chatList"] = chatList
+    return response
 
 
 @router.delete("/me", response_model=Message)

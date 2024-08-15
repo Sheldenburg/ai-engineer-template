@@ -254,6 +254,20 @@ async def chat_stream_handler(
         )
 
 
+@router.get("/chat_list", response_model=list[dict])
+async def get_chat_list(session: SessionDep, current_user: CurrentUser) -> list:
+    """
+    Get a list of chats belong to the given user.
+    """
+    chatList = []
+    statement = select(Chat).where(Chat.owner_id == current_user.id)
+    allChats = session.exec(statement).all()
+    # print(allChats)
+    for chat in allChats:
+        chatList.append({"id": chat.id, "title": chat.messages[1]["content"][:30]})
+    return chatList
+
+
 @router.get("/{chat_id}", response_model=ChatPublic)
 async def get_chat(
     chat_id: str,
@@ -270,36 +284,3 @@ async def get_chat(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Chat history not found."
         )
-
-
-@router.post("/save")
-async def save_chat(
-    chat_save_request: ChatSaveReuqest,
-    session: SessionDep,
-    current_user: CurrentUser,
-) -> dict:
-    """
-    Save chat history.
-    """
-    # check if the user already has a chat config
-    print(chat_save_request)
-    # statement = select(Chat).where(Chat.id == chat_save_request.chat_id)
-    # chatHistory = session.exec(statement).first()
-    # if chatHistory:
-    #     # update the chat history based on the chat_id in sqlmodel
-    #     chatHistory.messages = chat_save_request.messages
-    #     chatHistory.updated_at = func.now()
-    #     session.add(chatHistory)
-    #     session.commit()
-    # else:
-    #     # create a new chat history
-    #     chatHistory = Chat(
-    #         id=chat_save_request.chat_id,
-    #         chat_config_id=get_chat_config(session, current_user)["id"],
-    #         messages=chat_save_request.messages,
-    #         owner_id=current_user.id,
-    #     )
-    #     session.add(chatHistory)
-    #     session.commit()
-    #     session.refresh(chatHistory)
-    # return chatHistory.dict()

@@ -55,7 +55,7 @@ export interface paths {
   "/api/v1/users/me": {
     /**
      * Read User Me
-     * @description Get current user.
+     * @description Get current user and the user's chat list.
      */
     get: operations["users-read_user_me"];
     /**
@@ -161,19 +161,19 @@ export interface paths {
     /** Chat Stream Handler */
     post: operations["chat-chat_stream_handler"];
   };
+  "/api/v1/chat/chat_list": {
+    /**
+     * Get Chat List
+     * @description Get a list of chats belong to the given user.
+     */
+    get: operations["chat-get_chat_list"];
+  };
   "/api/v1/chat/{chat_id}": {
     /**
      * Get Chat
      * @description Get chat history.
      */
     get: operations["chat-get_chat"];
-  };
-  "/api/v1/chat/save/{chat_id}": {
-    /**
-     * Save Chat
-     * @description Save chat history.
-     */
-    post: operations["chat-save_chat"];
   };
 }
 
@@ -246,8 +246,8 @@ export interface components {
     ChatPublic: {
       /** Id */
       id: string;
-      /** Message */
-      message: components["schemas"]["MessageBase"][];
+      /** Messages */
+      messages: components["schemas"]["Message"][];
       /**
        * Created At
        * Format: date-time
@@ -266,14 +266,9 @@ export interface components {
       /** Input */
       input: string;
       /** Messages */
-      messages: components["schemas"]["Message-Input"][];
-    };
-    /** ChatSaveReuqest */
-    ChatSaveReuqest: {
+      messages: components["schemas"]["Message"][];
       /** Chat Id */
       chat_id: string;
-      /** Messages */
-      messages: components["schemas"]["Message-Input"][];
     };
     /** HTTPValidationError */
     HTTPValidationError: {
@@ -313,27 +308,15 @@ export interface components {
       count: number;
     };
     /** Message */
-    "Message-Input": {
-      /** Content */
-      content: string;
+    Message: {
       /** Role */
       role: string;
+      /** Content */
+      content: string;
       /** Function Call */
       function_call?: string | null;
       /** Tool Call */
       tool_call?: string | null;
-    };
-    /** Message */
-    "Message-Output": {
-      /** Message */
-      message: string;
-    };
-    /** MessageBase */
-    MessageBase: {
-      /** Role */
-      role: string;
-      /** Content */
-      content: string;
     };
     /** NewPassword */
     NewPassword: {
@@ -396,6 +379,8 @@ export interface components {
       full_name?: string | null;
       /** Id */
       id: number;
+      /** Chatlist */
+      chatList?: unknown[] | null;
     };
     /** UserRegister */
     UserRegister: {
@@ -515,7 +500,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Message-Output"];
+          "application/json": components["schemas"]["Message"];
         };
       };
       /** @description Validation Error */
@@ -540,7 +525,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Message-Output"];
+          "application/json": components["schemas"]["Message"];
         };
       };
       /** @description Validation Error */
@@ -629,7 +614,7 @@ export interface operations {
   };
   /**
    * Read User Me
-   * @description Get current user.
+   * @description Get current user and the user's chat list.
    */
   "users-read_user_me": {
     responses: {
@@ -650,7 +635,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Message-Output"];
+          "application/json": components["schemas"]["Message"];
         };
       };
     };
@@ -694,7 +679,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Message-Output"];
+          "application/json": components["schemas"]["Message"];
         };
       };
       /** @description Validation Error */
@@ -769,7 +754,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Message-Output"];
+          "application/json": components["schemas"]["Message"];
         };
       };
       /** @description Validation Error */
@@ -824,7 +809,7 @@ export interface operations {
       /** @description Successful Response */
       201: {
         content: {
-          "application/json": components["schemas"]["Message-Output"];
+          "application/json": components["schemas"]["Message"];
         };
       };
       /** @description Validation Error */
@@ -955,7 +940,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Message-Output"];
+          "application/json": components["schemas"]["Message"];
         };
       };
       /** @description Validation Error */
@@ -1050,6 +1035,20 @@ export interface operations {
     };
   };
   /**
+   * Get Chat List
+   * @description Get a list of chats belong to the given user.
+   */
+  "chat-get_chat_list": {
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": Record<string, never>[];
+        };
+      };
+    };
+  };
+  /**
    * Get Chat
    * @description Get chat history.
    */
@@ -1064,36 +1063,6 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["ChatPublic"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  /**
-   * Save Chat
-   * @description Save chat history.
-   */
-  "chat-save_chat": {
-    parameters: {
-      path: {
-        chat_id: string;
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["ChatSaveReuqest"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        content: {
-          "application/json": Record<string, never>;
         };
       };
       /** @description Validation Error */

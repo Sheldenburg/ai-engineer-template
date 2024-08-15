@@ -54,6 +54,7 @@ class User(UserBase, table=True):
 # Properties to return via API, id is always required
 class UserPublic(UserBase):
     id: int
+    chatList: list | None = None
 
 
 class UsersPublic(SQLModel):

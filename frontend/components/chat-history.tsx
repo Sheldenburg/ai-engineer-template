@@ -1,18 +1,14 @@
-import * as React from 'react'
+import * as React from "react";
 
-import Link from 'next/link'
+import Link from "next/link";
 
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils";
 // import { SidebarList } from '@/components/sidebar-list'
-import { buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from "@/components/ui/button";
 // import { IconPlus } from '@/components/ui/icons'
-import { Plus } from 'lucide-react'
+import { Plus } from "lucide-react";
 
-interface ChatHistoryProps {
-  userId?: string
-}
-
-function ChatHistory({ userId }: ChatHistoryProps) {
+function ChatHistory({ chatList }: { chatList?: any }) {
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center justify-between p-4">
@@ -22,8 +18,8 @@ function ChatHistory({ userId }: ChatHistoryProps) {
         <Link
           href="/chat"
           className={cn(
-            buttonVariants({ variant: 'outline' }),
-            'h-10 w-full justify-start bg-zinc-50 px-4 shadow-none transition-colors hover:bg-zinc-200/40 dark:bg-zinc-900 dark:hover:bg-zinc-300/10'
+            buttonVariants({ variant: "outline" }),
+            "h-10 w-full justify-start bg-zinc-50 px-4 shadow-none transition-colors hover:bg-zinc-200/40 dark:bg-zinc-900 dark:hover:bg-zinc-300/10"
           )}
         >
           <Plus className="-translate-x-2 stroke-2" />
@@ -44,9 +40,18 @@ function ChatHistory({ userId }: ChatHistoryProps) {
       >
         {/* @ts-ignore */}
         {/* <SidebarList userId={userId} /> */}
+        {chatList.map((chat: any) => (
+          <Link
+            key={chat.id}
+            href={`/chat/${chat.id}`}
+            className="h-10 w-full justify-start bg-zinc-50 px-4 shadow-none transition-colors hover:bg-zinc-200/40 dark:bg-zinc-900 dark:hover:bg-zinc-300/10"
+          >
+            {chat.title}
+          </Link>
+        ))}
       </React.Suspense>
     </div>
-  )
+  );
 }
 
-export default ChatHistory
+export default ChatHistory;

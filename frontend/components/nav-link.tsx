@@ -18,7 +18,7 @@ import ChatHistory from "./chat-history";
 //   CardTitle,
 // } from "@/components/ui/card";
 
-function NavLink({ user }: { user: { email: string } }) {
+function NavLink({ user }: { user: { email: string, chatList?: any } }) {
   const pathname = usePathname();
   const [ showSecondNav, setShowSecondNav ] = useState(false);
   const handleToggleSwitch = () => {
@@ -49,7 +49,7 @@ function NavLink({ user }: { user: { email: string } }) {
           </Button>
         </div>
         <div className="flex-1">
-          {!showSecondNav? <MainNavItems /> : <ChatHistory />}
+          {!showSecondNav? <MainNavItems /> : <ChatHistory chatList={user.chatList}/>}
         </div>
         <div className="fixed bottom-3 mt-auto pb-10 pl-8 items-center justify-center text-start">
           <div className="flex gap-3 mb-3 items-center justify-center">
