@@ -264,7 +264,7 @@ async def get_chat_list(session: SessionDep, current_user: CurrentUser) -> list:
     allChats = session.exec(statement).all()
     # print(allChats)
     for chat in allChats:
-        chatList.append({"id": chat.id, "title": chat.messages[1]["content"][:30]})
+        chatList.append({"id": chat.id, "title": chat.messages[1]["content"]})
     return chatList
 
 
