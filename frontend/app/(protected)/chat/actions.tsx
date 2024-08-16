@@ -1,31 +1,44 @@
-// "use server";
+"use server";
+import initiateClient from "@/lib/api";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
-// import { createStreamableValue } from "ai/rsc";
-// import { CoreMessage, streamText } from "ai";
-// import { openai } from "@ai-sdk/openai";
-// import initiateClient from "@/lib/api";
-// import { headers } from "next/headers";
-// import { decodeStreamToJson } from "@/lib/utils";
+export async function addChatConfig(formData: FormData) {
+  const client = initiateClient();
+  const { data, error } = await client.POST("/api/v1/chat/config", {
+    body: {
+      model: formData.get("model") as string,
+      api_key: formData.get("api-key") as string,
+      temperature: Number(formData.get("temperature")),
+      top_p: Number(formData.get("top-p")),
+      // topK: Number(formData.get("topK")),
+      system_message: formData.get("system-message") as string,
+    },
+  });
+  if (error) {
+    console.log(error);
+    redirect(`/chat?message=${error.detail}`);
+  }
+  revalidatePath("/chat");
+  redirect("/chat");
+}
 
-// export async function continueConversation(messages: CoreMessage[]) {
-//   const result = await streamText({
-//     model: openai("gpt-4-turbo"),
-//     messages,
-//   });
-
-//   const stream = createStreamableValue(result.textStream);
-//   console.log(messages);
-//   return stream.value;
-// }
-
-// export async function messageTest(messages: CoreMessage[]) {
-//   const client = initiateClient();
-//   const { data, error } = await client.GET("/api/v1/ai/chat/test", {});
-//   if (error) {
-//     console.log(error);
-//   }
-//   return data[1].content;
-// }
-
-
-
+export async function editChatConfig(formData: FormData) {
+  const client = initiateClient();
+  const { data, error } = await client.PUT("/api/v1/chat/config", {
+    body: {
+      model: formData.get("model") as string,
+      api_key: formData.get("api-key") as string,
+      temperature: Number(formData.get("temperature")),
+      top_p: Number(formData.get("top-p")),
+      // topK: Number(formData.get("topK")),
+      system_message: formData.get("system-message") as string,
+    },
+  });
+  if (error) {
+    console.log(error);
+    redirect(`/chat?message=${error.detail}`);
+  }
+  revalidatePath("/chat");
+  redirect("/chat");
+}

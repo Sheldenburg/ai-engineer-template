@@ -7,6 +7,10 @@ import { redirect, usePathname } from "next/navigation";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { revalidatePath } from "next/cache";
 import { logout } from "@/app/login/actions";
+import { useState } from "react";
+import MainNavItemsMob from "./mian-nav-items-mob";
+import { Switch } from "@/components/ui/switch";
+import ChatHistory from "./chat-history";
 // import {
 //   Card,
 //   CardContent,
@@ -15,8 +19,14 @@ import { logout } from "@/app/login/actions";
 //   CardTitle,
 // } from "@/components/ui/card";
 
-function MobileNavLink({ user }: { user: { email: string } }) {
+function MobileNavLink({ user }: { user: { email: string; chatList?: any } }) {
   const pathname = usePathname();
+  const [showSecondNav, setShowSecondNav] = useState(false);
+  const handleToggleSwitch = () => {
+    setShowSecondNav((prev: boolean) => !prev);
+    console.log(showSecondNav);
+    console.log(pathname);
+  };
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -25,80 +35,19 @@ function MobileNavLink({ user }: { user: { email: string } }) {
           <span className="sr-only">Toggle navigation menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="flex flex-col">
-        <nav className="grid gap-2 text-lg font-medium">
-          <Link
-            href="https://euclideanai.com"
-            className="flex items-center gap-2 text-lg font-semibold"
-          >
-            <Image
-              src="/euclideanai-favicon-black-transparent.png"
-              alt="EuclideanAI"
-              width={35}
-              height={35}
-            />
-
-            <span className="sr-only">EuclideanAI</span>
-          </Link>
-          <Link
-            href="/dashboard"
-            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${
-              pathname === "/dashboard" ? "bg-muted" : ""
-            }`}
-          >
-            <Home className="h-5 w-5" />
-            Dashboard
-          </Link>
-          <Link
-            href="/items"
-            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${
-              pathname === "/items" ? "bg-muted" : ""
-            }`}
-          >
-            <Briefcase className="h-5 w-5" />
-            Items
-          </Link>
-          <Link
-            href="/chat"
-            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${
-              pathname === "/settings" ? "bg-muted" : ""
-            }`}
-          >
-            <Settings className="h-5 w-5" />
-            Chat
-          </Link>
-          <Link
-            href="/settings"
-            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${
-              pathname === "/settings" ? "bg-muted" : ""
-            }`}
-          >
-            <Settings className="h-5 w-5" />
-            User Settings
-          </Link>
-          <Link
-            href="/admin"
-            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${
-              pathname === "/admin" ? "bg-muted" : ""
-            }`}
-          >
-            <Users className="h-5 w-5" />
-            Admin
-          </Link>
-          <form action={logout}>
-            <Button
-              variant="ghost"
-              type="submit"
-              className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground text-red-600 text-base"
-            >
-              <LogOut className="h-5 w-5" />
-              Logout
-            </Button>
-          </form>
-        </nav>
-        <div className="mt-auto">
-          <p className="text-sm">logged in as:</p>
-          <p className="text-sm">{user.email}</p>
+      <SheetContent side="left" className="flex flex-col p-1">
+        {!showSecondNav ? (
+          <MainNavItemsMob />
+        ) : (
+          <ChatHistory chatList={user.chatList} />
+        )}
+        <div className="mt-auto p-2 ml-3">
+          <div className="flex gap-3 mb-3 items-center justify-start">
+            <Switch onClick={handleToggleSwitch} />
+            <p className="text-sm">Show Chat History</p>
+          </div>
+            <p className="text-sm">logged in as:</p>
+            <p className="text-sm">{user.email}</p>
           {/* <Card>
             <CardHeader>
               <CardTitle>Upgrade to Pro</CardTitle>

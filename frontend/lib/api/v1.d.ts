@@ -55,7 +55,7 @@ export interface paths {
   "/api/v1/users/me": {
     /**
      * Read User Me
-     * @description Get current user.
+     * @description Get current user and the user's chat list.
      */
     get: operations["users-read_user_me"];
     /**
@@ -136,17 +136,44 @@ export interface paths {
      */
     delete: operations["items-delete_item"];
   };
-  "/api/v1/ai/chat": {
+  "/api/v1/chat/config": {
+    /**
+     * Read Chat Config
+     * @description Retrieve chat config from db.
+     */
+    get: operations["chat-read_chat_config"];
+    /**
+     * Create Chat Config
+     * @description Create chat config.
+     */
+    put: operations["chat-create_chat_config"];
+    /**
+     * Create Chat Config
+     * @description Create chat config.
+     */
+    post: operations["chat-create_chat_config"];
+  };
+  "/api/v1/chat/": {
     /** Chat Handler */
-    post: operations["ai-chat_handler"];
+    post: operations["chat-chat_handler"];
   };
-  "/api/v1/ai/chat/stream": {
+  "/api/v1/chat/stream": {
     /** Chat Stream Handler */
-    post: operations["ai-chat_stream_handler"];
+    post: operations["chat-chat_stream_handler"];
   };
-  "/api/v1/ai/chat/test": {
-    /** Chat Test */
-    get: operations["ai-chat_test"];
+  "/api/v1/chat/chat_list": {
+    /**
+     * Get Chat List
+     * @description Get a list of chats belong to the given user.
+     */
+    get: operations["chat-get_chat_list"];
+  };
+  "/api/v1/chat/{chat_id}": {
+    /**
+     * Get Chat
+     * @description Get chat history.
+     */
+    get: operations["chat-get_chat"];
   };
 }
 
@@ -172,10 +199,76 @@ export interface components {
       /** Client Secret */
       client_secret?: string | null;
     };
+    /** ChatConfigBase */
+    ChatConfigBase: {
+      /** Model */
+      model: string;
+      /** Temperature */
+      temperature: number;
+      /** Top P */
+      top_p?: number | null;
+      /** Top K */
+      top_k?: number | null;
+      /** System Message */
+      system_message?: string | null;
+    };
+    /** ChatConfigCreate */
+    ChatConfigCreate: {
+      /** Model */
+      model: string;
+      /** Temperature */
+      temperature: number;
+      /** Top P */
+      top_p?: number | null;
+      /** Top K */
+      top_k?: number | null;
+      /** System Message */
+      system_message?: string | null;
+      /** Api Key */
+      api_key?: string | null;
+    };
+    /** ChatConfigPublic */
+    ChatConfigPublic: {
+      /** Model */
+      model: string;
+      /** Api Key */
+      api_key?: string | null;
+      /** Temperature */
+      temperature: number;
+      /** Top P */
+      top_p?: number | null;
+      /** Top K */
+      top_k?: number | null;
+      /** System Message */
+      system_message?: string | null;
+    };
+    /** ChatPublic */
+    ChatPublic: {
+      /** Id */
+      id: string;
+      /** Messages */
+      messages: components["schemas"]["Message"][];
+      /**
+       * Created At
+       * Format: date-time
+       */
+      created_at: string;
+      /**
+       * Updated At
+       * Format: date-time
+       */
+      updated_at: string;
+      /** Owner Id */
+      owner_id: number;
+    };
     /** ChatRequest */
     ChatRequest: {
+      /** Input */
+      input: string;
       /** Messages */
-      messages: components["schemas"]["Message-Input"][];
+      messages: components["schemas"]["Message"][];
+      /** Chat Id */
+      chat_id: string;
     };
     /** HTTPValidationError */
     HTTPValidationError: {
@@ -215,19 +308,15 @@ export interface components {
       count: number;
     };
     /** Message */
-    "Message-Input": {
+    Message: {
+      /** Role */
+      role: string;
       /** Content */
       content: string;
-      /**
-       * Role
-       * @default user
-       */
-      role?: string;
-    };
-    /** Message */
-    "Message-Output": {
-      /** Message */
-      message: string;
+      /** Function Call */
+      function_call?: string | null;
+      /** Tool Call */
+      tool_call?: string | null;
     };
     /** NewPassword */
     NewPassword: {
@@ -290,6 +379,8 @@ export interface components {
       full_name?: string | null;
       /** Id */
       id: number;
+      /** Chatlist */
+      chatList?: unknown[] | null;
     };
     /** UserRegister */
     UserRegister: {
@@ -409,7 +500,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Message-Output"];
+          "application/json": components["schemas"]["Message"];
         };
       };
       /** @description Validation Error */
@@ -434,7 +525,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Message-Output"];
+          "application/json": components["schemas"]["Message"];
         };
       };
       /** @description Validation Error */
@@ -523,7 +614,7 @@ export interface operations {
   };
   /**
    * Read User Me
-   * @description Get current user.
+   * @description Get current user and the user's chat list.
    */
   "users-read_user_me": {
     responses: {
@@ -544,7 +635,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Message-Output"];
+          "application/json": components["schemas"]["Message"];
         };
       };
     };
@@ -588,7 +679,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Message-Output"];
+          "application/json": components["schemas"]["Message"];
         };
       };
       /** @description Validation Error */
@@ -663,7 +754,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Message-Output"];
+          "application/json": components["schemas"]["Message"];
         };
       };
       /** @description Validation Error */
@@ -718,7 +809,7 @@ export interface operations {
       /** @description Successful Response */
       201: {
         content: {
-          "application/json": components["schemas"]["Message-Output"];
+          "application/json": components["schemas"]["Message"];
         };
       };
       /** @description Validation Error */
@@ -849,7 +940,46 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Message-Output"];
+          "application/json": components["schemas"]["Message"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  /**
+   * Read Chat Config
+   * @description Retrieve chat config from db.
+   */
+  "chat-read_chat_config": {
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ChatConfigPublic"];
+        };
+      };
+    };
+  };
+  /**
+   * Create Chat Config
+   * @description Create chat config.
+   */
+  "chat-create_chat_config": {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["ChatConfigCreate"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ChatConfigBase"];
         };
       };
       /** @description Validation Error */
@@ -861,7 +991,7 @@ export interface operations {
     };
   };
   /** Chat Handler */
-  "ai-chat_handler": {
+  "chat-chat_handler": {
     requestBody: {
       content: {
         "application/json": components["schemas"]["ChatRequest"];
@@ -883,7 +1013,7 @@ export interface operations {
     };
   };
   /** Chat Stream Handler */
-  "ai-chat_stream_handler": {
+  "chat-chat_stream_handler": {
     requestBody: {
       content: {
         "application/json": components["schemas"]["ChatRequest"];
@@ -904,13 +1034,41 @@ export interface operations {
       };
     };
   };
-  /** Chat Test */
-  "ai-chat_test": {
+  /**
+   * Get Chat List
+   * @description Get a list of chats belong to the given user.
+   */
+  "chat-get_chat_list": {
     responses: {
       /** @description Successful Response */
       200: {
         content: {
           "application/json": Record<string, never>[];
+        };
+      };
+    };
+  };
+  /**
+   * Get Chat
+   * @description Get chat history.
+   */
+  "chat-get_chat": {
+    parameters: {
+      path: {
+        chat_id: string;
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ChatPublic"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
         };
       };
     };
