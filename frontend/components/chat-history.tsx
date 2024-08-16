@@ -10,7 +10,7 @@ import { Plus } from "lucide-react";
 
 function ChatHistory({ chatList }: { chatList?: any }) {
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full overflow-auto">
       <div className="flex items-center justify-between p-4">
         <h4 className="text-sm font-medium">Chat History</h4>
       </div>
@@ -40,15 +40,19 @@ function ChatHistory({ chatList }: { chatList?: any }) {
       >
         {/* @ts-ignore */}
         {/* <SidebarList userId={userId} /> */}
-        {chatList.map((chat: any) => (
-          <Link
-            key={chat.id}
-            href={`/chat/${chat.id}`}
-            className="h-10 w-full justify-start bg-zinc-50 px-4 shadow-none transition-colors hover:bg-zinc-200/40 dark:bg-zinc-900 dark:hover:bg-zinc-300/10"
-          >
-            {chat.title}
-          </Link>
-        ))}
+        <div className="flex flex-col gap-1 px-2">
+          {chatList.map((chat: any) => (
+            <Link
+              key={chat.id}
+              href={`/chat/${chat.id}`}
+              className="flex h-8 w-full rounded-sm text-sm items-center bg-zinc-50 px-4 shadow-none transition-colors hover:bg-zinc-200/40 dark:bg-zinc-900 dark:hover:bg-zinc-300/10"
+            >
+              {chat.title.length > 30
+                ? `${chat.title.substring(0, 30)}...`
+                : chat.title}
+            </Link>
+          ))}
+        </div>
       </React.Suspense>
     </div>
   );

@@ -10,6 +10,7 @@ import { logout } from "@/app/login/actions";
 import { useState } from "react";
 import MainNavItemsMob from "./mian-nav-items-mob";
 import { Switch } from "@/components/ui/switch";
+import ChatHistory from "./chat-history";
 // import {
 //   Card,
 //   CardContent,
@@ -18,7 +19,7 @@ import { Switch } from "@/components/ui/switch";
 //   CardTitle,
 // } from "@/components/ui/card";
 
-function MobileNavLink({ user }: { user: { email: string } }) {
+function MobileNavLink({ user }: { user: { email: string; chatList?: any } }) {
   const pathname = usePathname();
   const [showSecondNav, setShowSecondNav] = useState(false);
   const handleToggleSwitch = () => {
@@ -34,15 +35,19 @@ function MobileNavLink({ user }: { user: { email: string } }) {
           <span className="sr-only">Toggle navigation menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="flex flex-col">
-        {!showSecondNav? <MainNavItemsMob /> : null}
-        <div className="mt-auto">
-          <div className="flex gap-3 mb-3">
+      <SheetContent side="left" className="flex flex-col p-1">
+        {!showSecondNav ? (
+          <MainNavItemsMob />
+        ) : (
+          <ChatHistory chatList={user.chatList} />
+        )}
+        <div className="mt-auto p-2 ml-3">
+          <div className="flex gap-3 mb-3 items-center justify-start">
             <Switch onClick={handleToggleSwitch} />
             <p className="text-sm">Show Chat History</p>
           </div>
-          <p className="text-sm">logged in as:</p>
-          <p className="text-sm">{user.email}</p>
+            <p className="text-sm">logged in as:</p>
+            <p className="text-sm">{user.email}</p>
           {/* <Card>
             <CardHeader>
               <CardTitle>Upgrade to Pro</CardTitle>
