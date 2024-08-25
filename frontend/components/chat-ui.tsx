@@ -24,7 +24,7 @@ function ChatUI() {
       try {
         const chatHistory = await getChatHistory(chatId);
         if (chatHistory) {
-          setMessages(chatHistory.messages);
+          setMessages(chatHistory.messages.slice(1));
         } else {
           console.log('No chat history found or there was an error fetching it.');
         }
