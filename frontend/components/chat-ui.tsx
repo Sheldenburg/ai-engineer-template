@@ -12,6 +12,7 @@ import {
   Bot,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import useChatStream from "@/lib/hooks/useChatStream";
 import { getChatHistory } from "@/lib/utils";
@@ -69,7 +70,14 @@ function ChatUI() {
             className="min-h-10 max-h-60 w-full resize-none border-0 p-3 shadow-none focus-visible:ring-0 text-xs md:text-base"
             value={input}
             onChange={handleInputChange}
+            onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault(); // Prevent the default action to avoid submitting the form or adding a new line
+                handleSubmit(); // Call the handleSubmit function
+              }
+            }}
             autoFocus
+            rows={Math.min(input.split('\n').length+1, 10)}
           />
           <div className="relative flex items-center pt-0">
             {/* <TooltipProvider>
