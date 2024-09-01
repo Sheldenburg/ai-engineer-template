@@ -123,7 +123,11 @@ def read_user_me(current_user: CurrentUser, session: SessionDep) -> Any:
     Get current user and the user's chat list.
     """
     chatList = []
-    statement = select(Chat).where(Chat.owner_id == current_user.id)
+    statement = (
+        select(Chat)
+        .where(Chat.owner_id == current_user.id)
+        .order_by(Chat.updated_at.desc())
+    )
     allChats = session.exec(statement).all()
     # print(allChats)
     for chat in allChats:
