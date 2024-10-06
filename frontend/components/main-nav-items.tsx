@@ -6,6 +6,7 @@ import {
   BotMessageSquare,
   Briefcase,
   Users,
+  ShoppingBag,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -50,6 +51,15 @@ function MainNavItems() {
       >
         <BotMessageSquare className="h-4 w-4" />
         Chat{" "}
+      </Link>
+      <Link
+        href="/shop"
+        className={`flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary ${
+          pathname === "/shop" ? "bg-muted" : ""
+        }`}
+      >
+        <ShoppingBag className="h-4 w-4" />
+        Shop{" "}
       </Link>
       <Link
         href="/settings"
