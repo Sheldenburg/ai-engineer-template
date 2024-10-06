@@ -12,26 +12,31 @@ import {
   Bot,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import useChatStream from "@/lib/hooks/useChatStream";
 import { getChatHistory } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 
 function ChatUI() {
   const { messages, input, handleInputChange, handleSubmit, setMessages } =
     useChatStream("/api/v1/chat/stream");
   async function fetchChatHistory() {
-      try {
-        const chatHistory = await getChatHistory(chatId);
-        if (chatHistory) {
-          setMessages(chatHistory.messages);
-        } else {
-          console.log('No chat history found or there was an error fetching it.');
-        }
-      } catch (error) {
-        console.error('Error fetching chat history:', error);
+    try {
+      const chatHistory = await getChatHistory(chatId);
+      if (chatHistory) {
+        setMessages(chatHistory.messages.slice(1));
+      } else {
+        console.log("No chat history found or there was an error fetching it.");
       }
+    } catch (error) {
+      console.error("Error fetching chat history:", error);
     }
+  }
   const pathName = usePathname();
   const chatId = pathName.split("/").pop() ?? "";
   console.log(messages);
@@ -46,13 +51,31 @@ function ChatUI() {
           <div key={i} className="border-b border-gray-200">
             <div className="grid grid-cols-[26px_1fr] whitespace-pre-wrap py-3 md:p-3 items-start justify-start">
               {m.role === "user" ? (
-                <SquareUser className="pr-3 w-[32px] h-[32px]" />
+                <>
+                  <SquareUser className="pr-3 w-[32px] h-[32px]" />
+                  <div className="ml-4 items-center justify-center pt-1">
+                    {/* {m.content as string} */}
+                    <ReactMarkdown>{m.content}</ReactMarkdown>
+                  </div>
+                </>
               ) : (
-                <Bot className="pr-3 w-[32px] h-[32px]" />
+                <>
+                  <Bot className="pr-3 w-[32px] h-[32px]" />
+                  <div className="ml-4 items-center justify-center pt-1">
+                    {/* {m.content as string} */}
+                    <ReactMarkdown
+                      remarkPlugins={[
+                        remarkGfm,
+                        [remarkMath, { singleDollarTextMath: false }],
+                        // components={{ ...markdownComponents, img: () => null }}
+                      ]}
+                      rehypePlugins={[[rehypeKatex, { output: "html" }]]}
+                    >
+                      {m.content}
+                    </ReactMarkdown>
+                  </div>
+                </>
               )}
-              <div className="ml-4 items-center justify-center pt-1">
-                {m.content as string}
-              </div>
             </div>
           </div>
         ))}
@@ -69,7 +92,14 @@ function ChatUI() {
             className="min-h-10 max-h-60 w-full resize-none border-0 p-3 shadow-none focus-visible:ring-0 text-xs md:text-base"
             value={input}
             onChange={handleInputChange}
+            onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault(); // Prevent the default action to avoid submitting the form or adding a new line
+                handleSubmit(); // Call the handleSubmit function
+              }
+            }}
             autoFocus
+            rows={Math.min(input.split("\n").length + 1, 10)}
           />
           <div className="relative flex items-center pt-0">
             {/* <TooltipProvider>
