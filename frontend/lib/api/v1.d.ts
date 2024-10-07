@@ -5,175 +5,179 @@
 
 
 export interface paths {
+  "/": {
+    /** Read Root */
+    get: operations["read_root__get"];
+  };
   "/api/v1/login/access-token": {
     /**
      * Login Access Token
      * @description OAuth2 compatible token login, get an access token for future requests
      */
-    post: operations["login-login_access_token"];
+    post: operations["login_access_token_api_v1_login_access_token_post"];
   };
   "/api/v1/login/test-token": {
     /**
      * Test Token
      * @description Test access token
      */
-    post: operations["login-test_token"];
+    post: operations["test_token_api_v1_login_test_token_post"];
   };
   "/api/v1/password-recovery/{email}": {
     /**
      * Recover Password
      * @description Password Recovery
      */
-    post: operations["login-recover_password"];
+    post: operations["recover_password_api_v1_password_recovery__email__post"];
   };
   "/api/v1/reset-password/": {
     /**
      * Reset Password
      * @description Reset password
      */
-    post: operations["login-reset_password"];
+    post: operations["reset_password_api_v1_reset_password__post"];
   };
   "/api/v1/password-recovery-html-content/{email}": {
     /**
      * Recover Password Html Content
      * @description HTML Content for Password Recovery
      */
-    post: operations["login-recover_password_html_content"];
+    post: operations["recover_password_html_content_api_v1_password_recovery_html_content__email__post"];
   };
   "/api/v1/users/": {
     /**
      * Read Users
      * @description Retrieve users.
      */
-    get: operations["users-read_users"];
+    get: operations["read_users_api_v1_users__get"];
     /**
      * Create User
      * @description Create new user.
      */
-    post: operations["users-create_user"];
+    post: operations["create_user_api_v1_users__post"];
   };
   "/api/v1/users/me": {
     /**
      * Read User Me
      * @description Get current user and the user's chat list.
      */
-    get: operations["users-read_user_me"];
+    get: operations["read_user_me_api_v1_users_me_get"];
     /**
      * Delete User Me
      * @description Delete own user.
      */
-    delete: operations["users-delete_user_me"];
+    delete: operations["delete_user_me_api_v1_users_me_delete"];
     /**
      * Update User Me
      * @description Update own user.
      */
-    patch: operations["users-update_user_me"];
+    patch: operations["update_user_me_api_v1_users_me_patch"];
   };
   "/api/v1/users/me/password": {
     /**
      * Update Password Me
      * @description Update own password.
      */
-    patch: operations["users-update_password_me"];
+    patch: operations["update_password_me_api_v1_users_me_password_patch"];
   };
   "/api/v1/users/signup": {
     /**
      * Register User
      * @description Create new user without the need to be logged in.
      */
-    post: operations["users-register_user"];
+    post: operations["register_user_api_v1_users_signup_post"];
   };
   "/api/v1/users/{user_id}": {
     /**
      * Read User By Id
      * @description Get a specific user by id.
      */
-    get: operations["users-read_user_by_id"];
+    get: operations["read_user_by_id_api_v1_users__user_id__get"];
     /**
      * Delete User
      * @description Delete a user.
      */
-    delete: operations["users-delete_user"];
+    delete: operations["delete_user_api_v1_users__user_id__delete"];
     /**
      * Update User
      * @description Update a user.
      */
-    patch: operations["users-update_user"];
+    patch: operations["update_user_api_v1_users__user_id__patch"];
   };
   "/api/v1/utils/test-email/": {
     /**
      * Test Email
      * @description Test emails.
      */
-    post: operations["utils-test_email"];
+    post: operations["test_email_api_v1_utils_test_email__post"];
   };
   "/api/v1/items/": {
     /**
      * Read Items
      * @description Retrieve items.
      */
-    get: operations["items-read_items"];
+    get: operations["read_items_api_v1_items__get"];
     /**
      * Create Item
      * @description Create new item.
      */
-    post: operations["items-create_item"];
+    post: operations["create_item_api_v1_items__post"];
   };
   "/api/v1/items/{id}": {
     /**
      * Read Item
      * @description Get item by ID.
      */
-    get: operations["items-read_item"];
+    get: operations["read_item_api_v1_items__id__get"];
     /**
      * Update Item
      * @description Update an item.
      */
-    put: operations["items-update_item"];
+    put: operations["update_item_api_v1_items__id__put"];
     /**
      * Delete Item
      * @description Delete an item.
      */
-    delete: operations["items-delete_item"];
+    delete: operations["delete_item_api_v1_items__id__delete"];
   };
   "/api/v1/chat/config": {
     /**
      * Read Chat Config
      * @description Retrieve chat config from db.
      */
-    get: operations["chat-read_chat_config"];
+    get: operations["read_chat_config_api_v1_chat_config_get"];
     /**
      * Create Chat Config
      * @description Create chat config.
      */
-    put: operations["chat-create_chat_config"];
+    put: operations["create_chat_config_api_v1_chat_config_put"];
     /**
      * Create Chat Config
      * @description Create chat config.
      */
-    post: operations["chat-create_chat_config"];
+    post: operations["create_chat_config_api_v1_chat_config_post"];
   };
   "/api/v1/chat/": {
     /** Chat Handler */
-    post: operations["chat-chat_handler"];
+    post: operations["chat_handler_api_v1_chat__post"];
   };
   "/api/v1/chat/stream": {
     /** Chat Stream Handler */
-    post: operations["chat-chat_stream_handler"];
+    post: operations["chat_stream_handler_api_v1_chat_stream_post"];
   };
   "/api/v1/chat/chat_list": {
     /**
      * Get Chat List
      * @description Get a list of chats belong to the given user.
      */
-    get: operations["chat-get_chat_list"];
+    get: operations["get_chat_list_api_v1_chat_chat_list_get"];
   };
   "/api/v1/chat/{chat_id}": {
     /**
      * Get Chat
      * @description Get chat history.
      */
-    get: operations["chat-get_chat"];
+    get: operations["get_chat_api_v1_chat__chat_id__get"];
   };
 }
 
@@ -181,8 +185,8 @@ export type webhooks = Record<string, never>;
 
 export interface components {
   schemas: {
-    /** Body_login-login_access_token */
-    "Body_login-login_access_token": {
+    /** Body_login_access_token_api_v1_login_access_token_post */
+    Body_login_access_token_api_v1_login_access_token_post: {
       /** Grant Type */
       grant_type?: string | null;
       /** Username */
@@ -447,14 +451,25 @@ export type external = Record<string, never>;
 
 export interface operations {
 
+  /** Read Root */
+  read_root__get: {
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": unknown;
+        };
+      };
+    };
+  };
   /**
    * Login Access Token
    * @description OAuth2 compatible token login, get an access token for future requests
    */
-  "login-login_access_token": {
+  login_access_token_api_v1_login_access_token_post: {
     requestBody: {
       content: {
-        "application/x-www-form-urlencoded": components["schemas"]["Body_login-login_access_token"];
+        "application/x-www-form-urlencoded": components["schemas"]["Body_login_access_token_api_v1_login_access_token_post"];
       };
     };
     responses: {
@@ -476,7 +491,7 @@ export interface operations {
    * Test Token
    * @description Test access token
    */
-  "login-test_token": {
+  test_token_api_v1_login_test_token_post: {
     responses: {
       /** @description Successful Response */
       200: {
@@ -490,7 +505,7 @@ export interface operations {
    * Recover Password
    * @description Password Recovery
    */
-  "login-recover_password": {
+  recover_password_api_v1_password_recovery__email__post: {
     parameters: {
       path: {
         email: string;
@@ -515,7 +530,7 @@ export interface operations {
    * Reset Password
    * @description Reset password
    */
-  "login-reset_password": {
+  reset_password_api_v1_reset_password__post: {
     requestBody: {
       content: {
         "application/json": components["schemas"]["NewPassword"];
@@ -540,7 +555,7 @@ export interface operations {
    * Recover Password Html Content
    * @description HTML Content for Password Recovery
    */
-  "login-recover_password_html_content": {
+  recover_password_html_content_api_v1_password_recovery_html_content__email__post: {
     parameters: {
       path: {
         email: string;
@@ -565,7 +580,7 @@ export interface operations {
    * Read Users
    * @description Retrieve users.
    */
-  "users-read_users": {
+  read_users_api_v1_users__get: {
     parameters: {
       query?: {
         skip?: number;
@@ -591,7 +606,7 @@ export interface operations {
    * Create User
    * @description Create new user.
    */
-  "users-create_user": {
+  create_user_api_v1_users__post: {
     requestBody: {
       content: {
         "application/json": components["schemas"]["UserCreate"];
@@ -616,7 +631,7 @@ export interface operations {
    * Read User Me
    * @description Get current user and the user's chat list.
    */
-  "users-read_user_me": {
+  read_user_me_api_v1_users_me_get: {
     responses: {
       /** @description Successful Response */
       200: {
@@ -630,7 +645,7 @@ export interface operations {
    * Delete User Me
    * @description Delete own user.
    */
-  "users-delete_user_me": {
+  delete_user_me_api_v1_users_me_delete: {
     responses: {
       /** @description Successful Response */
       200: {
@@ -644,7 +659,7 @@ export interface operations {
    * Update User Me
    * @description Update own user.
    */
-  "users-update_user_me": {
+  update_user_me_api_v1_users_me_patch: {
     requestBody: {
       content: {
         "application/json": components["schemas"]["UserUpdateMe"];
@@ -669,7 +684,7 @@ export interface operations {
    * Update Password Me
    * @description Update own password.
    */
-  "users-update_password_me": {
+  update_password_me_api_v1_users_me_password_patch: {
     requestBody: {
       content: {
         "application/json": components["schemas"]["UpdatePassword"];
@@ -694,7 +709,7 @@ export interface operations {
    * Register User
    * @description Create new user without the need to be logged in.
    */
-  "users-register_user": {
+  register_user_api_v1_users_signup_post: {
     requestBody: {
       content: {
         "application/json": components["schemas"]["UserRegister"];
@@ -719,7 +734,7 @@ export interface operations {
    * Read User By Id
    * @description Get a specific user by id.
    */
-  "users-read_user_by_id": {
+  read_user_by_id_api_v1_users__user_id__get: {
     parameters: {
       path: {
         user_id: number;
@@ -744,7 +759,7 @@ export interface operations {
    * Delete User
    * @description Delete a user.
    */
-  "users-delete_user": {
+  delete_user_api_v1_users__user_id__delete: {
     parameters: {
       path: {
         user_id: number;
@@ -769,7 +784,7 @@ export interface operations {
    * Update User
    * @description Update a user.
    */
-  "users-update_user": {
+  update_user_api_v1_users__user_id__patch: {
     parameters: {
       path: {
         user_id: number;
@@ -799,7 +814,7 @@ export interface operations {
    * Test Email
    * @description Test emails.
    */
-  "utils-test_email": {
+  test_email_api_v1_utils_test_email__post: {
     parameters: {
       query: {
         email_to: string;
@@ -824,7 +839,7 @@ export interface operations {
    * Read Items
    * @description Retrieve items.
    */
-  "items-read_items": {
+  read_items_api_v1_items__get: {
     parameters: {
       query?: {
         skip?: number;
@@ -850,7 +865,7 @@ export interface operations {
    * Create Item
    * @description Create new item.
    */
-  "items-create_item": {
+  create_item_api_v1_items__post: {
     requestBody: {
       content: {
         "application/json": components["schemas"]["ItemCreate"];
@@ -875,7 +890,7 @@ export interface operations {
    * Read Item
    * @description Get item by ID.
    */
-  "items-read_item": {
+  read_item_api_v1_items__id__get: {
     parameters: {
       path: {
         id: number;
@@ -900,7 +915,7 @@ export interface operations {
    * Update Item
    * @description Update an item.
    */
-  "items-update_item": {
+  update_item_api_v1_items__id__put: {
     parameters: {
       path: {
         id: number;
@@ -930,7 +945,7 @@ export interface operations {
    * Delete Item
    * @description Delete an item.
    */
-  "items-delete_item": {
+  delete_item_api_v1_items__id__delete: {
     parameters: {
       path: {
         id: number;
@@ -955,7 +970,7 @@ export interface operations {
    * Read Chat Config
    * @description Retrieve chat config from db.
    */
-  "chat-read_chat_config": {
+  read_chat_config_api_v1_chat_config_get: {
     responses: {
       /** @description Successful Response */
       200: {
@@ -969,7 +984,32 @@ export interface operations {
    * Create Chat Config
    * @description Create chat config.
    */
-  "chat-create_chat_config": {
+  create_chat_config_api_v1_chat_config_put: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["ChatConfigCreate"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ChatConfigPublic"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  /**
+   * Create Chat Config
+   * @description Create chat config.
+   */
+  create_chat_config_api_v1_chat_config_post: {
     requestBody: {
       content: {
         "application/json": components["schemas"]["ChatConfigCreate"];
@@ -991,7 +1031,7 @@ export interface operations {
     };
   };
   /** Chat Handler */
-  "chat-chat_handler": {
+  chat_handler_api_v1_chat__post: {
     requestBody: {
       content: {
         "application/json": components["schemas"]["ChatRequest"];
@@ -1013,7 +1053,7 @@ export interface operations {
     };
   };
   /** Chat Stream Handler */
-  "chat-chat_stream_handler": {
+  chat_stream_handler_api_v1_chat_stream_post: {
     requestBody: {
       content: {
         "application/json": components["schemas"]["ChatRequest"];
@@ -1038,7 +1078,7 @@ export interface operations {
    * Get Chat List
    * @description Get a list of chats belong to the given user.
    */
-  "chat-get_chat_list": {
+  get_chat_list_api_v1_chat_chat_list_get: {
     responses: {
       /** @description Successful Response */
       200: {
@@ -1052,7 +1092,7 @@ export interface operations {
    * Get Chat
    * @description Get chat history.
    */
-  "chat-get_chat": {
+  get_chat_api_v1_chat__chat_id__get: {
     parameters: {
       path: {
         chat_id: string;
