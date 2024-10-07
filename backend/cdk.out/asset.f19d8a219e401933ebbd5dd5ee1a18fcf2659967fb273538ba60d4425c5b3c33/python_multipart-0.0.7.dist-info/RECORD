@@ -1,0 +1,14 @@
+multipart/__init__.py,sha256=tktDsqzmdCpOVqRXyLU2SAfG4uhJKNeR0L0nL47w2gI,328
+multipart/__pycache__/__init__.cpython-311.pyc,,
+multipart/__pycache__/decoders.cpython-311.pyc,,
+multipart/__pycache__/exceptions.cpython-311.pyc,,
+multipart/__pycache__/multipart.cpython-311.pyc,,
+multipart/decoders.py,sha256=6LeCVARmDrQgmMsaul1WUIf79Q-mLE9swhGxumQe_98,6107
+multipart/exceptions.py,sha256=yDZ9pqq3Y9ZMCvj2TkAvOcNdMjFHjLnHl4luFnzt750,1410
+multipart/multipart.py,sha256=K1h57ptPQ2stWs8UgMAEqSUBqQhIgBJHBMx2RxsVD-E,71575
+python_multipart-0.0.7.dist-info/INSTALLER,sha256=zuuue4knoyJ-UwPPXg8fezS7VCrXJQrAP7zeNuwvFQg,4
+python_multipart-0.0.7.dist-info/METADATA,sha256=V8kCxo1gOGAMXxlHxFHNyl6Mrn7b_dzHUyKAbf-e-8w,2481
+python_multipart-0.0.7.dist-info/RECORD,,
+python_multipart-0.0.7.dist-info/REQUESTED,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
+python_multipart-0.0.7.dist-info/WHEEL,sha256=TJPnKdtrSue7xZ_AVGkp9YXcvDrobsjBds1du3Nx6dc,87
+python_multipart-0.0.7.dist-info/licenses/LICENSE.txt,sha256=qOgzF2zWF9rwC51tOfoVyo7evG0WQwec0vSJPAwom-I,556
