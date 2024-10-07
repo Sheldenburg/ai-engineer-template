@@ -9,6 +9,13 @@
 ### Demo video
 https://drive.google.com/file/d/1QfZvzOnOeBvtoDMlBb4IxDx3DoC-GC4Q/view?usp=sharing
 
+### Tech stack 
+The backend code in this repository originated from the [FastAPI full stack template](https://github.com/fastapi/full-stack-fastapi-template) and includes AI components that make this AI engineer template unique.
+
+To fast-track the MVP building process, which is crucial for most AI products, we have chosen a simple tech stack. This allows people to focus more on iterating through product features rather than on DevOps from the outset.
+
+![architecture](architecture.png)
+
 ### How to run in local
 1. Clone this repo
 ```bash

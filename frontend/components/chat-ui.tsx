@@ -39,7 +39,6 @@ function ChatUI() {
   }
   const pathName = usePathname();
   const chatId = pathName.split("/").pop() ?? "";
-  console.log(messages);
   useEffect(() => {
     fetchChatHistory();
   }, []);
