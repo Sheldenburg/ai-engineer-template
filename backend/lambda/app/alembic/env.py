@@ -18,7 +18,7 @@ fileConfig(config.config_file_name)
 # target_metadata = mymodel.Base.metadata
 # target_metadata = None
 
-from app.models import SQLModel  # noqa
+from models import SQLModel  # noqa
 
 target_metadata = SQLModel.metadata
 
@@ -36,7 +36,7 @@ def get_url():
     db = os.getenv("POSTGRES_DB", "app")
     # return f"postgresql+psycopg2://{user}:{password}@{server}:{port}/{db}"
     return f"postgresql://{user}:{password}@{server}:{port}/{db}"
-    # return "postgresql+psycopg://postgres:postgres@localhost:54322/postgres"
+    # return "postgresql://postgres:postgres@localhost:54322/postgres"
 
 
 def run_migrations_offline():

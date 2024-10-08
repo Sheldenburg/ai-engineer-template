@@ -21,6 +21,23 @@ supabase init
 supabase start
 ```
 You can use the `supabase stop` command at any time to stop all services (without resetting your local database). Use `supabase stop --no-backup` to stop all services and reset your local database.
+
+## DB Migration 
+alembic will pick up all the new changes from sqlmodel. To push migration to the local Supabase docker container
+```bash
+cd backend
+poetry shell
+```
+If this is the first time, run the prestart.sh to load the initial data 
+```
+source prestart.sh
+```
+For ongoing alembic update, use
+```
+alembic revision --autogenerate -m "the scope for the migration"
+alembic upgrade head
+```
+
 ## FastAPI backend
 Make sure you have poetry installed before you start, if not
 ```bash
