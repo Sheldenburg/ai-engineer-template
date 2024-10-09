@@ -31,13 +31,6 @@ jobs:
           aws-region: ap-southeast-2
 
       - name: Bootstrap CDK
-        working-directory: backend
-        run: |
-          npm install -g aws-cdk
-          cdk bootstrap
-
-      - name: Deploy CDK stack
-        working-directory: backend
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           FIRST_SUPERUSER_PASSWORD: ${{ secrets.FIRST_SUPERUSER_PASSWORD }}
@@ -47,5 +40,12 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_SERVER: ${{ secrets.POSTGRES_SERVER }}
           POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+        working-directory: backend
+        run: |
+          npm install -g aws-cdk
+          cdk bootstrap
+
+      - name: Deploy CDK stack
+        working-directory: backend
         run: |
           cdk deploy --require-approval never
