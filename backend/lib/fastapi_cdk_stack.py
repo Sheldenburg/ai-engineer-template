@@ -53,7 +53,7 @@ class FastapiServerlessStack(Stack):
             runtime=lambda_.Runtime.PYTHON_3_11,
             handler="main.handler",
             # Comment the below line out unless you are using ARM64 based system to build the lambda image.
-            architecture=lambda_.Architecture.ARM_64,
+            # architecture=lambda_.Architecture.ARM_64,
             environment={
                 "PROJECT_NAME": "Full Stack AI Engineer Template",
                 "STACK_NAME": "full-stack-fastapi-project",
