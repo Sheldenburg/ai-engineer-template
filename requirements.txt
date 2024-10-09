@@ -22,3 +22,4 @@ SQLAlchemy==2.0.35
 sqlmodel==0.0.22
 tenacity==9.0.0
 typing_extensions==4.12.2
+aws-cdk-lib==2.161.1
