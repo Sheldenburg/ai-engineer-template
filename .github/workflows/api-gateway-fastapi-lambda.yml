@@ -46,6 +46,15 @@ jobs:
           cdk bootstrap
 
       - name: Deploy CDK stack
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          FIRST_SUPERUSER_PASSWORD: ${{ secrets.FIRST_SUPERUSER_PASSWORD }}
+          ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_SERVER: ${{ secrets.POSTGRES_SERVER }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
         working-directory: backend
         run: |
           cdk deploy --require-approval never
