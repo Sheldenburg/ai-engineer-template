@@ -14,7 +14,11 @@
         "tests",
         "*.venv*",
         "*cdk.out/*",
-        "lib/*"
+        "lib/*",
+        "app.py",
+        "*.sh",
+        ".dockerignore",
+        ".gitignore"
       ]
     },
     "context": {
