@@ -1,0 +1,30 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: ai-engineer-template-backend
+spec:
+  template:
+    spec:
+      containers:
+        - image: australia-southeast1-docker.pkg.dev/ai-engineer-template/fastapi-backend/fastapi-backend:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: POSTGRES_SERVER
+              value: ""
+            - name: POSTGRES_PORT
+              value: ""
+            - name: POSTGRES_DB
+              value: ""
+            - name: POSTGRES_USER
+              value: ""
+            - name: POSTGRES_PASSWORD
+              value: ""
+            - name: ENCRYPTION_KEY
+              value: ""
+            - name: PROJECT_NAME
+              value: "ai-engineer-template"
+            - name: FIRST_SUPERUSER
+              value: ""
+            - name: FIRST_SUPERUSER_PASSWORD
+              value: ""

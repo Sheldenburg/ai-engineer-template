@@ -7,3 +7,4 @@ htmlcov
 .cache
 .venv
 *cdk.out
+*service.yml

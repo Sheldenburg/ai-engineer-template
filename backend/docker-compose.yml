@@ -1,0 +1,7 @@
+services:
+  fastapi-backend:
+    build: src
+    ports:
+      - "8080:8000"
+    volumes:
+      - ./src:/src
