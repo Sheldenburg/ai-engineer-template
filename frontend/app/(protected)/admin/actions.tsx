@@ -56,4 +56,3 @@ export async function deleteUser(userId: string) {
   }
   revalidatePath("/admin");
 }
-

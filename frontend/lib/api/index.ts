@@ -12,6 +12,6 @@ export default function initiateClient() {
         Authorization: `Bearer ${cookies().get("access_token")?.value}`
       }
     });
-  
+
     return client;
   }

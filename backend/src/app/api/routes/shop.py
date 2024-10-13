@@ -1,10 +1,9 @@
 # shop.py
-from typing import Any, Dict, List
+from typing import Any
 
-from fastapi import APIRouter, HTTPException
 import requests
 from bs4 import BeautifulSoup
-
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
 router = APIRouter()
@@ -20,11 +19,11 @@ class GoogleShoppingRequest(BaseModel):
 class ScrapedData(BaseModel):
     title: str
     description: str
-    links: List[str]
+    links: list[str]
 
 
 @router.get("/google_shopping")
-def google_shopping_search(request: GoogleShoppingRequest) -> Dict[str, Any]:
+def google_shopping_search(request: GoogleShoppingRequest) -> dict[str, Any]:
     """
     Fetches products from Google Shopping using SerpApi.
     """

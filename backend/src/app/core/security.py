@@ -1,12 +1,11 @@
 from datetime import datetime, timedelta
 from typing import Any
 
+from cryptography.fernet import Fernet
 from jose import jwt
 from passlib.context import CryptContext
 
 from app.core.config import settings
-
-from cryptography.fernet import Fernet
 
 # Initialize Fernet with the key
 cipher_suite = Fernet(settings.ENCRYPTION_KEY)

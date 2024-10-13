@@ -1,40 +1,24 @@
 from typing import Any
 
-from fastapi import APIRouter, HTTPException, Response, status
+from dotenv import load_dotenv
+from fastapi import APIRouter, HTTPException, status
+from fastapi.responses import StreamingResponse
+from openai import OpenAI
+from pydantic import BaseModel
 from sqlmodel import func, select
 
 from app.api.deps import CurrentUser, SessionDep
+from app.core.security import decrypt_api_key, encrypt_api_key
 from app.models import (
-    Item,
-    ItemCreate,
-    ItemPublic,
-    ItemsPublic,
-    ItemUpdate,
-    Message,
-    MessageBase,
-)
-
-from pydantic import BaseModel
-
-from fastapi.responses import StreamingResponse
-
-from openai import OpenAI
-
-import os
-
-from dotenv import load_dotenv
-
-from app.api.utils import get_streamed_response
-from app.models import (
+    Chat,
     ChatConfig,
     ChatConfigBase,
     ChatConfigCreate,
     ChatConfigPublic,
-    Chat,
     ChatPublic,
+    Message,
+    MessageBase,
 )
-
-from app.core.security import encrypt_api_key, decrypt_api_key
 
 router = APIRouter()
 
@@ -196,11 +180,11 @@ def read_chat_config(
 
 
 @router.put("/config", response_model=ChatConfigPublic)
-def create_chat_config(
+def update_chat_config(
     *, session: SessionDep, current_user: CurrentUser, config_in: ChatConfigCreate
 ) -> Any:
     """
-    Create chat config.
+    Update chat config.
     """
     # check if the user already has a chat config
     statement = select(ChatConfig).where(ChatConfig.owner_id == current_user.id)
@@ -240,7 +224,6 @@ async def chat_handler(
 async def chat_stream_handler(
     chat_request: ChatRequest, session: SessionDep, current_user: CurrentUser
 ) -> StreamingResponse:
-    content = ""
     # get the chat config from the database if it exists
     chatConfig = get_chat_config(session, current_user)
     try:

@@ -1,8 +1,8 @@
 from datetime import datetime
-from typing import Optional, List
-from sqlmodel import Field, Relationship, SQLModel, JSON
-from sqlalchemy.sql import func
+
 from sqlalchemy import Column, DateTime
+from sqlalchemy.sql import func
+from sqlmodel import JSON, Field, Relationship, SQLModel
 
 
 # Shared properties
@@ -98,8 +98,8 @@ class ItemsPublic(SQLModel):
 
 
 # Generic message
-class Message(SQLModel):
-    message: str
+# class Message(SQLModel):
+#     message: str
 
 
 # JSON payload containing access token
@@ -171,12 +171,12 @@ class Chat(SQLModel, table=True):
     chat_config_id: int | None = Field(
         default=None, foreign_key="chatconfig.id", nullable=False
     )
-    messages: List[dict] = Field(sa_column=Column(JSON))
-    created_at: Optional[datetime] = Field(
+    messages: list[dict] = Field(sa_column=Column(JSON))
+    created_at: datetime | None = Field(
         sa_column=Column(DateTime(timezone=True), server_default=func.now())
     )
 
-    updated_at: Optional[datetime] = Field(
+    updated_at: datetime | None = Field(
         sa_column=Column(DateTime(timezone=True), onupdate=func.now())
     )
     owner_id: int | None = Field(default=None, foreign_key="user.id", nullable=False)
@@ -184,7 +184,7 @@ class Chat(SQLModel, table=True):
 
 class ChatPublic(SQLModel):
     id: str
-    messages: List[Message]
+    messages: list[Message]
     created_at: datetime
     updated_at: datetime
     owner_id: int
