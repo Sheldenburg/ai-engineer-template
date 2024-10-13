@@ -62,3 +62,13 @@ uvicorn main:app --reload
 Grab the openapi.json file from the backend Swagger UI. Then replace in frontend/lib/api/openapi.json.
 Run `npm run types:generate`, it will generate a type file called v1.d.ts in the same folder.
 TO DO: automate this in a MAKE file.
+
+## Linting check
+Linting check is done via pre-commit hook. In file '.pre-commit-config.yaml', it has all the configuration for the check. For the first time running in local, in the root directory you need to (use `poetry shell` to activate python env first)
+```bash
+pre-commit install
+```
+Then the check will run while the code is being committed. Optionally, you can also run this hook for all files mannually.
+```bash
+pre-commit run --all-files
+```
