@@ -1,0 +1,54 @@
+name: Deploy Fastapi backend to Cloud Run
+
+env:
+  SERVICE_NAME: ai-engineer-template-backend
+  PROJECT_ID: ai-engineer-template
+  DOCKER_IMAGE_URL: australia-southeast1-docker.pkg.dev/ai-engineer-template/fastapi-backend/fastapi-backend
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  dockerize-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Google Cloud Auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+          project_id: ${{ env.PROJECT_ID }}
+
+      - name: Set up Cloud SDK
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      - name: Configure Docker
+        run: |
+          gcloud auth configure-docker australia-southeast1-docker.pkg.dev
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t ${{ env.DOCKER_IMAGE_URL }}:latest -f /backend/src/Dockerfile .
+          docker push ${{ env.DOCKER_IMAGE_URL }}:latest
+
+      - name: Deploy to Cloud Run
+        run: |
+          echo SERVICE_NAME $SERVICE_NAME
+          gcloud run deploy $SERVICE_NAME \
+            --image ${{ env.DOCKER_IMAGE_URL }}:latest \
+            --platform managed \
+            --region australia-southeast1 \
+            --allow-unauthenticated
+            --set-env-vars POSTGRES_SERVER=${{ secrets.POSTGRES_SERVER }},POSTGRES_PORT=${{ secrets.POSTGRES_PORT }} \
+            POSTGRES_DB=${{ secrets.POSTGRES_DB }},POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
+            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }},ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }} \
+            PROJECT_NAME=${{ env.PROJECT_ID }},FIRST_SUPERUSER=${{ secrets.FIRST_SUPERUSER }} \
+            FIRST_SUPERUSER_PASSWORD=${{ secrets.FIRST_SUPERUSER_PASSWORD }}

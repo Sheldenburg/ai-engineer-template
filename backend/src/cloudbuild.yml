@@ -1,0 +1,5 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-f', 'Dockerfile', '-t', 'australia-southeast1-docker.pkg.dev/ai-engineer-template/fastapi-backend/fastapi-backend:latest','.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'australia-southeast1-docker.pkg.dev/ai-engineer-template/fastapi-backend/fastapi-backend:latest']

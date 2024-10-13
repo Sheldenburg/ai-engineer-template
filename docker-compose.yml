@@ -1,0 +1,7 @@
+services:
+  fastapi-backend:
+    build: backend
+    ports:
+      - "8080:8000"
+    volumes:
+      - ./backend/app:/app/app

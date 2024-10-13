@@ -62,3 +62,4 @@ uvicorn main:app --reload
 Grab the openapi.json file from the backend Swagger UI. Then replace in frontend/lib/api/openapi.json. 
 Run `npm run types:generate`, it will generate a type file called v1.d.ts in the same folder. 
 TO DO: automate this in a MAKE file. 
+
