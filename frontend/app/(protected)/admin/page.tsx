@@ -1,4 +1,4 @@
-import {AddUser} from "@/components/add-user";
+import { AddUser } from "@/components/add-user";
 import UsersTable from "@/components/users-table";
 import React from "react";
 

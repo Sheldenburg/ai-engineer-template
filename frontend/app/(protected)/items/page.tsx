@@ -1,4 +1,4 @@
-import {AddItem} from "@/components/add-item";
+import { AddItem } from "@/components/add-item";
 import ItemsTable from "@/components/items-table";
 import React from "react";
 

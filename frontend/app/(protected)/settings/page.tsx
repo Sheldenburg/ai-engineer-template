@@ -1,12 +1,12 @@
 import Appearance from "@/components/appearance-settings";
 import MyProfile from "@/components/my-profile";
 import PasswordReset from "@/components/password-reset";
-import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import initiateClient from "@/lib/api";
 
 async function SettingsPage() {
   const client = initiateClient();
-  const {data, error} = await client.GET("/api/v1/users/me");
+  const { data, error } = await client.GET("/api/v1/users/me");
   if (error) {
     //TODO: handle error
     console.log(error);

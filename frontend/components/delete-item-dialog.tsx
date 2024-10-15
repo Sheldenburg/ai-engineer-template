@@ -1,5 +1,5 @@
 "use client";
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,20 +9,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {useState} from "react";
-import {Trash2} from "lucide-react";
-import {deleteItem} from "@/app/(protected)/items/actions";
-import {useToast} from "./ui/use-toast";
+import { useState } from "react";
+import { Trash2 } from "lucide-react";
+import { deleteItem } from "@/app/(protected)/items/actions";
+import { useToast } from "./ui/use-toast";
 
-export function DeleteItemDialog({
-  itemId,
-  popOverSetOpen,
-}: {
-  itemId: number;
-  popOverSetOpen: (value: boolean) => void;
-}) {
+export function DeleteItemDialog({ itemId, popOverSetOpen }: { itemId: number, popOverSetOpen: (value: boolean) => void}) {
   const [open, setOpen] = useState(false);
-  const {toast} = useToast();
+  const { toast } = useToast();
   const deleteItemwithId = deleteItem.bind(null, itemId.toString()); // bind only works with string not number
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -55,7 +49,7 @@ export function DeleteItemDialog({
                 toast({
                   title: "Success",
                   description: "Your item was deleted successfully.",
-                });
+                })
               }}
             >
               Delete

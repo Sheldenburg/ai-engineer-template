@@ -1,10 +1,10 @@
 import Image from "next/image";
-import {ModeToggle} from "@/components/dark-mode-toggle";
-import {PlusIcon} from "@heroicons/react/20/solid";
-import {buttonVariants} from "@/components/ui/button";
-import {FaGithub} from "react-icons/fa";
-import {Badge} from "@/components/ui/badge";
-import {cn} from "@/lib/utils";
+import { ModeToggle } from "@/components/dark-mode-toggle";
+import { PlusIcon } from "@heroicons/react/20/solid";
+import { buttonVariants } from "@/components/ui/button";
+import { FaGithub } from "react-icons/fa";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 import GitHubStars from "@/components/github-star";
 
@@ -101,7 +101,8 @@ export default function Home() {
             </span>
           </h2>
           <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            One of the most popular Python backend framework with native async support.
+            One of the most popular Python backend framework with native async
+            support.
           </p>
         </a>
 

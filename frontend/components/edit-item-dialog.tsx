@@ -1,7 +1,7 @@
 "use client";
-import {Button} from "@/components/ui/button";
-import {Label} from "./ui/label";
-import {Input} from "./ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 import {
   Dialog,
   DialogContent,
@@ -10,10 +10,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {useState} from "react";
-import {SquarePen} from "lucide-react";
-import {editItem} from "@/app/(protected)/items/actions";
-import {useToast} from "./ui/use-toast";
+import { useState } from "react";
+import { SquarePen } from "lucide-react";
+import { editItem } from "@/app/(protected)/items/actions";
+import { useToast } from "./ui/use-toast";
 
 export function EditItemDialog({
   itemId,
@@ -23,7 +23,7 @@ export function EditItemDialog({
   popOverSetOpen: (value: boolean) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const {toast} = useToast();
+  const { toast } = useToast();
   const editItemwithId = editItem.bind(null, itemId.toString()); // bind only works with string not number
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -43,7 +43,13 @@ export function EditItemDialog({
               <Label htmlFor="name" className="text-right text-md">
                 Title
               </Label>
-              <Input id="title" name="title" placeholder="title" className="col-span-3" required />
+              <Input
+                id="title"
+                name="title"
+                placeholder="title"
+                className="col-span-3"
+                required
+              />
             </div>
             <div className="flex flex-col items-start gap-3">
               <Label htmlFor="username" className="text-right text-md">

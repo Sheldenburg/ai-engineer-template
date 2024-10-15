@@ -1,7 +1,14 @@
 import React from "react";
 import Link from "next/link";
-import {Home, Settings, BotMessageSquare, Briefcase, Users, ShoppingBag} from "lucide-react";
-import {usePathname} from "next/navigation";
+import {
+  Home,
+  Settings,
+  BotMessageSquare,
+  Briefcase,
+  Users,
+  ShoppingBag,
+} from "lucide-react";
+import { usePathname } from "next/navigation";
 
 function MainNavItems() {
   const pathname = usePathname();

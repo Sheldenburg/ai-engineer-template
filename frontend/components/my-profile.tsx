@@ -1,16 +1,22 @@
 "use client";
-import {Button} from "./ui/button";
-import {useState} from "react";
-import {Label} from "./ui/label";
-import {Input} from "./ui/input";
-import {updateProfile} from "@/app/(protected)/settings/actions";
-import {useToast} from "./ui/use-toast";
+import { Button } from "./ui/button";
+import { useState } from "react";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
+import { updateProfile } from "@/app/(protected)/settings/actions";
+import { useToast } from "./ui/use-toast";
 
-function MyProfile({fullName, email}: {fullName: string | null | undefined; email: string}) {
+function MyProfile({
+  fullName,
+  email,
+}: {
+  fullName: string | null | undefined;
+  email: string;
+}) {
   const [edit, setEdit] = useState(false);
   const [fullNameClient, setFullNameClient] = useState("");
   const [emailClient, setEmailClient] = useState("");
-  const {toast} = useToast();
+  const { toast } = useToast();
   const handleCanel = () => {
     setEdit(false);
     setFullNameClient("");
@@ -23,7 +29,9 @@ function MyProfile({fullName, email}: {fullName: string | null | undefined; emai
         <>
           <div className="mt-4 space-y-3">
             <Label className="text-base font-bold">Full name</Label>
-            <p className={fullName ? "" : "text-gray-300"}>{fullName ? fullName : "N/A"}</p>
+            <p className={fullName ? "" : "text-gray-300"}>
+              {fullName ? fullName : "N/A"}
+            </p>
           </div>
           <div className="mt-4 space-y-3">
             <Label className="text-base font-bold">Email</Label>

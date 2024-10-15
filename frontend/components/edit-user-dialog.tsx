@@ -1,7 +1,7 @@
 "use client";
-import {Button} from "@/components/ui/button";
-import {Label} from "./ui/label";
-import {Input} from "./ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 import {
   Dialog,
   DialogContent,
@@ -10,11 +10,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {useState} from "react";
-import {SquarePen} from "lucide-react";
-import {useToast} from "./ui/use-toast";
-import {Checkbox} from "@/components/ui/checkbox";
-import {editUser} from "@/app/(protected)/admin/actions";
+import { useState } from "react";
+import { SquarePen } from "lucide-react";
+import { useToast } from "./ui/use-toast";
+import { Checkbox } from "@/components/ui/checkbox";
+import { editUser } from "@/app/(protected)/admin/actions";
 
 export function EditUserDialog({
   user,
@@ -30,16 +30,22 @@ export function EditUserDialog({
   popOverSetOpen: (value: boolean) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const [isSuperUser, setIsSuperUser] = useState(user.is_superuser ? user.is_superuser : false);
-  const [isActive, setIsActive] = useState(user.is_active ? user.is_active : false);
+  const [isSuperUser, setIsSuperUser] = useState(
+    user.is_superuser ? user.is_superuser : false
+  );
+  const [isActive, setIsActive] = useState(
+    user.is_active ? user.is_active : false
+  );
   const [email, setEmail] = useState(user.email ? user.email : "");
-  const [fullName, setFullName] = useState(user.full_name ? user.full_name : "");
+  const [fullName, setFullName] = useState(
+    user.full_name ? user.full_name : ""
+  );
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const {toast} = useToast();
+  const { toast } = useToast();
   const editUserwithCheckbox = editUser.bind(
     null,
-    `{"userId": ${user.id}, "isSuperUser": ${isSuperUser}, "isActive": ${isActive}}`,
+    `{"userId": ${user.id}, "isSuperUser": ${isSuperUser}, "isActive": ${isActive}}`
   ); // bind only works with string not number
 
   function resetForm() {

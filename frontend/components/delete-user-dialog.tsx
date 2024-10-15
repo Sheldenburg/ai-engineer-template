@@ -1,5 +1,5 @@
 "use client";
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,10 +9,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {useState} from "react";
-import {Trash2} from "lucide-react";
-import {deleteUser} from "@/app/(protected)/admin/actions";
-import {useToast} from "./ui/use-toast";
+import { useState } from "react";
+import { Trash2 } from "lucide-react";
+import { deleteUser } from "@/app/(protected)/admin/actions";
+import { useToast } from "./ui/use-toast";
 
 export function DeleteUserDialog({
   userId,
@@ -22,7 +22,7 @@ export function DeleteUserDialog({
   popOverSetOpen: (value: boolean) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const {toast} = useToast();
+  const { toast } = useToast();
   const deleteUserwithId = deleteUser.bind(null, userId.toString()); // bind only works with string not number
   async function handleSubmit() {
     const result = await deleteUserwithId();
@@ -60,12 +60,16 @@ export function DeleteUserDialog({
           <DialogHeader>
             <DialogTitle>Delete User</DialogTitle>
             <DialogDescription>
-              All items associated with this user will also be <strong>permantly deleted.</strong>{" "}
-              Are you sure? You will not be able to undo this action.
+              All items associated with this user will also be <strong>permantly
+              deleted.</strong> Are you sure? You will not be able to undo this action.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="mt-4">
-            <Button variant="destructive" type="submit" formAction={handleSubmit}>
+            <Button
+              variant="destructive"
+              type="submit"
+              formAction={handleSubmit}
+            >
               Delete
             </Button>
             <Button

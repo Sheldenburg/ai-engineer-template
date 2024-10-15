@@ -1,9 +1,0 @@
-dist
-node_modules
-.next
-build
-scripts
-tailwind.config.ts
-package*.json
-*config.ts
-*config.json

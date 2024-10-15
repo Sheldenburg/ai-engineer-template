@@ -1,9 +1,9 @@
-"use client";
+'use client';
 // import ChatSettings from "@/components/chat-settings";
 // import ChatUI from "@/components/chat-ui";
 // import initiateClient from "@/lib/api";
-import {nanoid} from "nanoid";
-import {useRouter} from "next/navigation";
+import { nanoid } from "nanoid";
+import { useRouter } from "next/navigation";
 
 export default async function ShopPage() {
   const router = useRouter();

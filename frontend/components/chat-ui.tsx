@@ -1,5 +1,5 @@
 "use client";
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import {
   Bird,
   CornerDownLeft,
@@ -11,19 +11,19 @@ import {
   SquareUser,
   Bot,
 } from "lucide-react";
-import {Button} from "@/components/ui/button";
-import {Input} from "@/components/ui/input";
-import {Textarea} from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import useChatStream from "@/lib/hooks/useChatStream";
-import {getChatHistory} from "@/lib/utils";
-import {usePathname} from "next/navigation";
+import { getChatHistory } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 
 function ChatUI() {
-  const {messages, input, handleInputChange, handleSubmit, setMessages} =
+  const { messages, input, handleInputChange, handleSubmit, setMessages } =
     useChatStream("/api/v1/chat/stream");
   async function fetchChatHistory() {
     try {
@@ -65,10 +65,10 @@ function ChatUI() {
                     <ReactMarkdown
                       remarkPlugins={[
                         remarkGfm,
-                        [remarkMath, {singleDollarTextMath: false}],
+                        [remarkMath, { singleDollarTextMath: false }],
                         // components={{ ...markdownComponents, img: () => null }}
                       ]}
-                      rehypePlugins={[[rehypeKatex, {output: "html"}]]}
+                      rehypePlugins={[[rehypeKatex, { output: "html" }]]}
                     >
                       {m.content}
                     </ReactMarkdown>
@@ -121,7 +121,11 @@ function ChatUI() {
                     <TooltipContent side="top">Use Microphone</TooltipContent>
                   </Tooltip>
                 </TooltipProvider> */}
-            <Button type="submit" size="sm" className="absolute bottom-3 right-5 ml-auto gap-1.5">
+            <Button
+              type="submit"
+              size="sm"
+              className="absolute bottom-3 right-5 ml-auto gap-1.5"
+            >
               <CornerDownLeft className="size-3.5" />
             </Button>
           </div>

@@ -1,11 +1,13 @@
 "use client";
 import Link from "next/link";
-import {Bell} from "lucide-react";
-import {Button} from "@/components/ui/button";
-import {Switch} from "@/components/ui/switch";
+import {
+  Bell,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import Image from "next/image";
-import {usePathname} from "next/navigation";
-import {useState} from "react";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 import MainNavItems from "./main-nav-items";
 import ChatHistory from "./chat-history";
 // import {
@@ -16,9 +18,9 @@ import ChatHistory from "./chat-history";
 //   CardTitle,
 // } from "@/components/ui/card";
 
-function NavLink({user}: {user: {email: string; chatList?: any}}) {
+function NavLink({ user }: { user: { email: string, chatList?: any } }) {
   const pathname = usePathname();
-  const [showSecondNav, setShowSecondNav] = useState(false);
+  const [ showSecondNav, setShowSecondNav ] = useState(false);
   const handleToggleSwitch = () => {
     setShowSecondNav((prev: boolean) => !prev);
     console.log(showSecondNav);
@@ -29,7 +31,10 @@ function NavLink({user}: {user: {email: string; chatList?: any}}) {
     <div className="hidden fixed top-0 left-0 w-1/6 border-r bg-muted/40 min-h-screen md:block">
       <div className="flex h-full max-h-screen flex-col gap-2">
         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-          <Link href="https://euclideanai.com" className="flex items-center gap-2 font-semibold">
+          <Link
+            href="https://euclideanai.com"
+            className="flex items-center gap-2 font-semibold"
+          >
             <Image
               src="/euclideanai-favicon-black-transparent.png"
               alt="EuclideanAI"
@@ -44,11 +49,11 @@ function NavLink({user}: {user: {email: string; chatList?: any}}) {
           </Button>
         </div>
         <div className="flex-1">
-          {!showSecondNav ? <MainNavItems /> : <ChatHistory chatList={user.chatList} />}
+          {!showSecondNav? <MainNavItems /> : <ChatHistory chatList={user.chatList}/>}
         </div>
         <div className="fixed bottom-3 mt-auto pb-10 pl-8 items-center justify-center text-start">
           <div className="flex gap-3 mb-3 items-center justify-center">
-            <Switch onClick={handleToggleSwitch} />
+            <Switch onClick={handleToggleSwitch}/>
             <p className="text-sm">Show Chat History</p>
           </div>
           <p className="text-sm">logged in as:</p>

@@ -1,6 +1,6 @@
-"use client";
-import {CircleUser, User} from "lucide-react";
-import {Button} from "@/components/ui/button";
+'use client';
+import { CircleUser, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,13 +11,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import MobileNavLink from "./mobile-nav-link";
 import Link from "next/link";
-import {LogOut} from "lucide-react";
-import {revalidatePath} from "next/cache";
-import {redirect} from "next/navigation";
-import {logout} from "@/app/login/actions";
-import {useState} from "react";
+import { LogOut } from "lucide-react";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { logout } from "@/app/login/actions";
+import { useState } from "react";
 
-function DashboardHeader({user}: {user: {email: string}}) {
+function DashboardHeader({ user }: { user: { email: string } }) {
   const [open, setOpen] = useState(false);
   return (
     <header className="fixed top-0 right-0 flex h-14 w-full z-10 items-end justify-end gap-4 px-4 lg:h-[60px] lg:px-6">
@@ -45,7 +45,7 @@ function DashboardHeader({user}: {user: {email: string}}) {
           <DropdownMenuContent align="end">
             {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
             {/* <DropdownMenuSeparator /> */}
-            <DropdownMenuItem className="hover:bg-gray-200" onClick={() => setOpen(!open)}>
+            <DropdownMenuItem className="hover:bg-gray-200" onClick={()=>setOpen(!open)}>
               <Link href="/settings" className="flex items-center gap-2">
                 <User className="h-5 w-5" />
                 My Profile
