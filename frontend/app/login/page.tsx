@@ -1,41 +1,24 @@
 import Link from "next/link";
 
-import { SubmitButton } from "@/components/ui/submit-button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { login, signup } from "./actions";
+import {SubmitButton} from "@/components/ui/submit-button";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+import {login, signup} from "./actions";
 
-export default function LoginPage({
-  searchParams,
-}: {
-  searchParams: { message?: string };
-}) {
+export default function LoginPage({searchParams}: {searchParams: {message?: string}}) {
   return (
     <form className="fixed inset-0 m-auto flex items-center justify-center">
       <Card className="mx-auto max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
-          </CardDescription>
+          <CardDescription>Enter your email below to login to your account</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
-              <Input
-                name="username"
-                type="email"
-                placeholder="m@example.com"
-                required
-              />
+              <Input name="username" type="email" placeholder="m@example.com" required />
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">

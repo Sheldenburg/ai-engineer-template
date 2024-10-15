@@ -1,18 +1,12 @@
 import React from "react";
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import {Table, TableBody, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import initiateClient from "@/lib/api";
 import TableRowItem from "@/components/table-row-item";
 
 async function ItemsTable() {
   const client = initiateClient();
   async function getItems() {
-    const { data, error } = await client.GET("/api/v1/items/", {
+    const {data, error} = await client.GET("/api/v1/items/", {
       cache: "no-store",
     });
     if (error) {

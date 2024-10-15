@@ -1,11 +1,11 @@
 "use server";
 import initiateClient from "@/lib/api";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import {revalidatePath} from "next/cache";
+import {redirect} from "next/navigation";
 
 export async function addChatConfig(formData: FormData) {
   const client = initiateClient();
-  const { data, error } = await client.POST("/api/v1/chat/config", {
+  const {data, error} = await client.POST("/api/v1/chat/config", {
     body: {
       model: formData.get("model") as string,
       api_key: formData.get("api-key") as string,
@@ -25,7 +25,7 @@ export async function addChatConfig(formData: FormData) {
 
 export async function editChatConfig(formData: FormData) {
   const client = initiateClient();
-  const { data, error } = await client.PUT("/api/v1/chat/config", {
+  const {data, error} = await client.PUT("/api/v1/chat/config", {
     body: {
       model: formData.get("model") as string,
       api_key: formData.get("api-key") as string,

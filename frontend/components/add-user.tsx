@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,13 +8,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Plus } from "lucide-react";
-import { addUsers } from "@/app/(protected)/admin/actions";
-import { useState } from "react";
-import { useToast } from "./ui/use-toast";
-import { Checkbox } from "@/components/ui/checkbox";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+import {Plus} from "lucide-react";
+import {addUsers} from "@/app/(protected)/admin/actions";
+import {useState} from "react";
+import {useToast} from "./ui/use-toast";
+import {Checkbox} from "@/components/ui/checkbox";
 
 export function AddUser() {
   const [open, setOpen] = useState(false);
@@ -24,8 +24,8 @@ export function AddUser() {
   const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const { toast } = useToast();
-  function resetForm () {
+  const {toast} = useToast();
+  function resetForm() {
     setIsActive(false);
     setIsSuperUser(false);
     setEmail("");
@@ -33,8 +33,11 @@ export function AddUser() {
     setPassword("");
     setConfirmPassword("");
   }
-  const addUserswithCheckbox = addUsers.bind(null, `{"isSuperUser": ${isSuperUser}, "isActive": ${isActive}}`);
-  async function handleSubmit (formData: FormData) {
+  const addUserswithCheckbox = addUsers.bind(
+    null,
+    `{"isSuperUser": ${isSuperUser}, "isActive": ${isActive}}`,
+  );
+  async function handleSubmit(formData: FormData) {
     const result = await addUserswithCheckbox(formData);
     if (result?.error) {
       resetForm();
@@ -57,10 +60,7 @@ export function AddUser() {
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button
-            variant="default"
-            className="items-center justify-center gap-0.5"
-          >
+          <Button variant="default" className="items-center justify-center gap-0.5">
             <Plus className="h-5 w-5" />
             Add User
           </Button>
@@ -128,7 +128,12 @@ export function AddUser() {
               </div>
               <div className="flex flex-row items-center justify-start space-x-8">
                 <div>
-                  <Checkbox id="isSuperUser" name="isSuperUser" checked={isSuperUser} onClick={()=>setIsSuperUser(!isSuperUser)}/>
+                  <Checkbox
+                    id="isSuperUser"
+                    name="isSuperUser"
+                    checked={isSuperUser}
+                    onClick={() => setIsSuperUser(!isSuperUser)}
+                  />
                   <label
                     htmlFor="isSuperUser"
                     className="text-sm font-medium leading-none ml-2 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -137,7 +142,12 @@ export function AddUser() {
                   </label>
                 </div>
                 <div>
-                  <Checkbox id="isActive" name="isActive" checked={isActive} onClick={()=>setIsActive(!isActive)}/>
+                  <Checkbox
+                    id="isActive"
+                    name="isActive"
+                    checked={isActive}
+                    onClick={() => setIsActive(!isActive)}
+                  />
                   <label
                     htmlFor="isActive"
                     className="text-sm font-medium leading-none ml-2 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -148,10 +158,7 @@ export function AddUser() {
               </div>
             </div>
             <DialogFooter>
-              <Button
-                type="submit"
-                formAction={handleSubmit}
-              >
+              <Button type="submit" formAction={handleSubmit}>
                 Save
               </Button>
               <Button

@@ -1,16 +1,12 @@
 "use client";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { TableCell, TableRow } from "@/components/ui/table";
-import { DeleteUserDialog } from "./delete-user-dialog";
-import { EditUserDialog } from "./edit-user-dialog";
-import { useState } from "react";
-import { Dot } from "lucide-react";
+import {Button} from "@/components/ui/button";
+import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
+import {TableCell, TableRow} from "@/components/ui/table";
+import {DeleteUserDialog} from "./delete-user-dialog";
+import {EditUserDialog} from "./edit-user-dialog";
+import {useState} from "react";
+import {Dot} from "lucide-react";
 
 function TableRowUser({
   user,
@@ -22,7 +18,7 @@ function TableRowUser({
     is_superuser?: boolean | undefined;
     full_name?: string | null | undefined;
     id: number;
-  },
+  };
   me: {
     email: string;
     is_active?: boolean | undefined;
@@ -52,24 +48,13 @@ function TableRowUser({
         <Popover open={popOverOpen} onOpenChange={popOverSetOpen}>
           <PopoverTrigger asChild>
             <Button variant="ghost">
-              <Image
-                src="/three-dots-vertical.svg"
-                alt="Edit"
-                width={20}
-                height={20}
-              />
+              <Image src="/three-dots-vertical.svg" alt="Edit" width={20} height={20} />
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-50">
             <form className="flex flex-col">
-              <EditUserDialog
-                user={user}
-                popOverSetOpen={popOverSetOpen}
-              />
-              <DeleteUserDialog
-                userId={user.id}
-                popOverSetOpen={popOverSetOpen}
-              />
+              <EditUserDialog user={user} popOverSetOpen={popOverSetOpen} />
+              <DeleteUserDialog userId={user.id} popOverSetOpen={popOverSetOpen} />
             </form>
           </PopoverContent>
         </Popover>

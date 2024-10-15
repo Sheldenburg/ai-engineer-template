@@ -1,18 +1,12 @@
 import React from "react";
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import {Table, TableBody, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import initiateClient from "@/lib/api";
 import TableRowUser from "@/components/table-row-user";
 
 async function UsersTable() {
   const client = initiateClient();
   async function getUsers() {
-    const { data, error } = await client.GET("/api/v1/users/", {
+    const {data, error} = await client.GET("/api/v1/users/", {
       cache: "no-store",
     });
     if (error) {
@@ -22,7 +16,7 @@ async function UsersTable() {
     return data;
   }
   async function getMe() {
-    const { data, error } = await client.GET("/api/v1/users/me", {
+    const {data, error} = await client.GET("/api/v1/users/me", {
       cache: "no-store",
     });
     if (error) {
@@ -58,9 +52,7 @@ async function UsersTable() {
                 }[];
                 count: number;
               }
-            ).data.map((user) => (
-              <TableRowUser key={user.id} user={user} me={me} />
-            ))}
+            ).data.map((user) => <TableRowUser key={user.id} user={user} me={me} />)}
         </TableBody>
       </Table>
     </div>

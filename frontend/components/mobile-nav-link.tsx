@@ -1,15 +1,15 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { Home, Settings, LogOut, Briefcase, Users, Menu } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { redirect, usePathname } from "next/navigation";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { revalidatePath } from "next/cache";
-import { logout } from "@/app/login/actions";
-import { useState } from "react";
+import {Home, Settings, LogOut, Briefcase, Users, Menu} from "lucide-react";
+import {Button} from "@/components/ui/button";
+import {redirect, usePathname} from "next/navigation";
+import {Sheet, SheetContent, SheetTrigger} from "@/components/ui/sheet";
+import {revalidatePath} from "next/cache";
+import {logout} from "@/app/login/actions";
+import {useState} from "react";
 import MainNavItemsMob from "./mian-nav-items-mob";
-import { Switch } from "@/components/ui/switch";
+import {Switch} from "@/components/ui/switch";
 import ChatHistory from "./chat-history";
 // import {
 //   Card,
@@ -19,7 +19,7 @@ import ChatHistory from "./chat-history";
 //   CardTitle,
 // } from "@/components/ui/card";
 
-function MobileNavLink({ user }: { user: { email: string; chatList?: any } }) {
+function MobileNavLink({user}: {user: {email: string; chatList?: any}}) {
   const pathname = usePathname();
   const [showSecondNav, setShowSecondNav] = useState(false);
   const handleToggleSwitch = () => {
@@ -36,18 +36,14 @@ function MobileNavLink({ user }: { user: { email: string; chatList?: any } }) {
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="flex flex-col p-1">
-        {!showSecondNav ? (
-          <MainNavItemsMob />
-        ) : (
-          <ChatHistory chatList={user.chatList} />
-        )}
+        {!showSecondNav ? <MainNavItemsMob /> : <ChatHistory chatList={user.chatList} />}
         <div className="mt-auto p-2 ml-3">
           <div className="flex gap-3 mb-3 items-center justify-start">
             <Switch onClick={handleToggleSwitch} />
             <p className="text-sm">Show Chat History</p>
           </div>
-            <p className="text-sm">logged in as:</p>
-            <p className="text-sm">{user.email}</p>
+          <p className="text-sm">logged in as:</p>
+          <p className="text-sm">{user.email}</p>
           {/* <Card>
             <CardHeader>
               <CardTitle>Upgrade to Pro</CardTitle>

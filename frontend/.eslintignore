@@ -1,0 +1,13 @@
+.next/*
+*.css
+dist
+esm/*
+public/*
+tests/*
+scripts/*
+*.config.js
+node_modules
+coverage
+.next
+build
+*tailwind.config.ts

@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,24 +8,21 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Plus } from "lucide-react";
-import { addItems } from "@/app/(protected)/items/actions";
-import { useState } from "react";
-import { useToast } from "./ui/use-toast";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+import {Plus} from "lucide-react";
+import {addItems} from "@/app/(protected)/items/actions";
+import {useState} from "react";
+import {useToast} from "./ui/use-toast";
 
 export function AddItem() {
   const [open, setOpen] = useState(false);
-  const { toast } = useToast();
+  const {toast} = useToast();
   return (
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button
-            variant="default"
-            className="items-center justify-center gap-0.5"
-          >
+          <Button variant="default" className="items-center justify-center gap-0.5">
             <Plus className="h-5 w-5" />
             Add Item
           </Button>
@@ -69,7 +66,7 @@ export function AddItem() {
                   toast({
                     title: "Success",
                     description: "Item created successfully.",
-                  })
+                  });
                 }}
               >
                 Save

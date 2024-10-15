@@ -1,15 +1,15 @@
 "use client";
-import { Button } from "./ui/button";
-import { useState } from "react";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
-import { updatePassword } from "@/app/(protected)/settings/actions";
-import { useToast } from "./ui/use-toast";
-import { unstable_noStore as noStore } from "next/cache";
+import {Button} from "./ui/button";
+import {useState} from "react";
+import {Label} from "./ui/label";
+import {Input} from "./ui/input";
+import {updatePassword} from "@/app/(protected)/settings/actions";
+import {useToast} from "./ui/use-toast";
+import {unstable_noStore as noStore} from "next/cache";
 
 function PasswordReset() {
   noStore();
-  const { toast } = useToast();
+  const {toast} = useToast();
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

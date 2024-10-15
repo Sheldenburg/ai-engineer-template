@@ -1,30 +1,38 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
-import { Message } from "@/lib/definitions";
+import {type ClassValue, clsx} from "clsx";
+import {twMerge} from "tailwind-merge";
+import {Message} from "@/lib/definitions";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
-export const getStream = async (input: string, chatMessages: Message[], api: string, chatId: string) => {
+export const getStream = async (
+  input: string,
+  chatMessages: Message[],
+  api: string,
+  chatId: string,
+) => {
   const getCookie = (name: string) => {
-    const value = `; ${document.cookie ?? ''}`;
+    const value = `; ${document.cookie ?? ""}`;
     const parts = value.split(`; ${name}=`);
-    if (parts && parts.length === 2) { return parts.pop()?.split(';').shift() }
-    else { return null };
+    if (parts && parts.length === 2) {
+      return parts.pop()?.split(";").shift();
+    } else {
+      return null;
+    }
   };
   const response = await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + api, {
-    method: 'POST',
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${getCookie("access_token")}`
+      Authorization: `Bearer ${getCookie("access_token")}`,
     },
     // body: JSON.stringify(input, (_k, v) => v === null ? undefined : v)
     body: JSON.stringify({
       input: input,
       messages: chatMessages,
       chat_id: chatId,
-    })
+    }),
   });
 
   if (!response.ok) throw new Error(response.statusText);
@@ -34,16 +42,19 @@ export const getStream = async (input: string, chatMessages: Message[], api: str
 
 export const getChatHistory = async (chatId: string) => {
   const getCookie = (name: string) => {
-    const value = `; ${document.cookie ?? ''}`;
+    const value = `; ${document.cookie ?? ""}`;
     const parts = value.split(`; ${name}=`);
-    if (parts && parts.length === 2) { return parts.pop()?.split(';').shift() }
-    else { return null };
+    if (parts && parts.length === 2) {
+      return parts.pop()?.split(";").shift();
+    } else {
+      return null;
+    }
   };
   const response = await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + `/api/v1/chat/${chatId}`, {
-    method: 'GET',
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${getCookie("access_token")}`
+      Authorization: `Bearer ${getCookie("access_token")}`,
     },
   });
 
@@ -91,7 +102,7 @@ export async function* decodeStreamToJson(
   const decoder = new TextDecoder();
 
   while (true) {
-    const { value, done } = await reader.read();
+    const {value, done} = await reader.read();
     if (done) break;
 
     if (value) {

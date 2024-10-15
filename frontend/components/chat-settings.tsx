@@ -8,8 +8,8 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -17,11 +17,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Bird, Rabbit, Settings, Turtle } from "lucide-react";
+import {Bird, Rabbit, Settings, Turtle} from "lucide-react";
 import initiateClient from "@/lib/api";
-import { Button } from "@/components/ui/button";
-import { addChatConfig, editChatConfig } from "@/app/(protected)/chat/actions";
-import { ChatConfigPublic } from "@/lib/definitions";
+import {Button} from "@/components/ui/button";
+import {addChatConfig, editChatConfig} from "@/app/(protected)/chat/actions";
+import {ChatConfigPublic} from "@/lib/definitions";
 
 function ChatSettings({
   chatConfig,
@@ -52,9 +52,7 @@ function ChatSettings({
           <DrawerHeader>
             <div className="flex justify-between items-center">
               <div>
-                <DrawerTitle className="text-start pl-3">
-                  Configuration
-                </DrawerTitle>
+                <DrawerTitle className="text-start pl-3">Configuration</DrawerTitle>
                 <DrawerDescription className="text-start mt-2 pl-3">
                   Configure the settings for the model and messages.
                 </DrawerDescription>
@@ -77,9 +75,7 @@ function ChatSettings({
           </DrawerHeader>
           <div className="grid w-full items-start gap-6 overflow-auto p-4 pt-0">
             <fieldset className="grid gap-6 rounded-lg border p-4">
-              <legend className="-ml-1 px-1 text-sm font-medium">
-                Settings
-              </legend>
+              <legend className="-ml-1 px-1 text-sm font-medium">Settings</legend>
               <div className="grid gap-3">
                 <Label htmlFor="model">Model</Label>
                 <Select
@@ -87,62 +83,40 @@ function ChatSettings({
                   // onValueChange={handleModelSelectChange}
                   name="model"
                 >
-                  <SelectTrigger
-                    id="model"
-                    className="items-start [&_[data-description]]:hidden"
-                  >
+                  <SelectTrigger id="model" className="items-start [&_[data-description]]:hidden">
                     <SelectValue placeholder="Select a model" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="openai">
                       <div className="flex items-start gap-3 text-muted-foreground">
-                        <img
-                          src="/icons8-chatgpt.svg"
-                          className="size-5"
-                          alt="gpt"
-                        />
+                        <img src="/icons8-chatgpt.svg" className="size-5" alt="gpt" />
                         <div className="grid gap-0.5">
                           <p>
-                            OpenAI{" "}
-                            <span className="font-medium text-foreground">
-                              GPT4o
-                            </span>
+                            OpenAI <span className="font-medium text-foreground">GPT4o</span>
                           </p>
                         </div>
                       </div>
                     </SelectItem>
                     <SelectItem value="google">
                       <div className="flex items-start gap-3 text-muted-foreground">
-                        <img
-                          src="/icons8-google.svg"
-                          className="size-5"
-                          alt="gemini"
-                        />
+                        <img src="/icons8-google.svg" className="size-5" alt="gemini" />
 
                         <div className="grid gap-0.5">
                           <p>
                             Google{" "}
-                            <span className="font-medium text-foreground">
-                              Gemini 1.5Pro
-                            </span>
+                            <span className="font-medium text-foreground">Gemini 1.5Pro</span>
                           </p>
                         </div>
                       </div>
                     </SelectItem>
                     <SelectItem value="anthropic">
                       <div className="flex items-start gap-3 text-muted-foreground">
-                        <img
-                          src="/icons8-claude.svg"
-                          className="size-5"
-                          alt="claude"
-                        />
+                        <img src="/icons8-claude.svg" className="size-5" alt="claude" />
 
                         <div className="grid gap-0.5">
                           <p>
                             Anthropic{" "}
-                            <span className="font-medium text-foreground">
-                              Claude 3.0
-                            </span>
+                            <span className="font-medium text-foreground">Claude 3.0</span>
                           </p>
                         </div>
                       </div>
@@ -195,9 +169,7 @@ function ChatSettings({
             </div> */}
             </fieldset>
             <fieldset className="grid gap-6 rounded-lg border p-4">
-              <legend className="-ml-1 px-1 text-sm font-medium">
-                Messages
-              </legend>
+              <legend className="-ml-1 px-1 text-sm font-medium">Messages</legend>
               <div className="grid gap-3">
                 <Label htmlFor="role">Role</Label>
                 <Select defaultValue="system">
