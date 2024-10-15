@@ -8,7 +8,9 @@
     "start": "next start -p 80",
     "lint": "next lint",
     "test:ts": "tsc --noEmit",
-    "types:generate": "openapi-typescript ./lib/api/openapi.json -o ./lib/api/v1.d.ts"
+    "types:generate": "openapi-typescript ./lib/api/openapi.json -o ./lib/api/v1.d.ts",
+    "prepare": "husky",
+    "link-staged": "next lint"
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.37",
@@ -54,6 +56,9 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
     "openapi-typescript": "^6.7.5",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",

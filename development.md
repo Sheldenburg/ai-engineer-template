@@ -1,4 +1,4 @@
-# How to develop locally 
+# How to develop locally
 The following guide will show you how to spin up this repo and develop locally.
 ## Nextjs frontend
 ```bash
@@ -22,13 +22,13 @@ supabase start
 ```
 You can use the `supabase stop` command at any time to stop all services (without resetting your local database). Use `supabase stop --no-backup` to stop all services and reset your local database.
 
-## DB Migration 
+## DB Migration
 alembic will pick up all the new changes from sqlmodel. To push migration to the local Supabase docker container
 ```bash
 cd backend
 poetry shell
 ```
-If this is the first time, run the prestart.sh to load the initial data 
+If this is the first time, run the prestart.sh to load the initial data
 ```
 source prestart.sh
 ```
@@ -59,7 +59,16 @@ Start the unicorn server
 uvicorn main:app --reload
 ```
 ## Type generate
-Grab the openapi.json file from the backend Swagger UI. Then replace in frontend/lib/api/openapi.json. 
-Run `npm run types:generate`, it will generate a type file called v1.d.ts in the same folder. 
-TO DO: automate this in a MAKE file. 
+Grab the openapi.json file from the backend Swagger UI. Then replace in frontend/lib/api/openapi.json.
+Run `npm run types:generate`, it will generate a type file called v1.d.ts in the same folder.
+TO DO: automate this in a MAKE file.
 
+## Linting check
+Linting check is done via pre-commit hook. In file '.pre-commit-config.yaml', it has all the configuration for the check. For the first time running in local, in the root directory you need to (use `poetry shell` to activate python env first)
+```bash
+pre-commit install
+```
+Then the check will run while the code is being committed. Optionally, you can also run this hook for all files mannually.
+```bash
+pre-commit run --all-files
+```

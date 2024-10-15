@@ -1,12 +1,9 @@
 # import sentry_sdk
-from fastapi import FastAPI
-from fastapi.routing import APIRoute
-from starlette.middleware.cors import CORSMiddleware
-
 # from mangum import Mangum
-
 from app.api.main_route import api_router
 from app.core.config import settings
+from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
 
 # def custom_generate_unique_id(route: APIRoute) -> str:
 #     return f"{route.tags[0]}-{route.name}"
@@ -21,9 +18,11 @@ app = FastAPI(
     # generate_unique_id_function=custom_generate_unique_id,
 )
 
+
 @app.get("/")
 async def read_root():
-    return {"Hello": "World!"}
+    return {"Hello": "Welcome to ai engineer template!"}
+
 
 # Set all CORS enabled origins
 if settings.BACKEND_CORS_ORIGINS:
@@ -50,7 +49,6 @@ if settings.BACKEND_CORS_ORIGINS:
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
 # handler = Mangum(app)
-
 
 
 # from typing import Union
@@ -88,4 +86,3 @@ app.include_router(api_router, prefix=settings.API_V1_STR)
 
 
 # handler = Mangum(app)
-

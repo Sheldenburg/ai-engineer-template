@@ -34,9 +34,7 @@ export default async function Layout({
     // <div className="grid min-h-screen md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
     <div className="flex min-h-screen">
       <NavLink user={data} />
-      <div
-        className="flex flex-col w-full md:ml-[16.666667%]"
-      >
+      <div className="flex flex-col w-full md:ml-[16.666667%]">
         <DashboardHeader user={data} />
         <div className="mt-14">{children}</div>
       </div>

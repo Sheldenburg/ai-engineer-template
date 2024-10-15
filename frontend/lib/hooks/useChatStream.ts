@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 const BOT_ERROR_MESSAGE = 'Something went wrong fetching AI response.';
 
-const useChatSteam = (endpoint: string) => {
+const useChatStream = (endpoint: string) => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState<string>("");
     const [isStreaming, setIsStreaming] = useState<boolean>(false);
@@ -90,4 +90,4 @@ const useChatSteam = (endpoint: string) => {
     };
 }
 
-export default useChatSteam;
+export default useChatStream;
