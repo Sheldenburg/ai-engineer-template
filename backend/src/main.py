@@ -39,7 +39,7 @@ async def read_root():
 #         allow_headers=["*"],
 #     )
 
-origins = ["http://localhost:3000", "*", "https://ai-engineer-template.vercel.app"]
+origins = ["http://localhost:3000", "https://ai-engineer-template.vercel.app"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
