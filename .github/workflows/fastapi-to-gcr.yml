@@ -4,7 +4,7 @@ env:
   SERVICE_NAME: ai-engineer-template-backend
   PROJECT_ID: ai-engineer-template
   DOCKER_IMAGE_URL: australia-southeast1-docker.pkg.dev/ai-engineer-template/fastapi-backend/fastapi-backend
-
+  USERS_OPEN_REGISTRATION: True
 on:
   push:
     branches:
@@ -19,13 +19,13 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Google Cloud Auth
-        uses: 'google-github-actions/auth@v2'
+        uses: "google-github-actions/auth@v2"
         with:
-          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+          credentials_json: "${{ secrets.GCP_SA_KEY }}"
           project_id: ${{ env.PROJECT_ID }}
 
       - name: Set up Cloud SDK
-        uses: 'google-github-actions/setup-gcloud@v2.1.1'
+        uses: "google-github-actions/setup-gcloud@v2.1.1"
 
       - name: Configure Docker
         run: |
@@ -43,6 +43,6 @@ jobs:
           gcloud run deploy $SERVICE_NAME \
             --image ${{ env.DOCKER_IMAGE_URL }}:latest \
             --platform managed \
-            --set-env-vars POSTGRES_SERVER=${{ secrets.POSTGRES_SERVER }},POSTGRES_PORT=${{ secrets.POSTGRES_PORT }},POSTGRES_DB=${{ secrets.POSTGRES_DB }},POSTGRES_USER=${{ secrets.POSTGRES_USER }},POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }},ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }},PROJECT_NAME=${{ env.PROJECT_ID }},FIRST_SUPERUSER=${{ secrets.FIRST_SUPERUSER }},FIRST_SUPERUSER_PASSWORD=${{ secrets.FIRST_SUPERUSER_PASSWORD }} \
+            --set-env-vars POSTGRES_SERVER=${{ secrets.POSTGRES_SERVER }},POSTGRES_PORT=${{ secrets.POSTGRES_PORT }},POSTGRES_DB=${{ secrets.POSTGRES_DB }},POSTGRES_USER=${{ secrets.POSTGRES_USER }},POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }},ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }},PROJECT_NAME=${{ env.PROJECT_ID }},FIRST_SUPERUSER=${{ secrets.FIRST_SUPERUSER }},FIRST_SUPERUSER_PASSWORD=${{ secrets.FIRST_SUPERUSER_PASSWORD }},USERS_OPEN_REGISTRATION=${{ env.USERS_OPEN_REGISTRATION }} \
             --region australia-southeast1 \
             --allow-unauthenticated
