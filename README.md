@@ -1,50 +1,25 @@
-# Nextjs FastAPI Template
-
-<!-- <a href="https://github.com/tiangolo/full-stack-fastapi-template/actions?query=workflow%3ATest" target="_blank"><img src="https://github.com/tiangolo/full-stack-fastapi-template/workflows/Test/badge.svg" alt="Test"></a>
-<a href="https://coverage-badge.samuelcolvin.workers.dev/redirect/tiangolo/full-stack-fastapi-template" target="_blank"><img src="https://coverage-badge.samuelcolvin.workers.dev/tiangolo/full-stack-fastapi-template.svg" alt="Coverage"></a> -->
+# AI Engineer Template Nextjs + FastAPI
 
 ![nextjs+fastapi_template](nextjs+fastapi-template.png)
 ![nextjs+fastapi_template_dark_mode](nextjs+fastapi-template-dark-mode.png)
 
-### Demo video
-https://drive.google.com/file/d/1QfZvzOnOeBvtoDMlBb4IxDx3DoC-GC4Q/view?usp=sharing
+### Demo website
+
+https://ai-engineer-template.vercel.app
 
 ### Tech stack
-The backend code in this repository originated from the [FastAPI full stack template](https://github.com/fastapi/full-stack-fastapi-template) and includes AI components that make this AI engineer template unique.
 
-To fast-track the MVP building process, which is crucial for most AI products, we have chosen a simple tech stack. This allows people to focus more on iterating through product features rather than on DevOps from the outset.
+The backend code in this repository originated from the [FastAPI full stack template](https://github.com/fastapi/full-stack-fastapi-template) plus additional AI components that make this AI engineer template unique.
+
+To fast-track MVP building process, which is crucial for most AI products, we have chosen a simple tech stack. This allows people to focus more on iterating through product features rather than on DevOps from the outset.
 
 ![architecture](architecture.png)
 
 ### How to run in local
-1. Clone this repo
-```bash
-git clone https://github.com/Sheldenburg/nextjs-fastapi-template.git
-```
-2. Follow the original [README]('README-original.md') to docker compose and set up Postgres, reverse proxy and Fastapi server. You can leave the original React fronend running if you'd like. Or, you can just comment out the frontend bit in the docker compose file.
-3. Run nextjs app in local
-```bash
-cd frontend
-```
-```bash
-npm install
-```
-```bash
-npm run dev
-```
 
-Note: This is a fork from the original [Full Stack FastAPI Template](https://github.com/tiangolo/full-stack-fastapi-template "Full Stack FastAPI Template"). Instead of the original Reactjs frontend, we used Nextjs14 in this repository.
+Refer to [development](development.md)
 
-Here are the reasons why we wanted to build with Nextjs (a full stack framework built on top of React) over React.
-- Dependencies reduction
-A barebone Reactjs application would require installation of dependency packages to achieve multi-page routing, managing API requests, caching etc. There are a number of solutions out there, e.g. in the original repo, @tanstack/react-router is used for routing, @tanstack/react-query + axios are used for managing API requests and caching.
-In a Nextjs application, all these functions are built in without the need for third-party libraries. Also, Nextjs14 (app router) uses file-based routing which means the routing is automatically done via the folder structure.
-
-- Server side rendering
-Data fetching and mutation in a Nextjs application is mostly dealt in server side while client side data fetching is also allowed. This offers advantages to get away with 'useEffect' and other cumbersome boiler plate codes in order to do data fetching at client side. Server side rendering also offers performance benefit.
-
-- Popularity
-Nextjs is getting more and more popular. There are good amount of frontend projects and Youtube tutorials based on Nextjs, which are beginner friendly.
+### Openapi Fetch
 
 [![Openapi-fetch](https://openapi-ts.pages.dev/assets/openapi-fetch.svg "Openapi-fetch")](https://openapi-ts.pages.dev/openapi-fetch/ "Openapi-fetch")
 
@@ -58,10 +33,20 @@ import createClient from "openapi-fetch";
 import type { paths } from "./v1";
 import { cookies } from "next/headers";
 
-const client = createClient<paths>({ baseUrl: process.env.API_BASE_URL, headers: { Authorization: `Bearer ${cookies().get("access_token")?.value}` } });
+const client =
+  createClient <
+  paths >
+  {
+    baseUrl: process.env.API_BASE_URL,
+    headers: {
+      Authorization: `Bearer ${cookies().get("access_token")?.value}`,
+    },
+  };
 export default client;
 ```
+
 then, on a server component, we can just do
+
 ```javascript
 import client from "@/lib/api";
 async function getItems() {
@@ -70,31 +55,32 @@ async function getItems() {
   });
   if (error) {
     console.log(error);
-	// any other error handling code
+    // any other error handling code
   }
   return data;
 }
 ```
-This is as cleanest as it can possibly get, in my personal opinion, for handling frontend API requests.
+
+This is is a very simple and clean way, in my personal opinion, to handle frontend API requests.
 
 ### UI library
+
 We use [Shadcn](https://ui.shadcn.com/ "Shadcn"). It's light-weight, all the UI components are imported as plain javascript code for transparency. So, you can modify to suit your need.
 
 ### Deployment
-Docker compose is up to date now with nextjs frontend. You can just deploy through docker compose on a remote server.
-A friendly warning is this code was recently written (in 3-4 days), so there are still bugs. All pull requests are welcome!
 
-### Roadmap
-- Tidy up the error handling bit
-- Add task queue for long last jobs (Celery + Redis)
-- AI chat interface
+This is a 100% serverless template! No need to manage a VM or Kubernates yourself. And it will be completely free to start with. Frontend, backend and database code is deployed to three serverless hosting separately with individual scalability.<br>
+Frontend --> Vercel<br>
+Backend --> GCP Cloud Run<br>
+Database --> Supabase (Postgres)<br>
+**You don't need to clickOps the deployment. The whole deployment process is set up via github actions. Whenever there is a merge to the main branch, a CD will be triggered.**
 
-### Backend
-We did not change the backend code, all the other details remain valid from the original [README](README-original.md)
+Refer to the guide [here](deployment.md)
 
 ### EuclideanAI
-Who the hell is EuclideanAI? we are a boutique AI & Data consultancy who provide purpose-built AI, data, machine learning solutions for our clients. [Feel free to reach out!](https://euclideanai.com/contactus/)
+
+Who the hell is EuclideanAI? we are a boutique Data&AI consultancy who provide purpose-built AI, data, machine learning solutions for our clients. [Feel free to reach out!](https://euclideanai.com/contactus/)
 
 ### License
 
-The Nextjs FastAPI Template is licensed under the terms of the MIT license.
+The AI Engineer Template is licensed under the terms of the MIT license.
