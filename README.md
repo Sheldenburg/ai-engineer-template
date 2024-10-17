@@ -1,13 +1,13 @@
-# AI Engineer Template Nextjs + FastAPI
+# AI Engineer Template Nextjs + FastAPI 🚀
 
 ![nextjs+fastapi_template](nextjs+fastapi-template.png)
 ![nextjs+fastapi_template_dark_mode](nextjs+fastapi-template-dark-mode.png)
 
-### Demo website
+### Demo website 🌐
 
 https://ai-engineer-template.vercel.app
 
-### Tech stack
+### Tech stack 🛠️
 
 The backend code in this repository originated from the [FastAPI full stack template](https://github.com/fastapi/full-stack-fastapi-template) plus additional AI components that make this AI engineer template unique.
 
@@ -15,7 +15,7 @@ To fast-track MVP building process, which is crucial for most AI products, we ha
 
 ![architecture](architecture.png)
 
-### How to run in local
+### How to run in local 🏃‍♂️
 
 Refer to [development](development.md)
 
