@@ -18,7 +18,7 @@ jobs:
       FIRST_SUPERUSER: ${{ secrets.FIRST_SUPERUSER }}
       FIRST_SUPERUSER_PASSWORD: ${{ secrets.FIRST_SUPERUSER_PASSWORD }}
       ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
-      PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
+      PROJECT_NAME: ${{ vars.PROJECT_NAME }}
 
     steps:
       - name: Checkout code
