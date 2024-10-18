@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useUser } from "@/lib/context/userContext";
+import { useUser } from "@/lib/context/UserContext";
 
 function Page() {
   const user = useUser();
