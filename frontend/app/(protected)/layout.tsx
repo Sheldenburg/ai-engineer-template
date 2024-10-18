@@ -4,7 +4,7 @@ import initiateClient from "@/lib/api";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { unstable_noStore as noStore, revalidatePath } from "next/cache";
-import { UserProvider } from "@/lib/context/userContext";
+import { UserProvider } from "@/lib/context/UserContext";
 import { User } from "lucide-react";
 
 export default async function Layout({
