@@ -4,6 +4,8 @@ import initiateClient from "@/lib/api";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { unstable_noStore as noStore, revalidatePath } from "next/cache";
+import { UserProvider } from "@/lib/context/UserContext";
+import { User } from "lucide-react";
 
 export default async function Layout({
   children,
@@ -31,12 +33,13 @@ export default async function Layout({
   }
 
   return (
-    // <div className="grid min-h-screen md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
     <div className="flex min-h-screen">
       <NavLink user={data} />
       <div className="flex flex-col w-full md:ml-[16.666667%]">
         <DashboardHeader user={data} />
-        <div className="mt-14">{children}</div>
+        <UserProvider user={data}>
+          <div className="mt-14">{children}</div>
+        </UserProvider>
       </div>
     </div>
   );
