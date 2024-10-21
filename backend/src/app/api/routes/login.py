@@ -1,8 +1,9 @@
 from datetime import timedelta
 from typing import Annotated, Any
 
-from fastapi import APIRouter, Depends, HTTPException
-from fastapi.responses import HTMLResponse
+import requests
+from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.security import OAuth2PasswordRequestForm
 
 from app import crud
@@ -10,7 +11,7 @@ from app.api.deps import CurrentUser, SessionDep, get_current_active_superuser
 from app.core import security
 from app.core.config import settings
 from app.core.security import get_password_hash
-from app.models import Message, NewPassword, Token, UserPublic
+from app.models import Message, NewPassword, Token, UserCreateOauth, UserPublic
 from app.utils import (
     generate_password_reset_token,
     generate_reset_password_email,
@@ -123,3 +124,85 @@ def recover_password_html_content(email: str, session: SessionDep) -> Any:
     return HTMLResponse(
         content=email_data.html_content, headers={"subject:": email_data.subject}
     )
+
+
+# Redirect user to Google's OAuth2 login page
+@router.get("/login/google")
+def login_google():
+    google_auth_url = (
+        "https://accounts.google.com/o/oauth2/v2/auth?"
+        f"client_id={settings.GOOGLE_CLIENT_ID}&"
+        "redirect_uri={settings.GOOGLE_REDIRECT_URI}&"
+        "response_type=code&"
+        "scope=email profile"
+    )
+    return RedirectResponse(google_auth_url)
+
+
+# Handle Google OAuth callback
+@router.get("/auth/google")
+def auth(session: SessionDep, code: str, response: Response):
+    token_url = "https://oauth2.googleapis.com/token"
+    token_data = {
+        "code": code,
+        "client_id": settings.GOOGLE_CLIENT_ID,
+        "client_secret": settings.GOOGLE_CLIENT_SECRET,
+        "redirect_uri": settings.GOOGLE_REDIRECT_URI,
+        "grant_type": "authorization_code",
+    }
+
+    token_r = requests.post(token_url, data=token_data)
+    token_json = token_r.json()
+
+    if "error" in token_json:
+        raise HTTPException(
+            status_code=400, detail="Failed to retrieve token from Google"
+        )
+
+    access_token = token_json["access_token"]
+
+    # Get user info from Google
+    user_info = requests.get(
+        "https://www.googleapis.com/oauth2/v2/userinfo",
+        headers={"Authorization": f"Bearer {access_token}"},
+    ).json()
+
+    # Check if the user already exists
+    user = crud.get_user_by_email(session=session, email=user_info["email"])
+    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    if user:
+        response = RedirectResponse("http://localhost:3000/dashboard")
+        response.set_cookie(
+            key="access_token",
+            value=security.create_access_token(
+                user.id, expires_delta=access_token_expires
+            ),
+            httponly=True,
+        )
+        return response
+
+    # Check if the app is open for new user registration
+    if not settings.USERS_OPEN_REGISTRATION:
+        raise HTTPException(
+            status_code=403,
+            detail="Open user registration is forbidden on this server",
+        )
+    # Create a new user
+    user_create = UserCreateOauth.model_validate(
+        {
+            "email": user_info["email"],
+            "is_active": True,
+            "is_superuser": False,
+            "full_name": user_info["name"],
+            "provider": "google",
+        }
+    )
+    user = crud.create_user_oauth(session=session, user_create=user_create)
+
+    response = RedirectResponse("http://localhost:3000/dashboard")
+    response.set_cookie(
+        key="access_token",
+        value=security.create_access_token(user.id, expires_delta=access_token_expires),
+        httponly=True,
+    )
+    return response
