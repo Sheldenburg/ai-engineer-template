@@ -171,7 +171,7 @@ def google_oauth(session: SessionDep, code: str, response: Response):
     user = crud.get_user_by_email(session=session, email=user_info["email"])
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     if user:
-        response = RedirectResponse("http://localhost:3000/dashboard")
+        response = RedirectResponse(settings.OAUTH_REDIRECT_URI)
         response.set_cookie(
             key="access_token",
             value=security.create_access_token(
@@ -199,7 +199,7 @@ def google_oauth(session: SessionDep, code: str, response: Response):
     )
     user = crud.create_user_oauth(session=session, user_create=user_create)
 
-    response = RedirectResponse("http://localhost:3000/dashboard")
+    response = RedirectResponse(settings.OAUTH_REDIRECT_URI)
     response.set_cookie(
         key="access_token",
         value=security.create_access_token(user.id, expires_delta=access_token_expires),
@@ -214,8 +214,8 @@ def github_oauth(session: SessionDep, code: str, response: Response):
     token_url = "https://github.com/login/oauth/access_token"
     token_data = {
         "code": code,
-        "client_id": settings.GITHUB_CLIENT_ID,
-        "client_secret": settings.GITHUB_CLIENT_SECRET,
+        "client_id": settings.GH_CLIENT_ID,
+        "client_secret": settings.GH_SECRET,
     }
     headers = {"Accept": "application/json"}
 
@@ -241,7 +241,7 @@ def github_oauth(session: SessionDep, code: str, response: Response):
     user = crud.get_user_by_email(session=session, email=user_emails[0]["email"])
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     if user:
-        response = RedirectResponse("http://localhost:3000/dashboard")
+        response = RedirectResponse(settings.OAUTH_REDIRECT_URI)
         response.set_cookie(
             key="access_token",
             value=security.create_access_token(
@@ -269,7 +269,7 @@ def github_oauth(session: SessionDep, code: str, response: Response):
     )
     user = crud.create_user_oauth(session=session, user_create=user_create)
 
-    response = RedirectResponse("http://localhost:3000/dashboard")
+    response = RedirectResponse(settings.OAUTH_REDIRECT_URI)
     response.set_cookie(
         key="access_token",
         value=security.create_access_token(user.id, expires_delta=access_token_expires),
