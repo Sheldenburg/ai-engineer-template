@@ -141,7 +141,7 @@ def login_google():
 
 # Handle Google OAuth callback
 @router.get("/auth/google")
-def auth(session: SessionDep, code: str, response: Response):
+def google_oauth(session: SessionDep, code: str, response: Response):
     token_url = "https://oauth2.googleapis.com/token"
     token_data = {
         "code": code,
@@ -195,6 +195,76 @@ def auth(session: SessionDep, code: str, response: Response):
             "is_superuser": False,
             "full_name": user_info["name"],
             "provider": "google",
+        }
+    )
+    user = crud.create_user_oauth(session=session, user_create=user_create)
+
+    response = RedirectResponse("http://localhost:3000/dashboard")
+    response.set_cookie(
+        key="access_token",
+        value=security.create_access_token(user.id, expires_delta=access_token_expires),
+        httponly=True,
+    )
+    return response
+
+
+# Handle Github OAuth callback
+@router.get("/auth/github")
+def github_oauth(session: SessionDep, code: str, response: Response):
+    token_url = "https://github.com/login/oauth/access_token"
+    token_data = {
+        "code": code,
+        "client_id": settings.GITHUB_CLIENT_ID,
+        "client_secret": settings.GITHUB_CLIENT_SECRET,
+    }
+    headers = {"Accept": "application/json"}
+
+    token_r = requests.post(token_url, data=token_data, headers=headers)
+    token_json = token_r.json()
+    if "error" in token_json:
+        raise HTTPException(
+            status_code=400, detail="Failed to retrieve token from Github"
+        )
+    access_token = token_json["access_token"]
+    # Get user info from Github
+    user_info = requests.get(
+        "https://api.github.com/user",
+        headers={"Authorization": f"Bearer {access_token}"},
+    ).json()
+
+    user_emails = requests.get(
+        "https://api.github.com/user/emails",
+        headers={"Authorization": f"Bearer {access_token}"},
+    ).json()
+
+    # Check if the user already exists
+    user = crud.get_user_by_email(session=session, email=user_emails[0]["email"])
+    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    if user:
+        response = RedirectResponse("http://localhost:3000/dashboard")
+        response.set_cookie(
+            key="access_token",
+            value=security.create_access_token(
+                user.id, expires_delta=access_token_expires
+            ),
+            httponly=True,
+        )
+        return response
+
+    # Check if the app is open for new user registration
+    if not settings.USERS_OPEN_REGISTRATION:
+        raise HTTPException(
+            status_code=403,
+            detail="Open user registration is forbidden on this server",
+        )
+    # Create a new user
+    user_create = UserCreateOauth.model_validate(
+        {
+            "email": user_emails[0]["email"],
+            "is_active": True,
+            "is_superuser": False,
+            "full_name": user_info["login"],
+            "provider": "github",
         }
     )
     user = crud.create_user_oauth(session=session, user_create=user_create)

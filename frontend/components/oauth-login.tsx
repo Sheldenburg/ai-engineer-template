@@ -11,8 +11,17 @@ export function OAuthLogin() {
       console.error("Google Client ID or Redirect URI is not defined");
     }
     const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=email%20profile`;
-    console.log(googleAuthUrl);
     window.location.href = googleAuthUrl;
+  }
+  async function loginGithub() {
+    const GITHUB_CLIENT_ID = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
+    const GITHUB_REDIRECT_URI = process.env.NEXT_PUBLIC_GITHUB_REDIRECT_URI;
+
+    if (!GITHUB_CLIENT_ID || !GITHUB_REDIRECT_URI) {
+      console.error("GitHub Client ID or Redirect URI is not defined");
+    }
+    const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=read:user user:email`;
+    window.location.href = githubAuthUrl;
   }
   return (
     <div className="grid grid-cols-2 gap-6 mt-3">
@@ -38,7 +47,7 @@ export function OAuthLogin() {
         </svg>
         Google
       </Button>
-      <Button variant="outline">
+      <Button variant="outline" onClick={loginGithub}>
         <Github className="mr-2 h-4 w-4" />
         GitHub
       </Button>

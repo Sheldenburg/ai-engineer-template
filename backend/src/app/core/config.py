@@ -122,5 +122,8 @@ class Settings(BaseSettings):
     GOOGLE_CLIENT_SECRET: str
     GOOGLE_REDIRECT_URI: str
 
+    GH_CLIENT_ID: str
+    GH_CLIENT_SECRET: str
+
 
 settings = Settings()  # type: ignore
