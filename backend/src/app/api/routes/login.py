@@ -215,7 +215,7 @@ def github_oauth(session: SessionDep, code: str, response: Response):
     token_data = {
         "code": code,
         "client_id": settings.GH_CLIENT_ID,
-        "client_secret": settings.GH_SECRET,
+        "client_secret": settings.GH_CLIENT_SECRET,
     }
     headers = {"Accept": "application/json"}
 
