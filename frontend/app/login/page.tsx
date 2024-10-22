@@ -23,13 +23,13 @@ export default function LoginPage({
     <div className="fixed inset-0 m-auto flex items-center justify-center">
       <Card className="mx-auto max-w-sm">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">Welcome Back!</CardTitle>
           <CardDescription>
             Enter your email below to login to your account
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4">
+          <div className="grid">
             <form>
               {/* <div className="grid gap-2"> */}
               <div className="space-y-3">
@@ -77,7 +77,7 @@ export default function LoginPage({
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t" />
               </div>
-              <div className="relative flex justify-center text-xs uppercase">
+              <div className="relative flex justify-center text-xs uppercase mt-3">
                 <span className="bg-background px-2 text-muted-foreground">
                   Or continue with
                 </span>
