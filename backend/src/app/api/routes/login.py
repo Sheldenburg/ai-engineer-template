@@ -179,7 +179,7 @@ def google_oauth(session: SessionDep, code: str, response: Response):
             ),
             httponly=True,
             secure=True,
-            samesite="None",
+            samesite="lax",
         )
         return response
 
@@ -207,7 +207,7 @@ def google_oauth(session: SessionDep, code: str, response: Response):
         value=security.create_access_token(user.id, expires_delta=access_token_expires),
         httponly=True,
         secure=True,
-        samesite="None",
+        samesite="lax",
     )
     return response
 
@@ -253,7 +253,7 @@ def github_oauth(session: SessionDep, code: str, response: Response):
             ),
             httponly=True,
             secure=True,
-            samesite="None",
+            samesite="lax",
         )
         return response
 
@@ -281,6 +281,6 @@ def github_oauth(session: SessionDep, code: str, response: Response):
         value=security.create_access_token(user.id, expires_delta=access_token_expires),
         httponly=True,
         secure=True,
-        samesite="None",
+        samesite="lax",
     )
     return response
