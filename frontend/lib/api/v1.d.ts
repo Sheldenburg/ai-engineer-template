@@ -44,6 +44,14 @@ export interface paths {
      */
     post: operations["recover_password_html_content_api_v1_password_recovery_html_content__email__post"];
   };
+  "/api/v1/login/google": {
+    /** Login Google */
+    get: operations["login_google_api_v1_login_google_get"];
+  };
+  "/api/v1/auth/google": {
+    /** Auth */
+    get: operations["auth_api_v1_auth_google_get"];
+  };
   "/api/v1/users/": {
     /**
      * Read Users
@@ -147,10 +155,10 @@ export interface paths {
      */
     get: operations["read_chat_config_api_v1_chat_config_get"];
     /**
-     * Create Chat Config
-     * @description Create chat config.
+     * Update Chat Config
+     * @description Update chat config.
      */
-    put: operations["create_chat_config_api_v1_chat_config_put"];
+    put: operations["update_chat_config_api_v1_chat_config_put"];
     /**
      * Create Chat Config
      * @description Create chat config.
@@ -576,6 +584,39 @@ export interface operations {
       };
     };
   };
+  /** Login Google */
+  login_google_api_v1_login_google_get: {
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": unknown;
+        };
+      };
+    };
+  };
+  /** Auth */
+  auth_api_v1_auth_google_get: {
+    parameters: {
+      query: {
+        code: string;
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": unknown;
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
   /**
    * Read Users
    * @description Retrieve users.
@@ -981,10 +1022,10 @@ export interface operations {
     };
   };
   /**
-   * Create Chat Config
-   * @description Create chat config.
+   * Update Chat Config
+   * @description Update chat config.
    */
-  create_chat_config_api_v1_chat_config_put: {
+  update_chat_config_api_v1_chat_config_put: {
     requestBody: {
       content: {
         "application/json": components["schemas"]["ChatConfigCreate"];
