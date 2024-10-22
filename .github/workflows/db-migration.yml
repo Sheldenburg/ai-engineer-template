@@ -24,6 +24,7 @@ jobs:
       GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
       GH_CLIENT_ID: ${{ secrets.GH_CLIENT_ID }}
       GH_CLIENT_SECRET: ${{ secrets.GH_CLIENT_SECRET }}
+      OAUTH_REDIRECT_URI: ${{ secrets.OAUTH_REDIRECT_URI }}
 
     steps:
       - name: Checkout code

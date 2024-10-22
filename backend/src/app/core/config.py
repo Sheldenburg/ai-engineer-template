@@ -125,5 +125,7 @@ class Settings(BaseSettings):
     GH_CLIENT_ID: str
     GH_CLIENT_SECRET: str
 
+    OAUTH_REDIRECT_URI: str
+
 
 settings = Settings()  # type: ignore
