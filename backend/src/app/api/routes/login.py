@@ -132,7 +132,7 @@ def login_google():
     google_auth_url = (
         "https://accounts.google.com/o/oauth2/v2/auth?"
         f"client_id={settings.GOOGLE_CLIENT_ID}&"
-        "redirect_uri={settings.GOOGLE_REDIRECT_URI}&"
+        f"redirect_uri={settings.GOOGLE_REDIRECT_URI}&"
         "response_type=code&"
         "scope=email profile"
     )
@@ -178,6 +178,8 @@ def google_oauth(session: SessionDep, code: str, response: Response):
                 user.id, expires_delta=access_token_expires
             ),
             httponly=True,
+            secure=True,
+            samesite="None",
         )
         return response
 
@@ -204,6 +206,8 @@ def google_oauth(session: SessionDep, code: str, response: Response):
         key="access_token",
         value=security.create_access_token(user.id, expires_delta=access_token_expires),
         httponly=True,
+        secure=True,
+        samesite="None",
     )
     return response
 
@@ -248,6 +252,8 @@ def github_oauth(session: SessionDep, code: str, response: Response):
                 user.id, expires_delta=access_token_expires
             ),
             httponly=True,
+            secure=True,
+            samesite="None",
         )
         return response
 
@@ -274,5 +280,7 @@ def github_oauth(session: SessionDep, code: str, response: Response):
         key="access_token",
         value=security.create_access_token(user.id, expires_delta=access_token_expires),
         httponly=True,
+        secure=True,
+        samesite="None",
     )
     return response
