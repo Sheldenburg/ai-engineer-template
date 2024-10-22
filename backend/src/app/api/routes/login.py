@@ -253,8 +253,8 @@ def github_oauth(session: SessionDep, code: str, response: Response):
             ),
             httponly=True,
             secure=True,
-            samesite="lax",
-            domain="ai-engineer-template.vercel.app",
+            samesite="none",
+            # domain="ai-engineer-template.vercel.app",
         )
         return response
 
@@ -282,7 +282,7 @@ def github_oauth(session: SessionDep, code: str, response: Response):
         value=security.create_access_token(user.id, expires_delta=access_token_expires),
         httponly=True,
         secure=True,
-        samesite="lax",
-        domain="ai-engineer-template.vercel.app",
+        samesite="none",
+        # domain="ai-engineer-template.vercel.app",
     )
     return response
