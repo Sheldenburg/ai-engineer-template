@@ -20,6 +20,7 @@ export default async function Layout({
   // }
   const client = initiateClient();
   const { data, error } = await client.GET("/api/v1/users/me", {
+    credentials: "include",
     headers: {
       Authorization: `Bearer ${cookies().get("access_token")?.value}`,
     },
