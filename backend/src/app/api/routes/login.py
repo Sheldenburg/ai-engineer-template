@@ -251,7 +251,7 @@ def github_oauth(session: SessionDep, code: str, response: Response):
             value=security.create_access_token(
                 user.id, expires_delta=access_token_expires
             ),
-            httponly=True,
+            # httponly=True,
             secure=True,
             samesite="none",
             # domain="ai-engineer-template.vercel.app",
@@ -280,7 +280,7 @@ def github_oauth(session: SessionDep, code: str, response: Response):
     response.set_cookie(
         key="access_token",
         value=security.create_access_token(user.id, expires_delta=access_token_expires),
-        httponly=True,
+        # httponly=True,
         secure=True,
         samesite="none",
         # domain="ai-engineer-template.vercel.app",
