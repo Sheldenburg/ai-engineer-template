@@ -180,7 +180,7 @@ def google_oauth(session: SessionDep, code: str, response: Response):
             httponly=True,
             secure=True,
             samesite="none",
-            domain="ai-engineer-template.vercel.app",
+            domain=".vercel.app",
         )
         return response
 
@@ -209,7 +209,7 @@ def google_oauth(session: SessionDep, code: str, response: Response):
         httponly=True,
         secure=True,
         samesite="none",
-        domain="ai-engineer-template.vercel.app",
+        domain=".vercel.app",
     )
     return response
 
@@ -256,7 +256,7 @@ def github_oauth(session: SessionDep, code: str, response: Response):
             # httponly=True,
             secure=True,
             samesite="none",
-            domain="ai-engineer-template.vercel.app",
+            domain=".vercel.app",
         )
         return response
 
@@ -285,6 +285,6 @@ def github_oauth(session: SessionDep, code: str, response: Response):
         # httponly=True,
         secure=True,
         samesite="none",
-        domain="ai-engineer-template.vercel.app",
+        domain=".vercel.app",
     )
     return response
