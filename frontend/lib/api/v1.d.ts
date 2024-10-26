@@ -49,8 +49,12 @@ export interface paths {
     get: operations["login_google_api_v1_login_google_get"];
   };
   "/api/v1/auth/google": {
-    /** Auth */
-    get: operations["auth_api_v1_auth_google_get"];
+    /** Google Oauth */
+    get: operations["google_oauth_api_v1_auth_google_get"];
+  };
+  "/api/v1/auth/github": {
+    /** Github Oauth */
+    post: operations["github_oauth_api_v1_auth_github_post"];
   };
   "/api/v1/users/": {
     /**
@@ -337,6 +341,11 @@ export interface components {
       /** New Password */
       new_password: string;
     };
+    /** OauthRequest */
+    OauthRequest: {
+      /** Code */
+      code: string;
+    };
     /** Token */
     Token: {
       /** Access Token */
@@ -595,8 +604,8 @@ export interface operations {
       };
     };
   };
-  /** Auth */
-  auth_api_v1_auth_google_get: {
+  /** Google Oauth */
+  google_oauth_api_v1_auth_google_get: {
     parameters: {
       query: {
         code: string;
@@ -607,6 +616,28 @@ export interface operations {
       200: {
         content: {
           "application/json": unknown;
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  /** Github Oauth */
+  github_oauth_api_v1_auth_github_post: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["OauthRequest"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["Token"];
         };
       };
       /** @description Validation Error */
