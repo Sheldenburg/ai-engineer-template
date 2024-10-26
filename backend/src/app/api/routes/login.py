@@ -11,7 +11,14 @@ from app.api.deps import CurrentUser, SessionDep, get_current_active_superuser
 from app.core import security
 from app.core.config import settings
 from app.core.security import get_password_hash
-from app.models import Message, NewPassword, Token, UserCreateOauth, UserPublic
+from app.models import (
+    Message,
+    NewPassword,
+    OauthRequest,
+    Token,
+    UserCreateOauth,
+    UserPublic,
+)
 from app.utils import (
     generate_password_reset_token,
     generate_reset_password_email,
@@ -215,17 +222,18 @@ def google_oauth(session: SessionDep, code: str, response: Response):
 
 
 # Handle Github OAuth callback
-@router.get("/auth/github")
-def github_oauth(session: SessionDep, code: str, response: Response):
+@router.post("/auth/github")
+def github_oauth(session: SessionDep, body: OauthRequest) -> Token:
     token_url = "https://github.com/login/oauth/access_token"
     token_data = {
-        "code": code,
+        "code": body.code,
         "client_id": settings.GH_CLIENT_ID,
         "client_secret": settings.GH_CLIENT_SECRET,
     }
     headers = {"Accept": "application/json"}
 
     token_r = requests.post(token_url, data=token_data, headers=headers)
+    print(token_r.json())
     token_json = token_r.json()
     if "error" in token_json:
         raise HTTPException(
@@ -245,20 +253,13 @@ def github_oauth(session: SessionDep, code: str, response: Response):
 
     # Check if the user already exists
     user = crud.get_user_by_email(session=session, email=user_emails[0]["email"])
-    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     if user:
-        response = RedirectResponse(settings.OAUTH_REDIRECT_URI)
-        response.set_cookie(
-            key="access_token",
-            value=security.create_access_token(
+        access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+        return Token(
+            access_token=security.create_access_token(
                 user.id, expires_delta=access_token_expires
-            ),
-            # httponly=True,
-            secure=True,
-            samesite="none",
-            domain=".vercel.app",
+            )
         )
-        return response
 
     # Check if the app is open for new user registration
     if not settings.USERS_OPEN_REGISTRATION:
@@ -277,14 +278,9 @@ def github_oauth(session: SessionDep, code: str, response: Response):
         }
     )
     user = crud.create_user_oauth(session=session, user_create=user_create)
-
-    response = RedirectResponse(settings.OAUTH_REDIRECT_URI)
-    response.set_cookie(
-        key="access_token",
-        value=security.create_access_token(user.id, expires_delta=access_token_expires),
-        # httponly=True,
-        secure=True,
-        samesite="none",
-        domain=".vercel.app",
+    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    return Token(
+        access_token=security.create_access_token(
+            user.id, expires_delta=access_token_expires
+        )
     )
-    return response

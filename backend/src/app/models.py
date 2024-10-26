@@ -193,3 +193,7 @@ class ChatPublic(SQLModel):
     created_at: datetime
     updated_at: datetime
     owner_id: int
+
+
+class OauthRequest(SQLModel):
+    code: str
