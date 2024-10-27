@@ -2,8 +2,8 @@ from datetime import timedelta
 from typing import Annotated, Any
 
 import requests
-from fastapi import APIRouter, Depends, HTTPException, Response
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import HTMLResponse
 from fastapi.security import OAuth2PasswordRequestForm
 
 from app import crud
@@ -133,25 +133,12 @@ def recover_password_html_content(email: str, session: SessionDep) -> Any:
     )
 
 
-# Redirect user to Google's OAuth2 login page
-@router.get("/login/google")
-def login_google():
-    google_auth_url = (
-        "https://accounts.google.com/o/oauth2/v2/auth?"
-        f"client_id={settings.GOOGLE_CLIENT_ID}&"
-        f"redirect_uri={settings.GOOGLE_REDIRECT_URI}&"
-        "response_type=code&"
-        "scope=email profile"
-    )
-    return RedirectResponse(google_auth_url)
-
-
 # Handle Google OAuth callback
-@router.get("/auth/google")
-def google_oauth(session: SessionDep, code: str, response: Response):
+@router.post("/auth/google")
+def google_oauth(session: SessionDep, body: OauthRequest) -> Token:
     token_url = "https://oauth2.googleapis.com/token"
     token_data = {
-        "code": code,
+        "code": body.code,
         "client_id": settings.GOOGLE_CLIENT_ID,
         "client_secret": settings.GOOGLE_CLIENT_SECRET,
         "redirect_uri": settings.GOOGLE_REDIRECT_URI,
@@ -178,18 +165,12 @@ def google_oauth(session: SessionDep, code: str, response: Response):
     user = crud.get_user_by_email(session=session, email=user_info["email"])
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     if user:
-        response = RedirectResponse(settings.OAUTH_REDIRECT_URI)
-        response.set_cookie(
-            key="access_token",
-            value=security.create_access_token(
+        access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+        return Token(
+            access_token=security.create_access_token(
                 user.id, expires_delta=access_token_expires
-            ),
-            httponly=True,
-            secure=True,
-            samesite="none",
-            domain=".vercel.app",
+            )
         )
-        return response
 
     # Check if the app is open for new user registration
     if not settings.USERS_OPEN_REGISTRATION:
@@ -208,17 +189,12 @@ def google_oauth(session: SessionDep, code: str, response: Response):
         }
     )
     user = crud.create_user_oauth(session=session, user_create=user_create)
-
-    response = RedirectResponse(settings.OAUTH_REDIRECT_URI)
-    response.set_cookie(
-        key="access_token",
-        value=security.create_access_token(user.id, expires_delta=access_token_expires),
-        httponly=True,
-        secure=True,
-        samesite="none",
-        domain=".vercel.app",
+    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    return Token(
+        access_token=security.create_access_token(
+            user.id, expires_delta=access_token_expires
+        )
     )
-    return response
 
 
 # Handle Github OAuth callback
@@ -233,7 +209,6 @@ def github_oauth(session: SessionDep, body: OauthRequest) -> Token:
     headers = {"Accept": "application/json"}
 
     token_r = requests.post(token_url, data=token_data, headers=headers)
-    print(token_r.json())
     token_json = token_r.json()
     if "error" in token_json:
         raise HTTPException(

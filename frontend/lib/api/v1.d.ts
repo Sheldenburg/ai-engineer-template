@@ -44,13 +44,9 @@ export interface paths {
      */
     post: operations["recover_password_html_content_api_v1_password_recovery_html_content__email__post"];
   };
-  "/api/v1/login/google": {
-    /** Login Google */
-    get: operations["login_google_api_v1_login_google_get"];
-  };
   "/api/v1/auth/google": {
     /** Google Oauth */
-    get: operations["google_oauth_api_v1_auth_google_get"];
+    post: operations["google_oauth_api_v1_auth_google_post"];
   };
   "/api/v1/auth/github": {
     /** Github Oauth */
@@ -593,29 +589,18 @@ export interface operations {
       };
     };
   };
-  /** Login Google */
-  login_google_api_v1_login_google_get: {
-    responses: {
-      /** @description Successful Response */
-      200: {
-        content: {
-          "application/json": unknown;
-        };
-      };
-    };
-  };
   /** Google Oauth */
-  google_oauth_api_v1_auth_google_get: {
-    parameters: {
-      query: {
-        code: string;
+  google_oauth_api_v1_auth_google_post: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["OauthRequest"];
       };
     };
     responses: {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": unknown;
+          "application/json": components["schemas"]["Token"];
         };
       };
       /** @description Validation Error */
